@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import instance from "@/server";
 export default {
   name: 'HelloWorld',
   data(){
@@ -11,10 +12,14 @@ export default {
     }
   },
   created() {
-    fetch("/api/subjects").then((response)=>response.text())
-    .then((data)=> {
-      this.msg = data;
-    })
+    // fetch("/api/subjects").then((response)=>response.text())
+    // .then((data)=> {
+    //   this.msg = data;
+    // })
+      instance.get("/api/subjects")
+        .then((response) =>{
+          this.msg = response.data;
+        })
   }
 
 }
