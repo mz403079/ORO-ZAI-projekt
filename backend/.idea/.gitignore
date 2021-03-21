@@ -2,7 +2,7 @@
 /shelf/
 /workspace.xml
 # Datasource local storage ignored files
-/../../../:\ORO-ZAI-projekt\.idea/dataSources/
+/../../../../:\ORO-ZAI-projekt\backend\.idea/dataSources/
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
