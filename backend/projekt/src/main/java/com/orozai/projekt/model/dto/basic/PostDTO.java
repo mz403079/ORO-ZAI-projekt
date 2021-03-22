@@ -24,6 +24,5 @@ public class PostDTO {
 
   private LocalTime timePosted;
 
-  @OneToMany(mappedBy = "PostDTO")
   private Set<TagDTO> tags = new HashSet<>();
 }

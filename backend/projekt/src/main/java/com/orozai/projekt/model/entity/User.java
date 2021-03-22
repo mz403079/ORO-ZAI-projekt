@@ -5,17 +5,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Tag {
+@Table(name="\"user\"")
+public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long tagId;
+  private Long userId;
 
-  @Column(nullable = false, length = 20)
-  private String tagName;
+  @Column(nullable = false, length = 50, unique = true)
+  private String username;
+
+  @Column(nullable = false)
+  private String password;
+
+  @Column(nullable = false, unique = true)
+  private String email;
 }

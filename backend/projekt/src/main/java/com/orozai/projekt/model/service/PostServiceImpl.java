@@ -41,9 +41,7 @@ public class PostServiceImpl implements IService<PostDTO> {
     return modelMapper.map(postRepository.findAll(), new TypeToken<Set<PostDTO>>(){}.getType());
   }
   public Collection<PostDTO> getByTagId(Long id) {
-    Optional<Tag> optional = tagRepository.findById(id);
-    Tag tag = optional.get();
-    return modelMapper.map(postRepository.findByTagsIn(postTagRepository.findAllByTag(tag)),
+    return modelMapper.map(postRepository.findByTagsIn(postTagRepository.findAllByTag(tagRepository.findById(id).get())),
         new TypeToken<Set<PostDTO>>(){}.getType());
   }
   @Override
