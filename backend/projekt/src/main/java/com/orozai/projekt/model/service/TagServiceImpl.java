@@ -1,12 +1,26 @@
 package com.orozai.projekt.model.service;
-import com.orozai.projekt.model.dto.basic.TagDTO;
-import java.util.Collection;
 
-public class TagServiceImpl implements IService<TagDTO>{
+import com.orozai.projekt.model.dto.basic.TagDTO;
+import com.orozai.projekt.model.repository.TagRepository;
+import java.util.Collection;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+@Service
+public class TagServiceImpl implements IService<TagDTO> {
+
+  private final ModelMapper modelMapper;
+  private final TagRepository tagRepository;
+
+  public TagServiceImpl(ModelMapper modelMapper,
+      TagRepository tagRepository) {
+    this.modelMapper = modelMapper;
+    this.tagRepository = tagRepository;
+  }
 
   @Override
   public TagDTO get(Long id) {
-    return null;
+    return modelMapper.map(tagRepository.findById(id), TagDTO.class);
   }
 
   @Override

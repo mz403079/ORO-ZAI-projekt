@@ -1,5 +1,11 @@
 <template>
-  <h1>{{msg}}</h1>
+  <div v-for ="item in msg " :key="item.postId">
+    <h1 >Tytuł: {{item.title}}</h1>
+    <h2>Autor Id: {{item.authorId}}</h2>
+    <p>{{item.content}}</p>
+    tagi:
+    <a v-for ="tag in item.tags" :key="tag.tagId"> #{{tag.tagName}}</a>
+  </div>
 </template>
 
 <script>
@@ -8,16 +14,13 @@ export default {
   name: 'HelloWorld',
   data(){
     return {
-      msg: ''
+      msg: []
     }
   },
   created() {
-    // fetch("/api/subjects").then((response)=>response.text())
-    // .then((data)=> {
-    //   this.msg = data;
-    // })
-      instance.get("/api/subjects")
+      instance.get("/api/tag/2")
         .then((response) =>{
+          console.log(response.data);
           this.msg = response.data;
         })
   }

@@ -14,7 +14,7 @@ import lombok.Setter;
 public class PostTag {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long postId;
+  private Long postTagId;
 
   @ManyToOne(optional = false)
   private Post post;

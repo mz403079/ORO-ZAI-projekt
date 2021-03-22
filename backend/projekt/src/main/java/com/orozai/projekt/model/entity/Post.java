@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 
 
 import java.time.LocalTime;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +22,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "Posts")
 public class Post {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +37,6 @@ public class Post {
 
   private LocalTime timePosted;
 
-  @OneToMany(mappedBy = "post")
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<PostTag> tags = new HashSet<>();
 }
