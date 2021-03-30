@@ -1,8 +1,7 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.orozai.projekt.model.entity.Post;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
+import com.orozai.projekt.model.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,4 +15,6 @@ public class CommentDTO {
   private int score;
 
   private Post post;
+
+  private User author;
 }

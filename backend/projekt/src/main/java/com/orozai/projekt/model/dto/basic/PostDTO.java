@@ -1,11 +1,10 @@
 package com.orozai.projekt.model.dto.basic;
 
+import com.orozai.projekt.model.entity.User;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import javax.persistence.OneToMany;
+import javax.persistence.Lob;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,9 +19,11 @@ public class PostDTO {
 
   private int rating;
 
-  private long authorId;
+  private User author;
 
   private LocalTime timePosted;
 
   private Set<TagDTO> tags = new HashSet<>();
+
+  private String imageData;
 }

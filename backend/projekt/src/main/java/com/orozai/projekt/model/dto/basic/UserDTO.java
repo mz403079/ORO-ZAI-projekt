@@ -1,7 +1,6 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 

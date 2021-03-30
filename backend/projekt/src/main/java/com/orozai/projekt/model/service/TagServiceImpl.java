@@ -1,9 +1,15 @@
 package com.orozai.projekt.model.service;
 
+import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.TagDTO;
+import com.orozai.projekt.model.entity.Tag;
 import com.orozai.projekt.model.repository.TagRepository;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,7 +31,7 @@ public class TagServiceImpl implements IService<TagDTO> {
 
   @Override
   public Collection<TagDTO> getAll() {
-    return null;
+    return modelMapper.map(tagRepository.findAll(Sort.by(Sort.Direction.ASC,"tagId")), new TypeToken<List<TagDTO>>(){}.getType());
   }
 
   @Override

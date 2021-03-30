@@ -41,7 +41,6 @@ public class Post {
   @Type(type = "text")
   private String content;
 
-  @Column(nullable = false)
   private String link;
 
   private int score;
@@ -56,4 +55,8 @@ public class Post {
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<Comment> comments = new HashSet<>();
+
+  @Lob
+  private String imageData;
+
 }
