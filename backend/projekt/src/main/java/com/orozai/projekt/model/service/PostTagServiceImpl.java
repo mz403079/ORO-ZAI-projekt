@@ -2,6 +2,7 @@ package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.PostTagDTO;
+import com.orozai.projekt.model.entity.PostTag;
 import com.orozai.projekt.model.entity.Tag;
 import com.orozai.projekt.model.repository.PostTagRepository;
 import com.orozai.projekt.model.repository.TagRepository;
@@ -37,7 +38,12 @@ public class PostTagServiceImpl implements IService<PostTagDTO> {
 
   @Override
   public PostTagDTO create(PostTagDTO postTagDTO) {
-    return null;
+
+    PostTag postTag = modelMapper.map(postTagDTO,PostTag.class);
+    postTag.getTag().getTagId();
+    postTag.getPost().getContent();
+
+    return postTagDTO;
   }
 
   @Override

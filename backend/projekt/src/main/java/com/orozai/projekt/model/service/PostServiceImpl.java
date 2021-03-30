@@ -1,20 +1,28 @@
 package com.orozai.projekt.model.service;
 
+import com.orozai.projekt.exception.DataNotFoundException;
 import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.specialized.PostFormDTO;
 import com.orozai.projekt.model.entity.Post;
+import com.orozai.projekt.model.entity.PostTag;
+import com.orozai.projekt.model.entity.User;
 import com.orozai.projekt.model.repository.PostRepository;
 import com.orozai.projekt.model.repository.PostTagRepository;
 import com.orozai.projekt.model.repository.TagRepository;
 import com.orozai.projekt.model.repository.UserRepository;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PostServiceImpl implements IService<PostDTO> {
@@ -55,23 +63,32 @@ public class PostServiceImpl implements IService<PostDTO> {
         new TypeToken<Set<PostDTO>>(){}.getType());
   }
 
-  public PostDTO createTest(PostFormDTO postDTO) {
+  public PostDTO create(String title, String content, MultipartFile file, int[] tags, int authorId) {
     Post p = new Post();
-    String fileName = StringUtils.cleanPath(postDTO.getImageData().getOriginalFilename());
+    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
     if(fileName.contains(".."))
     {
       System.out.println("not a a valid file");
     }
     try {
-      p.setImageData(Base64.getEncoder().encodeToString(postDTO.getImageData().getBytes()));
+      p.setImageData(Base64.getEncoder().encodeToString(file.getBytes()));
     } catch (IOException e) {
       e.printStackTrace();
     }
-    p.setContent(postDTO.getContent());
-    p.setTitle(postDTO.getTitle());
-    p.setAuthor(null);
+    p.setContent(content);
+    p.setTitle(title);
+
+    p.setAuthor(userRepository.findById((long) authorId).orElseThrow(
+        DataNotFoundException::new));
     p.setLink(null);
+    p.setTimePosted(LocalDateTime.now());
     postRepository.save(p);
+    for (int x : tags) {
+      PostTag postTag = new PostTag();
+      postTag.setPost(p);
+      postTag.setTag(tagRepository.findById((long)x).orElseThrow(DataNotFoundException::new));
+      postTagRepository.save(postTag);
+    }
     return null;
 
   }

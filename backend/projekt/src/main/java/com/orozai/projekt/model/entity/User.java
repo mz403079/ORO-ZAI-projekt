@@ -1,5 +1,6 @@
 package com.orozai.projekt.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,14 +20,17 @@ import lombok.Setter;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonIgnore
   private Long userId;
 
   @Column(nullable = false, length = 50, unique = true)
   private String username;
 
   @Column(nullable = false)
+  @JsonIgnore
   private String password;
 
   @Column(nullable = false, unique = true)
+  @JsonIgnore
   private String email;
 }

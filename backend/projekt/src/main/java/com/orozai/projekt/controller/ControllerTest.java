@@ -8,6 +8,7 @@ import com.orozai.projekt.model.service.PostServiceImpl;
 import com.orozai.projekt.model.service.PostTagServiceImpl;
 import com.orozai.projekt.model.service.TagServiceImpl;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
@@ -65,17 +66,9 @@ public class ControllerTest {
   public ResponseEntity<PostDTO> addPost(@RequestParam("title") String title,
       @RequestParam("content") String content,
       @RequestParam("file") MultipartFile file,
-      @RequestParam("tags") String tags) {
-    System.out.print("HURA1");
-    System.out.println(title);
-
-    System.out.println(file.getOriginalFilename());
-    System.out.println(tags);
-//    for (TagDTO tag : tags)
-//      System.out.println(tag.getTagName());
-
-//     postService.createTest(postFormDTO);
-//
+      @RequestParam("tags") int[] tags,
+      @RequestParam("authorId") int authorId) {
+    postService.create(title,content,file,tags,authorId);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 }
