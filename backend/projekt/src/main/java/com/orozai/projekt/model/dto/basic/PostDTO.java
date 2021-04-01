@@ -1,6 +1,7 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.orozai.projekt.model.entity.User;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class PostDTO {
 
   private User author;
 
-  private LocalTime timePosted;
+  private LocalDateTime timePosted;
 
   private Set<TagDTO> tags = new HashSet<>();
 
