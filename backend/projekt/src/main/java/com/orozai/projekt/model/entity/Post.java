@@ -1,11 +1,9 @@
 package com.orozai.projekt.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.orozai.projekt.model.dto.basic.TagDTO;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,6 +46,7 @@ public class Post {
   @OneToOne
   private User author;
 
+  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime timePosted;
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

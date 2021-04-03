@@ -65,17 +65,20 @@ public class PostServiceImpl implements IService<PostDTO> {
 
   public PostDTO create(String title, String content, MultipartFile file, int[] tags, int authorId) {
     Post p = new Post();
-    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-    if(fileName.contains(".."))
-    {
-      System.out.println("not a a valid file");
+    if (file != null) {
+      String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+      if (fileName.contains("..")) {
+        System.out.println("not a a valid file");
+      }
+      try {
+        p.setImageData(Base64.getEncoder().encodeToString(file.getBytes()));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
-    try {
-      p.setImageData(Base64.getEncoder().encodeToString(file.getBytes()));
-    } catch (IOException e) {
-      e.printStackTrace();
+    if (content != null) {
+      p.setContent(content);
     }
-    p.setContent(content);
     p.setTitle(title);
 
     p.setAuthor(userRepository.findById((long) authorId).orElseThrow(

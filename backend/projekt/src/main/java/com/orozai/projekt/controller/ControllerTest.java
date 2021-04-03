@@ -64,8 +64,8 @@ public class ControllerTest {
 
   @PostMapping(value ="/addPost")
   public ResponseEntity<PostDTO> addPost(@RequestParam("title") String title,
-      @RequestParam("content") String content,
-      @RequestParam("file") MultipartFile file,
+      @RequestParam(name="content",required = false) String content,
+      @RequestParam(name="file",required = false) MultipartFile file,
       @RequestParam("tags") int[] tags,
       @RequestParam("authorId") int authorId) {
     postService.create(title,content,file,tags,authorId);

@@ -1,56 +1,89 @@
 <template>
-  <div class="b-container">
-    <div class="b-container post" v-for="item in msg " :key="item.postId">
+  <div id="app">
+    <div class="b-container contentWrapper">
       <b-row>
-        <b-col>
-          <h1>Tytuł: {{ item.title }}</h1>
-        </b-col>
-        <b-col>
-          <h1>Nick autora: {{ item.author.username }}</h1>
-        </b-col>
-      </b-row>
-      <b-row>
-        <img :src="`data:image/png;base64, ${item.imageData}`" width="300" height="300">
+        <b-col md="8">
+      <div class="b-container post" v-for="item in msg " :key="item.postId">
+        <b-row>
+          <b-col>
+            <h3>{{ item.title }}
+              <b-badge>Hot</b-badge>
+              <b-badge v-for="tag in item.tags" v-bind:key="tag.tagId" class="tagBadge">
+                {{ tag.tagName }}
+              </b-badge>
+            </h3>
+          </b-col>
+        </b-row>
+        <b-row>
+          <h5>
+            <b-avatar>JW</b-avatar>
+            {{ item.author.username }} posted {{ item.timePosted }}
+          </h5>
+        </b-row>
+        <b-row v-if="item.imageData != null">
+          <img :src="`data:image/png;base64, ${item.imageData}`">
+        </b-row>
+        <b-row v-else-if="item.content != null">
+          {{ item.content }}
+        </b-row>
+        <!--      <b-row>-->
 
+        <!--      </b-row>-->
+      </div>
+        </b-col>
+        <b-col offset-md="1">
+          <b-row>
+          <div class="gog">
+            <h4>Popular tags</h4>
+            <div v-for="tag in tags" v-bind:key="tag.tagId" class="tagButton">
+              <b-button pill variant="secondary" v-on:click="addTag($event,tag)"> {{ tag.tagName }}
+              </b-button>
+            </div>
+          </div>
+          </b-row>
+          <b-row>
+          <div class="gog">
+            <h4>Top contributors</h4>
+            <div v-for="tag in tags" v-bind:key="tag.tagId" class="tagButton">
+              <b-button pill variant="secondary" v-on:click="addTag($event,tag)"> {{ tag.tagName }}
+              </b-button>
+            </div>
+          </div>
+          </b-row>
+        </b-col>
       </b-row>
-      <b-row>
-        <div v-for="tag in item.tags" v-bind:key="tag.tagId" class="tagButton">
-          <b-button pill variant="secondary"># {{ tag.tagName }}
-          </b-button>
+      <div class="formWrapper">
+        <form id="postForm"
+              @submit="checkForm">
+          <p>
+            <label>Tytul
+              <input type="text" v-model="title">
+            </label>
+          </p>
+          <p>
+            <label>Tresc
+              <input type="text" v-model="content">
+            </label>
+          </p>
+          <p>
+            <label>
+              <input type="file" value="Wybierz plik" @change="fileSelected">
+            </label>
+          </p>
+          <p>
+            <input type="submit" value="Dodaj">
+          </p>
+        </form>
+        <div>
+          <b-row>
+            <div v-for="tag in tags" v-bind:key="tag.tagId" class="tagButton">
+              <b-button pill variant="secondary" v-on:click="addTag($event,tag)"> {{ tag.tagName }}
+              </b-button>
+            </div>
+          </b-row>
         </div>
-      </b-row>
-    </div>
-    <div class="formWrapper">
-    <form id="postForm"
-          @submit="checkForm">
-      <p>
-        <label>Tytul
-          <input type="text" v-model="title">
-        </label>
-      </p>
-      <p>
-        <label>Tresc
-          <input type="text" v-model="content">
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type="file" value="Wybierz plik" @change="fileSelected">
-        </label>
-      </p>
-      <p>
-        <input type="submit" value="Dodaj">
-      </p>
-    </form>
-    <div>
-      <b-row>
-        <div v-for="tag in tags" v-bind:key="tag.tagId" class="tagButton">
-          <b-button pill variant="secondary" v-on:click="addTag($event,tag)"> {{ tag.tagName }}
-          </b-button>
-        </div>
-      </b-row>
-    </div>
-    {{ selected }}
+        {{ selected }}
+      </div>
     </div>
   </div>
 </template>
@@ -77,7 +110,6 @@ export default {
   methods: {
     fileSelected(event) {
       this.selectedFile = event.target.files[0];
-      this.getTags();
       console.log(event);
     },
     checkForm() {
@@ -109,30 +141,50 @@ export default {
   },
   created() {
     instance.get("/api/getPosts")
-    .then((response) => {
-      console.log(response.data);
-      this.msg = response.data;
-    })
+        .then((response) => {
+          console.log(response.data);
+          this.msg = response.data;
+        })
     instance.get("/api/getTags")
-    .then((response) => {
-      console.log(response.data);
-      this.tags = response.data;
-    })
+        .then((response) => {
+          console.log(response.data);
+          this.tags = response.data;
+        })
   },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#app {
+  background-color: #ABD6D6;
+}
 
-.post,.formWrapper {
-  padding: 100px;
-  margin: 100px;
+.post, .formWrapper {
+  background-color: white;
+  padding: 25px;
+  margin: 25px 10px 10px;
   border: black solid 1px;
+}
+
+.gog {
+  width:250px;
+  background-color: white;
+  margin-top: 25px;
+  border: black solid 1px;
+  padding: 0 15px 0;
 }
 
 .tagButton {
   padding: 10px;
 }
 
+.tagBadge {
+  margin-left: 5px;
+}
+
+.contentWrapper {
+  width: 70%;
+  margin: 0 auto;
+}
 </style>
