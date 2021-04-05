@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +45,7 @@ public class PostServiceImpl implements IService<PostDTO> {
   }
   @Override
   public PostDTO get(Long id) {
-    return null;
+    return modelMapper.map(postRepository.findById(id).orElseThrow(DataNotFoundException::new),PostDTO.class);
   }
 
   @Override

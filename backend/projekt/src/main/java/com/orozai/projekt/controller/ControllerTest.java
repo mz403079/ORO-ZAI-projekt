@@ -46,7 +46,14 @@ public class ControllerTest {
     Collection<PostDTO> posts = postService.getAll();
     return new ResponseEntity<>(posts, HttpStatus.OK);
   }
-
+  @GetMapping(value = "/post/{id}")
+  public ResponseEntity<PostDTO> getPost(@PathVariable("id") Long id) {
+    PostDTO post = postService.get(id);
+//    if(post.is)
+//      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    else
+    return new ResponseEntity<>(post, HttpStatus.OK);
+  }
   @GetMapping(value = "/getTags")
   public ResponseEntity<Collection<TagDTO>> getTags() {
     Collection<TagDTO> tags = tagService.getAll();

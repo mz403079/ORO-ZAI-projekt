@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="b-container post" v-for="item in postsToDisplay " :key="item.postId">
+    <div class="b-container post"  v-for="item in postsToDisplay" :key="item.postId">
+      <b-link :href="'/post/'+item.postId">
       <b-row>
         <b-col>
-          <h3>{{ item.title }}
+          <h3> {{ item.title }}
             <b-badge>Hot</b-badge>
             <b-badge :href="'/tag/'+tag.tagId" v-for="tag in item.tags" v-bind:key="tag.tagId" class="tagBadge">
               {{ tag.tagName }}
@@ -23,6 +24,7 @@
       <b-row v-else-if="item.content != null">
         {{ item.content }}
       </b-row>
+      </b-link>
     </div>
   </div>
 </template>
