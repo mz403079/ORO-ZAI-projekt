@@ -8,6 +8,9 @@ import java.util.Collection;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.transaction.Transactional;
+
+@Transactional
 public interface PostRepository extends JpaRepository<Post, Long> {
   Collection<Post> findByTagsIn(Collection<PostTag> postTags);
 }

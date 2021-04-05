@@ -14,7 +14,6 @@
           </b-row>
         </b-col>
       </b-row>
-  <NewPostForm></NewPostForm>
     </div>
   </div>
 </template>
@@ -22,36 +21,25 @@
 <script>
 import PostViewer from "@/components/PostViewer";
 import PopularTags from "@/components/PopularTags";
-import NewPostForm from "@/components/NewPostForm";
 import instance from "@/server";
-
 export default {
-  name: 'HelloWorld',
-  components: {NewPostForm, PopularTags, PostViewer},
+  name: "PostsWithTag",
+  components: {PostViewer, PopularTags},
   data() {
     return {
-      msg: [],
+      msg:null,
     }
   },
   created() {
-    instance.get("/api/getPosts")
-        .then((response) => {
-          console.log(response.data);
-          this.msg = response.data;
-        })
+    instance.get("/api/tag/5")
+    .then((response) => {
+      this.msg = response.data;
+    })
+    console.log("gowno");
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#app {
-  background-color: #ABD6D6;
-}
 
-
-.contentWrapper {
-  width: 70%;
-  margin: 0 auto;
-}
 </style>
