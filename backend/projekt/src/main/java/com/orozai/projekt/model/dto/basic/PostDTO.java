@@ -1,6 +1,7 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.orozai.projekt.model.entity.Comment;
 import com.orozai.projekt.model.entity.User;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -27,6 +28,8 @@ public class PostDTO {
   private LocalDateTime timePosted;
 
   private Set<TagDTO> tags = new HashSet<>();
+
+  private Set<CommentDTO> comments = new HashSet<>();
 
   private String imageData;
 }

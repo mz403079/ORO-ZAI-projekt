@@ -1,25 +1,22 @@
 package com.orozai.projekt.controller;
 
+import com.orozai.projekt.model.dto.basic.CommentDTO;
 import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.TagDTO;
-import com.orozai.projekt.model.dto.specialized.PostFormDTO;
-import com.orozai.projekt.model.entity.Tag;
+import com.orozai.projekt.model.dto.specialized.CommentFormDTO;
+import com.orozai.projekt.model.service.CommentServiceImpl;
 import com.orozai.projekt.model.service.PostServiceImpl;
 import com.orozai.projekt.model.service.PostTagServiceImpl;
 import com.orozai.projekt.model.service.TagServiceImpl;
+import com.orozai.projekt.model.service.UserServiceImpl;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,12 +30,18 @@ public class ControllerTest {
   private final PostServiceImpl postService;
   private final TagServiceImpl tagService;
   private final PostTagServiceImpl postTagService;
+  private final UserServiceImpl userService;
+  private final CommentServiceImpl commentService;
   public ControllerTest(ModelMapper modelMapper, PostServiceImpl postService,
-      TagServiceImpl tagService, PostTagServiceImpl postTagService) {
+      TagServiceImpl tagService, PostTagServiceImpl postTagService,
+      UserServiceImpl userService,
+      CommentServiceImpl commentService) {
     this.modelMapper = modelMapper;
     this.postService = postService;
     this.tagService = tagService;
     this.postTagService = postTagService;
+    this.userService = userService;
+    this.commentService = commentService;
   }
 
   @GetMapping(value = "/getPosts")
@@ -77,5 +80,14 @@ public class ControllerTest {
       @RequestParam("authorId") int authorId) {
     postService.create(title,content,file,tags,authorId);
     return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @PostMapping(value ="/addComment")
+  public ResponseEntity<CommentDTO> addComment(@RequestBody CommentFormDTO commentFormDTO) {
+    CommentDTO commentDTO = modelMapper.map(commentFormDTO, CommentDTO.class);
+    commentDTO.setAuthor(userService.get(commentFormDTO.getAuthorId()));
+    commentDTO.setPost(postService.get(commentFormDTO.getPostId()));
+    commentService.create(commentDTO);
+    return new ResponseEntity<>(commentDTO,HttpStatus.OK);
   }
 }
