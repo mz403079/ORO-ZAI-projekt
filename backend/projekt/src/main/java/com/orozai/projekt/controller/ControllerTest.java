@@ -49,6 +49,11 @@ public class ControllerTest {
     Collection<PostDTO> posts = postService.getAll();
     return new ResponseEntity<>(posts, HttpStatus.OK);
   }
+  @GetMapping(value = "/getComments")
+  public ResponseEntity<Collection<CommentDTO>> getComments() {
+    Collection<CommentDTO> comments = commentService.getAll();
+    return new ResponseEntity<>(comments, HttpStatus.OK);
+  }
   @GetMapping(value = "/post/{id}")
   public ResponseEntity<PostDTO> getPost(@PathVariable("id") Long id) {
     PostDTO post = postService.get(id);
@@ -85,8 +90,6 @@ public class ControllerTest {
   @PostMapping(value ="/addComment")
   public ResponseEntity<CommentDTO> addComment(@RequestBody CommentFormDTO commentFormDTO) {
     CommentDTO commentDTO = modelMapper.map(commentFormDTO, CommentDTO.class);
-    commentDTO.setAuthor(userService.get(commentFormDTO.getAuthorId()));
-    commentDTO.setPost(postService.get(commentFormDTO.getPostId()));
     commentService.create(commentDTO);
     return new ResponseEntity<>(commentDTO,HttpStatus.OK);
   }

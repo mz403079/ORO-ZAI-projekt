@@ -21,7 +21,7 @@ public class CommentDTO {
   @JsonFormat(pattern="yyyy-MM-dd HH:mm")
   private LocalDateTime timeCommented;
 
-  private PostDTO post;
+  private Long postId;
 
-  private UserDTO author;
+  private Long authorId;
 }
