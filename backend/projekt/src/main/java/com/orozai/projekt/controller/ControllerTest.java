@@ -4,6 +4,7 @@ import com.orozai.projekt.model.dto.basic.CommentDTO;
 import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.TagDTO;
 import com.orozai.projekt.model.dto.specialized.CommentFormDTO;
+import com.orozai.projekt.model.dto.specialized.CommentToUserDTO;
 import com.orozai.projekt.model.service.CommentServiceImpl;
 import com.orozai.projekt.model.service.PostServiceImpl;
 import com.orozai.projekt.model.service.PostTagServiceImpl;
@@ -90,6 +91,9 @@ public class ControllerTest {
   @PostMapping(value ="/addComment")
   public ResponseEntity<CommentDTO> addComment(@RequestBody CommentFormDTO commentFormDTO) {
     CommentDTO commentDTO = modelMapper.map(commentFormDTO, CommentDTO.class);
+    commentDTO.setCommentAuthor(userService.get(commentFormDTO.getAuthorId()));
+    commentDTO.setPost(postService.get(commentFormDTO.getPostId()));
+    System.out.println("HIre"+commentFormDTO.getContent()+commentDTO.getContent());
     commentService.create(commentDTO);
     return new ResponseEntity<>(commentDTO,HttpStatus.OK);
   }

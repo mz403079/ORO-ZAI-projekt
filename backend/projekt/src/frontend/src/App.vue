@@ -17,5 +17,8 @@ export default {
 </script>
 
 <style>
+.contentWrapper {
+  margin-left: 20px;
+}
 
 </style>

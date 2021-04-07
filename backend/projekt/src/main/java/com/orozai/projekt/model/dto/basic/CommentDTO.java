@@ -1,6 +1,7 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.User;
 import lombok.Getter;
@@ -14,14 +15,14 @@ import java.util.Date;
 public class CommentDTO {
   private Long commentId;
 
-  private String comment;
+  private String content;
 
   private int score;
 
   @JsonFormat(pattern="yyyy-MM-dd HH:mm")
   private LocalDateTime timeCommented;
+  @JsonIgnore
+  private PostDTO post;
 
-  private Long postId;
-
-  private Long authorId;
+  private UserDTO commentAuthor;
 }

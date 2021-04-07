@@ -2,6 +2,7 @@ package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.model.dto.basic.CommentDTO;
 import com.orozai.projekt.model.dto.basic.PostDTO;
+import com.orozai.projekt.model.dto.specialized.CommentToUserDTO;
 import com.orozai.projekt.model.entity.Comment;
 import com.orozai.projekt.model.repository.CommentRepository;
 import java.util.Collection;
@@ -30,7 +31,9 @@ public class CommentServiceImpl implements IService<CommentDTO> {
   public Collection<CommentDTO> getAll() {
     return modelMapper.map(commentRepository.findAll(), new TypeToken<Set<CommentDTO>>(){}.getType());
   }
-
+  public Collection<CommentToUserDTO> getAlla() {
+    return modelMapper.map(commentRepository.findAll(), new TypeToken<Set<CommentToUserDTO>>(){}.getType());
+  }
   @Override
   public CommentDTO create(CommentDTO commentDTO) {
 

@@ -1,7 +1,9 @@
 package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.exception.DataNotFoundException;
+import com.orozai.projekt.model.dto.basic.CommentDTO;
 import com.orozai.projekt.model.dto.basic.PostDTO;
+import com.orozai.projekt.model.dto.basic.TagDTO;
 import com.orozai.projekt.model.dto.specialized.PostFormDTO;
 import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.PostTag;
@@ -15,8 +17,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
@@ -44,14 +48,24 @@ public class PostServiceImpl implements IService<PostDTO> {
     this.userRepository = userRepository;
   }
   @Override
+  @Transactional
   public PostDTO get(Long id) {
-    return modelMapper.map(postRepository.findById(id).orElseThrow(DataNotFoundException::new),PostDTO.class);
+    Post post = postRepository.findById(id).orElseThrow(DataNotFoundException::new);
+    return postToPostDTO(post);
   }
 
-  @Override
-  public Collection<PostDTO> getAll() {
 
-    return modelMapper.map(postRepository.findAll(), new TypeToken<Set<PostDTO>>(){}.getType());
+  @Override
+  @Transactional
+  public Collection<PostDTO> getAll() {
+    Collection<Post> posts = postRepository.findAll();
+    Collection<PostDTO> postsDTO = modelMapper.map(posts, new TypeToken<Set<PostDTO>>(){}.getType());
+    postsDTO.clear();
+    for(Post post : posts) {
+      postsDTO.add(postToPostDTO(post));
+    }
+
+    return postsDTO;
   }
 
   @Override
@@ -72,7 +86,7 @@ public class PostServiceImpl implements IService<PostDTO> {
         System.out.println("not a a valid file");
       }
       try {
-        p.setImageData(Base64.getEncoder().encodeToString(file.getBytes()));
+        p.setImageData(Base64.getEncoder().encode(file.getBytes()));
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -82,7 +96,7 @@ public class PostServiceImpl implements IService<PostDTO> {
     }
     p.setTitle(title);
 
-    p.setAuthor(userRepository.findById((long) authorId).orElseThrow(
+    p.setPostAuthor(userRepository.findById((long) authorId).orElseThrow(
         DataNotFoundException::new));
     p.setLink(null);
     p.setTimePosted(LocalDateTime.now());
@@ -105,5 +119,15 @@ public class PostServiceImpl implements IService<PostDTO> {
   @Override
   public void delete(PostDTO postDTO) {
 
+  }
+
+  public PostDTO postToPostDTO(Post post) {
+    PostDTO postDTO = modelMapper.map(post,PostDTO.class);
+    byte[] imageData = post.getImageData();
+    if(imageData != null && imageData.length > 0)
+      postDTO.setImageData(new String(imageData));
+    else
+      postDTO.setImageData(null);
+    return postDTO;
   }
 }

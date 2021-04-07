@@ -1,6 +1,7 @@
 package com.orozai.projekt.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.orozai.projekt.model.dto.basic.TagDTO;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -44,7 +45,7 @@ public class Post {
   private int score;
 
   @OneToOne
-  private User author;
+  private User postAuthor;
 
   @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime timePosted;
@@ -53,9 +54,11 @@ public class Post {
   private Set<PostTag> tags = new HashSet<>();
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+
   private Set<Comment> comments = new HashSet<>();
 
   @Lob
-  private String imageData;
+//  @Type(type = "org.hibernate.type.ImageType")
+  private byte[] imageData;
 
 }

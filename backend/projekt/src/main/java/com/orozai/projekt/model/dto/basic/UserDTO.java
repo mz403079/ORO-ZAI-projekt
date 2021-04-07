@@ -1,6 +1,9 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.orozai.projekt.model.dto.specialized.CommentToUserDTO;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,8 +13,10 @@ public class UserDTO {
   private Long userId;
 
   private String username;
-  @JsonIgnore
+
   private String password;
 
   private String email;
+  @JsonIgnore
+  private Set<CommentDTO> comments = new HashSet<>();
 }

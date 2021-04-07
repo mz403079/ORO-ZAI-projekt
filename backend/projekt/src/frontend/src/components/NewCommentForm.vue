@@ -30,9 +30,8 @@ export default {
 
   methods : {
     checkForm() {
-      event.preventDefault();
       let json = JSON.stringify({
-            "comment": this.comment,
+            "content": this.comment,
             "postId": this.postId,
             "authorId": 1,
           })

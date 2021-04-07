@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class CommentFormDTO {
 
-  private String comment;
+  private String content;
 
   private Long postId;
 

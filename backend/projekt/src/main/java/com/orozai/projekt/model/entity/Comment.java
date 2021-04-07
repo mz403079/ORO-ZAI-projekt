@@ -1,5 +1,6 @@
 package com.orozai.projekt.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,17 +30,18 @@ public class Comment {
   private Long commentId;
 
   @Column(nullable = false, length = 250)
-  private String comment;
+  private String content;
 
   private int score;
 
   @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime timeCommented;
 
-  @ManyToOne(optional = false)
-  @JoinColumn
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  @JsonIgnore
   private Post post;
 
-  @OneToOne(optional = false)
-  private User author;
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  @JsonIgnore
+  private User commentAuthor;
 }

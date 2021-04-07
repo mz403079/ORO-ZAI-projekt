@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="b-container post"  v-for="item in postsToDisplay" :key="item.postId">
-      <b-link :href="'/post/'+item.postId">
+      <b-link :href="'/post/'+item.postId" class="link">
       <b-row>
         <b-col>
           <h3> {{ item.title }}
@@ -19,7 +19,7 @@
         </h5>
       </b-row>
       <b-row v-if="item.imageData != null">
-        <img :src="`data:image/png;base64, ${item.imageData}`">
+        <img :src="`data:image/png;base64, ${item.imageData}`" alt="${item.title}">
       </b-row>
       <b-row v-else-if="item.content != null">
         {{ item.content }}
@@ -49,5 +49,9 @@ export default {
 }
 .tagBadge {
   margin-left: 5px;
+}
+.link {
+  text-decoration: none;
+  color: black;
 }
 </style>

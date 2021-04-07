@@ -20,20 +20,20 @@
       <b-row v-if="post.imageData != null">
         <img :src="`data:image/png;base64, ${post.imageData}`">
       </b-row>
-      <b-row v-else-if="postToDisplay.content != null">
-        {{ post.content }}
-      </b-row>
+      <CommentViewer v-bind:comments="post.comments"></CommentViewer>
+      <NewCommentForm v-bind:post-id="post.postId"></NewCommentForm>
     </div>
-    <NewCommentForm v-bind:post-id="post.postId"></NewCommentForm>
+
   </div>
 </template>
 
 <script>
 import instance from "@/server";
 import NewCommentForm from "@/components/NewCommentForm";
+import CommentViewer from "@/components/CommentViewer";
 export default {
   name: "SinglePostAdvanced",
-  components: {NewCommentForm},
+  components: {CommentViewer, NewCommentForm},
   data() {
     return {
       post:null,
@@ -43,6 +43,7 @@ export default {
     instance.get("/api/post/"+this.$route.params.id)
     .then((response) => {
       this.post = response.data;
+      console.log(response.data);
     })
 
   }

@@ -1,6 +1,8 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.orozai.projekt.model.dto.specialized.CommentToUserDTO;
 import com.orozai.projekt.model.entity.Comment;
 import com.orozai.projekt.model.entity.User;
 import java.time.LocalDateTime;
