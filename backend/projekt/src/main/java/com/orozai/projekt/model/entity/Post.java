@@ -19,6 +19,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
@@ -54,11 +56,9 @@ public class Post {
   private Set<PostTag> tags = new HashSet<>();
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-
   private Set<Comment> comments = new HashSet<>();
 
   @Lob
-//  @Type(type = "org.hibernate.type.ImageType")
   private byte[] imageData;
 
 }

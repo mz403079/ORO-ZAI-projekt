@@ -59,13 +59,7 @@ public class PostServiceImpl implements IService<PostDTO> {
   @Transactional
   public Collection<PostDTO> getAll() {
     Collection<Post> posts = postRepository.findAll();
-    Collection<PostDTO> postsDTO = modelMapper.map(posts, new TypeToken<Set<PostDTO>>(){}.getType());
-    postsDTO.clear();
-    for(Post post : posts) {
-      postsDTO.add(postToPostDTO(post));
-    }
-
-    return postsDTO;
+    return getPostDTOS(posts);
   }
 
   @Override
@@ -74,9 +68,12 @@ public class PostServiceImpl implements IService<PostDTO> {
   }
 
   public Collection<PostDTO> getByTagId(Long id) {
-    return modelMapper.map(postRepository.findByTagsIn(postTagRepository.findAllByTag(tagRepository.findById(id).get())),
-        new TypeToken<Set<PostDTO>>(){}.getType());
+
+    Collection<Post> posts = postRepository.findByTagsIn(postTagRepository.findAllByTag(tagRepository.findById(id).get()));
+    return getPostDTOS(posts);
+
   }
+
 
   public PostDTO create(String title, String content, MultipartFile file, int[] tags, int authorId) {
     Post p = new Post();
@@ -129,5 +126,14 @@ public class PostServiceImpl implements IService<PostDTO> {
     else
       postDTO.setImageData(null);
     return postDTO;
+  }
+
+  private Collection<PostDTO> getPostDTOS(Collection<Post> posts) {
+    Collection<PostDTO> postsDTO = modelMapper.map(posts, new TypeToken<Set<PostDTO>>(){}.getType());
+    postsDTO.clear();
+    for(Post post : posts) {
+      postsDTO.add(postToPostDTO(post));
+    }
+    return postsDTO;
   }
 }

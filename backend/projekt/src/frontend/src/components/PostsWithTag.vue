@@ -31,11 +31,10 @@ export default {
     }
   },
   created() {
-    instance.get("/api/tag/5")
+    instance.get("/api/tag/"+this.$route.params.id)
     .then((response) => {
       this.msg = response.data;
     })
-    console.log("gowno");
   }
 }
 </script>

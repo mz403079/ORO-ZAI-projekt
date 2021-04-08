@@ -58,9 +58,6 @@ public class ControllerTest {
   @GetMapping(value = "/post/{id}")
   public ResponseEntity<PostDTO> getPost(@PathVariable("id") Long id) {
     PostDTO post = postService.get(id);
-//    if(post.is)
-//      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    else
     return new ResponseEntity<>(post, HttpStatus.OK);
   }
   @GetMapping(value = "/getTags")

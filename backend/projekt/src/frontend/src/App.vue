@@ -17,6 +17,9 @@ export default {
 </script>
 
 <style>
+#app {
+  background-color: #ABD6D6;
+}
 .contentWrapper {
   margin-left: 20px;
 }
