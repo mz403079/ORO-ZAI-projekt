@@ -1,32 +1,23 @@
 package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.exception.DataNotFoundException;
-import com.orozai.projekt.model.dto.basic.CommentDTO;
 import com.orozai.projekt.model.dto.basic.PostDTO;
-import com.orozai.projekt.model.dto.basic.TagDTO;
-import com.orozai.projekt.model.dto.specialized.PostFormDTO;
 import com.orozai.projekt.model.entity.Post;
-import com.orozai.projekt.model.entity.PostTag;
-import com.orozai.projekt.model.entity.User;
+import com.orozai.projekt.model.entity.PostTagForm;
 import com.orozai.projekt.model.repository.PostRepository;
 import com.orozai.projekt.model.repository.PostTagRepository;
 import com.orozai.projekt.model.repository.TagRepository;
 import com.orozai.projekt.model.repository.UserRepository;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Base64;
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -36,16 +27,18 @@ public class PostServiceImpl implements IService<PostDTO> {
   private final TagRepository tagRepository;
   private final PostTagRepository postTagRepository;
   private final UserRepository userRepository;
-
+  private final PostTagServiceImpl postTagService;
   public PostServiceImpl(ModelMapper modelMapper, PostRepository postRepository,
       TagRepository tagRepository,
       PostTagRepository postTagRepository,
-      UserRepository userRepository) {
+      UserRepository userRepository,
+      PostTagServiceImpl postTagService) {
     this.modelMapper = modelMapper;
     this.postRepository = postRepository;
     this.tagRepository = tagRepository;
     this.postTagRepository = postTagRepository;
     this.userRepository = userRepository;
+    this.postTagService = postTagService;
   }
   @Override
   @Transactional
@@ -98,12 +91,11 @@ public class PostServiceImpl implements IService<PostDTO> {
     p.setLink(null);
     p.setTimePosted(LocalDateTime.now());
     postRepository.save(p);
-    for (int x : tags) {
-      PostTag postTag = new PostTag();
-      postTag.setPost(p);
-      postTag.setTag(tagRepository.findById((long)x).orElseThrow(DataNotFoundException::new));
-      postTagRepository.save(postTag);
-    }
+
+    PostTagForm postTagForm = new PostTagForm();
+    postTagForm.setPost(p);
+    postTagForm.setTags(tags);
+    postTagService.createMany(postTagForm);
     return null;
 
   }

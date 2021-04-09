@@ -2,6 +2,7 @@ package com.orozai.projekt.controller;
 
 import com.orozai.projekt.model.dto.basic.CommentDTO;
 import com.orozai.projekt.model.dto.basic.PostDTO;
+import com.orozai.projekt.model.dto.basic.PostTagDTO;
 import com.orozai.projekt.model.dto.basic.TagDTO;
 import com.orozai.projekt.model.dto.specialized.CommentFormDTO;
 import com.orozai.projekt.model.dto.specialized.CommentToUserDTO;
@@ -63,6 +64,12 @@ public class ControllerTest {
   @GetMapping(value = "/getTags")
   public ResponseEntity<Collection<TagDTO>> getTags() {
     Collection<TagDTO> tags = tagService.getAll();
+    return new ResponseEntity<>(tags, HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/getPostTag")
+  public ResponseEntity<Collection<PostTagDTO>> getPostTags() {
+    Collection<PostTagDTO> tags = postTagService.getAll();
     return new ResponseEntity<>(tags, HttpStatus.OK);
   }
 

@@ -49,6 +49,7 @@ public class Post {
   @OneToOne
   private User postAuthor;
 
+  @Column(nullable = false)
   @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime timePosted;
 

@@ -1,13 +1,13 @@
 package com.orozai.projekt.model.service;
 
-import com.orozai.projekt.model.dto.basic.PostDTO;
+import com.orozai.projekt.exception.DataNotFoundException;
 import com.orozai.projekt.model.dto.basic.PostTagDTO;
 import com.orozai.projekt.model.entity.PostTag;
-import com.orozai.projekt.model.entity.Tag;
+import com.orozai.projekt.model.entity.PostTagForm;
 import com.orozai.projekt.model.repository.PostTagRepository;
 import com.orozai.projekt.model.repository.TagRepository;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
@@ -33,19 +33,23 @@ public class PostTagServiceImpl implements IService<PostTagDTO> {
 
   @Override
   public Collection<PostTagDTO> getAll() {
-    return null;
+  return modelMapper.map(postTagRepository.findAll(), new TypeToken<List<PostTagDTO>>(){}.getType());
   }
 
   @Override
   public PostTagDTO create(PostTagDTO postTagDTO) {
-
-    PostTag postTag = modelMapper.map(postTagDTO,PostTag.class);
-    postTag.getTag().getTagId();
-    postTag.getPost().getContent();
-
     return postTagDTO;
   }
 
+  public Collection<PostTagDTO> createMany(PostTagForm postTagForm) {
+    for (int x : postTagForm.getTags()) {
+      PostTag postTag = new PostTag();
+      postTag.setPost(postTagForm.getPost());
+      postTag.setTag(tagRepository.findById((long)x).orElseThrow(DataNotFoundException::new));
+      postTagRepository.save(postTag);
+    }
+    return null;
+  }
   @Override
   public PostTagDTO update(PostTagDTO postTagDTO) {
     return null;

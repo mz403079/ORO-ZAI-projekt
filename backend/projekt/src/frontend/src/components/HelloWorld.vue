@@ -39,6 +39,10 @@ export default {
           console.log(response.data);
           this.msg = response.data;
         })
+    instance.get("/api/getPostTag")
+    .then((response) => {
+      console.log(response.data);
+    })
   }
 }
 </script>

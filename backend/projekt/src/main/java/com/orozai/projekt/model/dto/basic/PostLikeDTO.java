@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserPostLikedDTO {
+public class PostLikeDTO {
 
   private long userPostLikeId;
 

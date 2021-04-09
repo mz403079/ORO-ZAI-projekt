@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class UserCommentLiked {
+public class CommentLike {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long userCommentLikeId;
