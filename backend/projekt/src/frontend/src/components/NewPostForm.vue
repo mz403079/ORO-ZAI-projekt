@@ -56,11 +56,9 @@ export default {
   methods: {
     fileSelected(event) {
       this.selectedFile = event.target.files[0];
-      console.log(event);
     },
     checkForm() {
       event.preventDefault();
-      console.log(this.selectedFile);
       this.formData = new FormData();
       this.formData.append("title", this.title);
       this.formData.append("content", this.content);

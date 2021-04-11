@@ -2,13 +2,9 @@ package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.orozai.projekt.model.entity.Post;
-import com.orozai.projekt.model.entity.User;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter

@@ -2,7 +2,7 @@
   <div id="app">
     <div class="b-container contentWrapper">
       <b-row>
-        <b-col md="8">
+        <b-col md="7">
           <PostViewer v-bind:postsToDisplay="this.msg"></PostViewer>
         </b-col>
         <b-col offset-md="1">
@@ -53,7 +53,7 @@ export default {
 
 
 .contentWrapper {
-  width: 70%;
+  width: 85%;
   margin: 0 auto;
 }
 </style>

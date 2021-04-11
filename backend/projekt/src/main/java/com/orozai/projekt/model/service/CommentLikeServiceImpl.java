@@ -1,7 +1,6 @@
 package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.model.dto.basic.CommentLikeDTO;
-import com.orozai.projekt.model.dto.basic.PostLikeDTO;
 import java.util.Collection;
 
 public class CommentLikeServiceImpl implements IService<CommentLikeDTO>{

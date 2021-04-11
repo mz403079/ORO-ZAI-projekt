@@ -5,7 +5,6 @@ import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.PostTagDTO;
 import com.orozai.projekt.model.dto.basic.TagDTO;
 import com.orozai.projekt.model.dto.specialized.CommentFormDTO;
-import com.orozai.projekt.model.dto.specialized.CommentToUserDTO;
 import com.orozai.projekt.model.service.CommentServiceImpl;
 import com.orozai.projekt.model.service.PostServiceImpl;
 import com.orozai.projekt.model.service.PostTagServiceImpl;

@@ -7,8 +7,21 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item><router-link to="tag">Zaloguj</router-link></b-nav-item>
-          <b-nav-item href="#" disabled>Disabled</b-nav-item>
+          <div>
+            <b-button v-b-modal.modal-1>Zaloguj / Zarejestruj</b-button>
+
+            <b-modal id="modal-1" title="BootstrapVue">
+              <RegisterForm></RegisterForm>
+              <LoginForm></LoginForm>
+            </b-modal>
+          </div>
+<!--          <div>-->
+<!--            <b-button v-b-modal.modal-2>Launch demo modal</b-button>-->
+
+<!--            <b-modal id="modal-2" title="BootstrapVue">-->
+<!--              <p class="my-4">Hello from modal2!</p>-->
+<!--            </b-modal>-->
+<!--          </div>-->
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -41,8 +54,13 @@
 </template>
 
 <script>
+import LoginForm from "@/components/LoginForm";
+import RegisterForm from "@/components/RegisterForm";
 export default {
-  name: "Navigation"
+  name: "Navigation",
+  components :{
+    LoginForm, RegisterForm
+  }
 }
 </script>
 

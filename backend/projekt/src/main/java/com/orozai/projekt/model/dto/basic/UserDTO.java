@@ -1,7 +1,6 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.orozai.projekt.model.dto.specialized.CommentToUserDTO;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
