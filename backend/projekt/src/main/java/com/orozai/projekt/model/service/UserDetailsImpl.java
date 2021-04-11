@@ -38,12 +38,10 @@ public class UserDetailsImpl implements UserDetails {
   }
 
   public static UserDetailsImpl build(User user) {
-
     List<GrantedAuthority> authorities = user.getRoles().stream()
         .map(role -> new SimpleGrantedAuthority(role.getName().name()))
         .collect(Collectors.toList());
-    for(Role role : user.getRoles())
-      System.out.println("SESEE"+role.getName());
+
     return new UserDetailsImpl(
         user.getUserId(),
         user.getUsername(),
@@ -54,7 +52,7 @@ public class UserDetailsImpl implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    return authorities;
   }
 
 

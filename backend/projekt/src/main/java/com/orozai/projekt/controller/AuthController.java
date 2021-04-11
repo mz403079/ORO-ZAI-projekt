@@ -51,15 +51,16 @@ public class AuthController {
 
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginFormDTO loginFormDTO) {
-    System.out.println("1");
+
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(loginFormDTO.getUsername(), loginFormDTO.getPassword()));
-    System.out.println("1");
+
     SecurityContextHolder.getContext().setAuthentication(authentication);
-    System.out.println("3");
+
     String jwt = jwtUtils.generateJwtToken(authentication);
 
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
     List<String> roles = userDetails.getAuthorities().stream()
         .map(item -> item.getAuthority())
         .collect(Collectors.toList());

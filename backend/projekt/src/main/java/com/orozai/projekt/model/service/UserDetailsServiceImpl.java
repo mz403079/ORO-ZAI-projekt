@@ -1,5 +1,6 @@
 package com.orozai.projekt.model.service;
 
+import com.orozai.projekt.model.entity.Role;
 import com.orozai.projekt.model.entity.User;
 import com.orozai.projekt.model.repository.UserRepository;
 import javax.transaction.Transactional;
@@ -19,7 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-
     return UserDetailsImpl.build(user);
   }
 
