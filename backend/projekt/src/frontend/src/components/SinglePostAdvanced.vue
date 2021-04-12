@@ -31,6 +31,7 @@
 import instance from "@/server";
 import NewCommentForm from "@/components/NewCommentForm";
 import CommentViewer from "@/components/CommentViewer";
+import authHeader from "@/authHeader";
 export default {
   name: "SinglePostAdvanced",
   components: {CommentViewer, NewCommentForm},
@@ -40,10 +41,9 @@ export default {
     }
   },
   created() {
-    instance.get("/api/post/"+this.$route.params.id)
+    instance.get("/api/post/"+this.$route.params.id, {headers : authHeader()})
     .then((response) => {
       this.post = response.data;
-      console.log(response.data);
     })
 
   }

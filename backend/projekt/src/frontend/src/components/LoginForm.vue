@@ -40,9 +40,8 @@ export default {
         "username": this.username,
         "plainPassword": this.password,
       })
-      console.log(json);
       instance.post("/api/auth/signin",json, {headers : headers}).then((response) => {
-        console.log(response);
+        localStorage.setItem('user', JSON.stringify(response.data));
       })
     }
   }

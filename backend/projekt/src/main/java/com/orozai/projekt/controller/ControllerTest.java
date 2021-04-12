@@ -14,6 +14,7 @@ import java.util.Collection;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,6 +56,7 @@ public class ControllerTest {
     Collection<CommentDTO> comments = commentService.getAll();
     return new ResponseEntity<>(comments, HttpStatus.OK);
   }
+  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
   @GetMapping(value = "/post/{id}")
   public ResponseEntity<PostDTO> getPost(@PathVariable("id") Long id) {
     PostDTO post = postService.get(id);

@@ -7,7 +7,10 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <div>
+          <div v-if="currentUser">
+            <b-button @click="logOut()" href="/">Wyloguj</b-button>
+          </div>
+          <div v-else>
             <b-button v-b-modal.modal-1>Zaloguj / Zarejestruj</b-button>
 
             <b-modal id="modal-1" title="BootstrapVue">
@@ -15,16 +18,7 @@
               <LoginForm></LoginForm>
             </b-modal>
           </div>
-<!--          <div>-->
-<!--            <b-button v-b-modal.modal-2>Launch demo modal</b-button>-->
-
-<!--            <b-modal id="modal-2" title="BootstrapVue">-->
-<!--              <p class="my-4">Hello from modal2!</p>-->
-<!--            </b-modal>-->
-<!--          </div>-->
         </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
             <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
@@ -60,6 +54,16 @@ export default {
   name: "Navigation",
   components :{
     LoginForm, RegisterForm
+  },
+  computed: {
+    currentUser() {
+      return localStorage.user;
+    }
+  },
+  methods : {
+    logOut() {
+      localStorage.clear();
+    }
   }
 }
 </script>
