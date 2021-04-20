@@ -44,6 +44,7 @@ export default {
     instance.get("/api/post/"+this.$route.params.id, {headers : authHeader()})
     .then((response) => {
       this.post = response.data;
+      console.log(this.post);
     })
 
   }

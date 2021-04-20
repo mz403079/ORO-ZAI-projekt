@@ -2,8 +2,10 @@ package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.exception.DataNotFoundException;
 import com.orozai.projekt.model.dto.basic.PostDTO;
+import com.orozai.projekt.model.entity.Image;
 import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.PostTagForm;
+import com.orozai.projekt.model.repository.ImageRepository;
 import com.orozai.projekt.model.repository.PostRepository;
 import com.orozai.projekt.model.repository.PostTagRepository;
 import com.orozai.projekt.model.repository.TagRepository;
@@ -28,17 +30,21 @@ public class PostServiceImpl implements IService<PostDTO> {
   private final PostTagRepository postTagRepository;
   private final UserRepository userRepository;
   private final PostTagServiceImpl postTagService;
+  private final ImageServiceImpl imageService;
+
   public PostServiceImpl(ModelMapper modelMapper, PostRepository postRepository,
       TagRepository tagRepository,
       PostTagRepository postTagRepository,
       UserRepository userRepository,
-      PostTagServiceImpl postTagService) {
+      PostTagServiceImpl postTagService,
+      ImageServiceImpl imageService) {
     this.modelMapper = modelMapper;
     this.postRepository = postRepository;
     this.tagRepository = tagRepository;
     this.postTagRepository = postTagRepository;
     this.userRepository = userRepository;
     this.postTagService = postTagService;
+    this.imageService = imageService;
   }
   @Override
   @Transactional
@@ -69,31 +75,23 @@ public class PostServiceImpl implements IService<PostDTO> {
 
 
   public PostDTO create(String title, String content, MultipartFile file, int[] tags, int authorId) {
-    Post p = new Post();
-    if (file != null) {
-      String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-      if (fileName.contains("..")) {
-        System.out.println("not a a valid file");
-      }
-      try {
-        p.setImageData(Base64.getEncoder().encode(file.getBytes()));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-    if (content != null) {
-      p.setContent(content);
-    }
-    p.setTitle(title);
+    Post post = new Post();
+    Image image = imageService.create(file);
+    post.setPostImage(image);
+    post.setTitle(title);
 
-    p.setPostAuthor(userRepository.findById((long) authorId).orElseThrow(
+    if (content != null) {
+      post.setContent(content);
+    }
+
+    post.setPostAuthor(userRepository.findById((long) authorId).orElseThrow(
         DataNotFoundException::new));
-    p.setLink(null);
-    p.setTimePosted(LocalDateTime.now());
-    postRepository.save(p);
+    post.setLink(null);
+    post.setTimePosted(LocalDateTime.now());
+    postRepository.save(post);
 
     PostTagForm postTagForm = new PostTagForm();
-    postTagForm.setPost(p);
+    postTagForm.setPost(post);
     postTagForm.setTags(tags);
     postTagService.createMany(postTagForm);
     return null;
@@ -112,7 +110,10 @@ public class PostServiceImpl implements IService<PostDTO> {
 
   public PostDTO postToPostDTO(Post post) {
     PostDTO postDTO = modelMapper.map(post,PostDTO.class);
-    byte[] imageData = post.getImageData();
+    if (postDTO.getImageData() == null)
+        return postDTO;
+
+    byte[] imageData = post.getPostImage().getImageData();
     if(imageData != null && imageData.length > 0)
       postDTO.setImageData(new String(imageData));
     else

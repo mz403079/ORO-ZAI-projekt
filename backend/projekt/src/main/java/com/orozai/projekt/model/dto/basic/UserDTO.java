@@ -1,6 +1,7 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.orozai.projekt.model.entity.Image;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
@@ -18,4 +19,6 @@ public class UserDTO {
   private String email;
   @JsonIgnore
   private Set<CommentDTO> comments = new HashSet<>();
+
+  private Long profileImageId;
 }

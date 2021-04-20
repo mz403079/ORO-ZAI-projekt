@@ -69,6 +69,7 @@ public class AuthController {
         userDetails.getUserId(),
         userDetails.getUsername(),
         userDetails.getEmail(),
+        userDetails.getPicId(),
         roles));
   }
 
@@ -87,7 +88,6 @@ public class AuthController {
 //    }
 //
 //    // Create new user's account
-    System.out.println("HELU"+registerFormDTO.getPassword());
     UserDTO userDTO = modelMapper.map(registerFormDTO, UserDTO.class);
     userService.create(userDTO);
 

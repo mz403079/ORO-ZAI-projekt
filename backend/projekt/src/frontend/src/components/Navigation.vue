@@ -18,6 +18,9 @@
               <LoginForm></LoginForm>
             </b-modal>
           </div>
+          <div v-if="userIsAdmin">
+            <b-button href="/admin-panel">Admin</b-button>
+          </div>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
@@ -50,14 +53,19 @@
 <script>
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
+import isUserAdmin from "@/isUserAdmin";
 export default {
   name: "Navigation",
-  components :{
+  components : {
     LoginForm, RegisterForm
   },
   computed: {
     currentUser() {
       return localStorage.user;
+    },
+    userIsAdmin() {
+      console.log(isUserAdmin());
+      return isUserAdmin();
     }
   },
   methods : {

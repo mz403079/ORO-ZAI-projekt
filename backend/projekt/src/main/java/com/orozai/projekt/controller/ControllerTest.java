@@ -1,11 +1,13 @@
 package com.orozai.projekt.controller;
 
 import com.orozai.projekt.model.dto.basic.CommentDTO;
+import com.orozai.projekt.model.dto.basic.ImageDTO;
 import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.PostTagDTO;
 import com.orozai.projekt.model.dto.basic.TagDTO;
 import com.orozai.projekt.model.dto.specialized.CommentFormDTO;
 import com.orozai.projekt.model.service.CommentServiceImpl;
+import com.orozai.projekt.model.service.ImageServiceImpl;
 import com.orozai.projekt.model.service.PostServiceImpl;
 import com.orozai.projekt.model.service.PostTagServiceImpl;
 import com.orozai.projekt.model.service.TagServiceImpl;
@@ -34,16 +36,20 @@ public class ControllerTest {
   private final PostTagServiceImpl postTagService;
   private final UserServiceImpl userService;
   private final CommentServiceImpl commentService;
+  private final ImageServiceImpl imageService;
+
   public ControllerTest(ModelMapper modelMapper, PostServiceImpl postService,
       TagServiceImpl tagService, PostTagServiceImpl postTagService,
       UserServiceImpl userService,
-      CommentServiceImpl commentService) {
+      CommentServiceImpl commentService,
+      ImageServiceImpl imageService) {
     this.modelMapper = modelMapper;
     this.postService = postService;
     this.tagService = tagService;
     this.postTagService = postTagService;
     this.userService = userService;
     this.commentService = commentService;
+    this.imageService = imageService;
   }
 
   @GetMapping(value = "/getPosts")
@@ -101,5 +107,17 @@ public class ControllerTest {
     System.out.println("HIre"+commentFormDTO.getContent()+commentDTO.getContent());
     commentService.create(commentDTO);
     return new ResponseEntity<>(commentDTO,HttpStatus.OK);
+  }
+  @PreAuthorize("hasRole('ADMIN')")
+  @GetMapping(value="/getAdminBoard")
+  public ResponseEntity<String> getAdminBoard() {
+    return new ResponseEntity<>("essa",HttpStatus.OK);
+
+  }
+
+  @GetMapping("/getImage/{id}")
+  public ResponseEntity<ImageDTO> getImage(@PathVariable("id") Long id) {
+    ImageDTO imageDTO = imageService.get(id);
+    return new ResponseEntity<>(imageDTO,HttpStatus.OK);
   }
 }

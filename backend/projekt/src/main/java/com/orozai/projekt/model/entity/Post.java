@@ -51,8 +51,8 @@ public class Post {
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<Comment> comments = new HashSet<>();
-
-  @Lob
-  private byte[] imageData;
+  
+  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  private Image postImage;
 
 }
