@@ -110,14 +110,9 @@ public class PostServiceImpl implements IService<PostDTO> {
 
   public PostDTO postToPostDTO(Post post) {
     PostDTO postDTO = modelMapper.map(post,PostDTO.class);
-    if (postDTO.getImageData() == null)
-        return postDTO;
-
-    byte[] imageData = post.getPostImage().getImageData();
-    if(imageData != null && imageData.length > 0)
-      postDTO.setImageData(new String(imageData));
-    else
-      postDTO.setImageData(null);
+    postDTO.setPostImage(imageService.imageToImageDTO(post.getPostImage()));
+    postDTO.getAuthor().setProfileImage(imageService.imageToImageDTO(post.getPostAuthor().getProfileImage()));
+    postDTO.setNumOfComments(post.getComments().size());
     return postDTO;
   }
 

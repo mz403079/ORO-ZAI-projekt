@@ -13,12 +13,12 @@ public class UserDTO {
   private Long userId;
 
   private String username;
-
+  @JsonIgnore
   private String password;
-
+  @JsonIgnore
   private String email;
   @JsonIgnore
   private Set<CommentDTO> comments = new HashSet<>();
 
-  private Long profileImageId;
+  private ImageDTO profileImage;
 }

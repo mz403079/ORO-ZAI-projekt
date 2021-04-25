@@ -1,8 +1,8 @@
 <template>
 <div>
 {{user.username}} - {{user.email}}
-  <div v-if="image != null">
-    <img class="post-icon" :src="`data:image/png;base64, ${image.imageData}`" alt="essa">
+  <div v-if="user.profileImage != null">
+    <img class="post-icon" :src="`data:image/png;base64, ${user.profileImage.imageData}`" alt="essa">
   </div>
   <form id="profilePicForm"
         @submit="checkForm">
@@ -20,7 +20,6 @@
 
 <script>
 import instance from "@/server";
-import authHeader from "@/authHeader";
 import multipartHeaders from "@/multipartHeader";
 
 export default {
@@ -29,7 +28,6 @@ export default {
     return {
       user : null,
       picName: "",
-      image : null,
       selectedFile: null,
       formData: null,
     }
@@ -40,10 +38,6 @@ export default {
     instance.get("api/profile/"+json.id).then(response => {
       this.user = response.data;
        console.log(this.user);
-      instance.get("api/getImage/"+this.user.profileImageId, {headers : authHeader()}).then(response => {
-        this.image = response.data;
-        // console.log(this.image);
-      })
     })
 
   },

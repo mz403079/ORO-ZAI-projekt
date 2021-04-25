@@ -19,7 +19,7 @@ public class PostDTO {
 
   private int rating;
 
-  private User author;
+  private UserDTO author;
   @JsonFormat(pattern="yyyy-MM-dd HH:mm")
   private LocalDateTime timePosted;
 
@@ -27,5 +27,7 @@ public class PostDTO {
 
   private Set<CommentDTO> comments = new HashSet<>();
 
-  private String imageData;
+  private int numOfComments;
+
+  private ImageDTO postImage;
 }

@@ -1,9 +1,11 @@
 package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.exception.DataNotFoundException;
+import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.UserDTO;
 import com.orozai.projekt.model.entity.ERole;
 import com.orozai.projekt.model.entity.Image;
+import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.Role;
 import com.orozai.projekt.model.entity.User;
 import com.orozai.projekt.model.repository.ImageRepository;
@@ -47,7 +49,8 @@ public class UserServiceImpl implements IService<UserDTO>{
 
   @Override
   public UserDTO get(Long id) {
-    return modelMapper.map(userRepository.findById(id).orElseThrow(DataNotFoundException::new),UserDTO.class);
+    User user = userRepository.findById(id).orElseThrow(DataNotFoundException::new);
+    return userToUserDTO(user);
   }
 
   @Override
@@ -80,6 +83,11 @@ public class UserServiceImpl implements IService<UserDTO>{
     return null;
   }
 
+  public UserDTO userToUserDTO(User user) {
+    UserDTO userDTO = modelMapper.map(user,UserDTO.class);
+    userDTO.setProfileImage(imageService.imageToImageDTO(user.getProfileImage()));
+    return userDTO;
+  }
   @Override
   public void delete(UserDTO userDTO) {
 
