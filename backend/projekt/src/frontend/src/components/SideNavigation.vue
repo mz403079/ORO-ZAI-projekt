@@ -3,7 +3,7 @@
     <div id="nav-wrapper">
       <nav>
         <div>
-          <b-link class="link">
+          <b-link v-on:click="$parent.componentName='Home'" class="link">
             <div class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="house-door-fill"></b-icon>
@@ -13,7 +13,7 @@
               </div>
             </div>
           </b-link>
-          <b-link class="link">
+          <b-link v-on:click="$parent.componentName='UserHome'" class="link">
             <div class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="person-circle"></b-icon>
@@ -23,7 +23,7 @@
               </div>
             </div>
           </b-link>
-          <b-link class="link">
+          <b-link v-b-modal.newPostModal class="link">
             <div class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="plus-circle"></b-icon>
@@ -33,7 +33,7 @@
               </div>
             </div>
           </b-link>
-          <b-link class="link">
+          <b-link v-on:click="$parent.componentName='TopTags'" class="link">
             <div class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="hash"></b-icon>
@@ -43,7 +43,7 @@
               </div>
             </div>
           </b-link>
-          <b-link class="link">
+          <b-link v-on:click="$parent.componentName='TrendingPosts'" class="link">
             <div class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="arrow-up-right-square"></b-icon>
@@ -66,12 +66,19 @@
         </div>
       </nav>
     </div>
+    <b-modal id="newPostModal" title="BootstrapVue">
+      <NewPostForm></NewPostForm>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import NewPostForm from "@/components/NewPostForm";
 export default {
-  name: "SideNavigation"
+  name: "SideNavigation",
+  components : {
+    NewPostForm,
+  },
 }
 </script>
 

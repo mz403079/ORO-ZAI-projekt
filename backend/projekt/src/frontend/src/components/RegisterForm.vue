@@ -18,7 +18,7 @@
         </label>
       </p>
       <p>
-        <input type="submit" value="Loguj">
+        <input type="submit" value="Sign-up">
       </p>
     </form>
   </div>

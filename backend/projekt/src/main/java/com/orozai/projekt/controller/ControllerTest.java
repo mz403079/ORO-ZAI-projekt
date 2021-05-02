@@ -1,10 +1,6 @@
 package com.orozai.projekt.controller;
 
-import com.orozai.projekt.model.dto.basic.CommentDTO;
-import com.orozai.projekt.model.dto.basic.ImageDTO;
-import com.orozai.projekt.model.dto.basic.PostDTO;
-import com.orozai.projekt.model.dto.basic.PostTagDTO;
-import com.orozai.projekt.model.dto.basic.TagDTO;
+import com.orozai.projekt.model.dto.basic.*;
 import com.orozai.projekt.model.dto.specialized.CommentFormDTO;
 import com.orozai.projekt.model.service.CommentServiceImpl;
 import com.orozai.projekt.model.service.ImageServiceImpl;
@@ -77,9 +73,15 @@ public class ControllerTest {
   @GetMapping(value = "/getPostTag")
   public ResponseEntity<Collection<PostTagDTO>> getPostTags() {
     Collection<PostTagDTO> tags = postTagService.getAll();
+
     return new ResponseEntity<>(tags, HttpStatus.OK);
   }
-
+  @GetMapping(value = "/getTopTags")
+  public ResponseEntity<Collection<TagCountDTO>> getTopTags() {
+    Collection<TagCountDTO> tops = postTagService.getTop();
+    tagService.setTags(tops);
+    return new ResponseEntity<>(tops, HttpStatus.OK);
+  }
   @GetMapping(value ="/tag/{id}")
   public ResponseEntity<Collection<PostDTO>> getPostByTagId(@PathVariable("id") Long id) {
     Collection<PostDTO> posts = postService.getByTagId(id);

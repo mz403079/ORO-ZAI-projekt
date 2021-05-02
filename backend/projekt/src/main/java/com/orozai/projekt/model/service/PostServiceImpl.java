@@ -14,10 +14,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,7 +59,7 @@ public class PostServiceImpl implements IService<PostDTO> {
   @Override
   @Transactional
   public Collection<PostDTO> getAll() {
-    Collection<Post> posts = postRepository.findAll();
+    List<Post> posts = postRepository.findAll(Sort.by(Sort.Direction.DESC,"timePosted"));
     return getPostDTOS(posts);
   }
 
@@ -117,7 +119,7 @@ public class PostServiceImpl implements IService<PostDTO> {
   }
 
   private Collection<PostDTO> getPostDTOS(Collection<Post> posts) {
-    Collection<PostDTO> postsDTO = modelMapper.map(posts, new TypeToken<Set<PostDTO>>(){}.getType());
+    List<PostDTO> postsDTO = modelMapper.map(posts, new TypeToken<List<PostDTO>>(){}.getType());
     postsDTO.clear();
     for(Post post : posts) {
       postsDTO.add(postToPostDTO(post));

@@ -8,7 +8,7 @@ import lombok.Setter;
 public class PostTagDTO {
   private Long postTagId;
 
-  private Long postId;
+  private PostDTO post;
 
-  private Long tagId;
+  private TagDTO tag;
 }

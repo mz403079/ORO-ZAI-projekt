@@ -3,13 +3,13 @@
     <div class="b-container contentWrapper">
       <b-row>
         <b-col md="2">
-          <div >
-          <SideNavigation></SideNavigation>
+          <div>
+            <SideNavigation></SideNavigation>
           </div>
         </b-col>
         <b-col md="5" offset-md="1">
           <div id="post-viewer-wrapper">
-          <PostViewer v-bind:postsToDisplay="this.msg"></PostViewer>
+            <component v-bind:is="componentName"></component>
           </div>
         </b-col>
         <b-col offset-md="1">
@@ -17,43 +17,41 @@
             <PopularTags></PopularTags>
           </b-row>
           <b-row>
+            {{ componentName }}
             <PopularTags></PopularTags>
           </b-row>
         </b-col>
       </b-row>
-  <NewPostForm></NewPostForm>
     </div>
   </div>
 </template>
 
 <script>
-import PostViewer from "@/components/PostViewer";
 import PopularTags from "@/components/PopularTags";
-import NewPostForm from "@/components/NewPostForm";
 import SideNavigation from "@/components/SideNavigation";
+import Home from "@/components/Home"
+import TrendingPosts from "@/components/TrendingPosts"
+import TopTags from "@/components/TopTags"
 import instance from "@/server";
 
 export default {
   name: 'HelloWorld',
-  components: {NewPostForm, PopularTags, PostViewer, SideNavigation},
+  components: {PopularTags, SideNavigation, Home, TrendingPosts, TopTags},
   data() {
     return {
-      temp: [],
-      msg: [],
+      componentName: "Home",
     }
   },
   created() {
-    instance.get("/api/getPosts")
-        .then((response) => {
-          //console.log(response.data);
-          console.log(response.data);
-          this.msg = response.data;
-          console.log(this.msg);
-        })
+
     instance.get("/api/getPostTag")
-    .then((response) => {
-      console.log(response.data);
-    })
+        .then((response) => {
+          console.log(response.data);
+        })
+    instance.get("/api/getTopTags")
+        .then((response) => {
+          console.log(response.data);
+        })
   },
 }
 </script>
@@ -62,7 +60,7 @@ export default {
 <style scoped>
 
 #post-viewer-wrapper {
-  margin-top:5px;
+  margin-top: 5px;
   border: solid #273E47 1px;
 }
 

@@ -1,5 +1,7 @@
 package com.orozai.projekt.model.service;
 
+import com.orozai.projekt.exception.DataNotFoundException;
+import com.orozai.projekt.model.dto.basic.TagCountDTO;
 import com.orozai.projekt.model.dto.basic.TagDTO;
 import com.orozai.projekt.model.repository.TagRepository;
 import java.util.Collection;
@@ -23,7 +25,7 @@ public class TagServiceImpl implements IService<TagDTO> {
 
   @Override
   public TagDTO get(Long id) {
-    return modelMapper.map(tagRepository.findById(id), TagDTO.class);
+    return modelMapper.map(tagRepository.findById(id).orElseThrow(DataNotFoundException::new), TagDTO.class);
   }
 
   @Override
@@ -44,5 +46,11 @@ public class TagServiceImpl implements IService<TagDTO> {
   @Override
   public void delete(TagDTO tagDTO) {
 
+  }
+
+  public void setTags(Collection<TagCountDTO> tops) {
+    for( TagCountDTO tag : tops) {
+      tag.setTag(this.get(tag.getTagId()));
+    }
   }
 }

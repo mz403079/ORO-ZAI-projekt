@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Getter
@@ -18,4 +19,5 @@ public class Tag {
 
   @Column(nullable = false, length = 20)
   private String tagName;
+
 }

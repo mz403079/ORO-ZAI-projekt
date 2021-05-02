@@ -29,7 +29,6 @@
         </div>
       </b-row>
     </div>
-    {{ selected }}
   </div>
 </template>
 
@@ -59,13 +58,14 @@ export default {
     },
     checkForm() {
       event.preventDefault();
-      let json = JSON.parse(localStorage.user);
+
+      // let json = JSON.parse(localStorage.user); temp 1
       this.formData = new FormData();
       this.formData.append("title", this.title);
       this.formData.append("content", this.content);
       this.formData.append("file", this.selectedFile);
       this.formData.append("tags", this.selected);
-      this.formData.append("authorId", json.id);
+      this.formData.append("authorId", 1);    // temp 1
       console.log(this.formData);
       instance.post("/api/addPost", this.formData, {headers: multipartHeaders})
     },
