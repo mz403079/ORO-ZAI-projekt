@@ -22,19 +22,25 @@
 import PostViewer from "@/components/PostViewer";
 import PopularTags from "@/components/PopularTags";
 import instance from "@/server";
+
 export default {
   name: "PostsWithTag",
   components: {PostViewer, PopularTags},
   data() {
     return {
-      msg:null,
+      msg: null,
     }
   },
   created() {
-    instance.get("/api/tag/"+this.$route.params.id)
-    .then((response) => {
-      this.msg = response.data;
-    })
+    this.getPostsWithTag();
+  },
+  methods: {
+    getPostsWithTag() {
+      instance.get("/api/tag/" + this.$route.params.id)
+          .then((response) => {
+            this.msg = response.data;
+          })
+    }
   }
 }
 </script>

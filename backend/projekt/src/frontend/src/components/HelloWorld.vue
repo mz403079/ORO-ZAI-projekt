@@ -17,7 +17,6 @@
             <PopularTags></PopularTags>
           </b-row>
           <b-row>
-            {{ componentName }}
             <PopularTags></PopularTags>
           </b-row>
         </b-col>
@@ -32,7 +31,6 @@ import SideNavigation from "@/components/SideNavigation";
 import Home from "@/components/Home"
 import TrendingPosts from "@/components/TrendingPosts"
 import TopTags from "@/components/TopTags"
-import instance from "@/server";
 
 export default {
   name: 'HelloWorld',
@@ -41,17 +39,6 @@ export default {
     return {
       componentName: "Home",
     }
-  },
-  created() {
-
-    instance.get("/api/getPostTag")
-        .then((response) => {
-          console.log(response.data);
-        })
-    instance.get("/api/getTopTags")
-        .then((response) => {
-          console.log(response.data);
-        })
   },
 }
 </script>

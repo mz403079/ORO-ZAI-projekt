@@ -19,23 +19,28 @@ export default {
     }
   },
   created() {
-    instance.get("/api/getTags")
-        .then((response) => {
-          console.log(response.data);
-          this.tags = response.data;
-        })
+    this.getPopularTags();
+  },
+  methods: {
+    getPopularTags() {
+      instance.get("/api/getTags")
+          .then((response) => {
+            this.tags = response.data;
+          })
+    }
   }
 }
 </script>
 
 <style scoped>
 .gog {
-  width:250px;
+  width: 250px;
   background-color: white;
   margin-top: 25px;
   border-radius: 5px;
   padding: 0 15px 0;
 }
+
 .tagBadge {
   margin-left: 5px;
 }

@@ -50,7 +50,6 @@ export default {
       return localStorage.user;
     },
     userIsAdmin() {
-      console.log(isUserAdmin());
       return isUserAdmin();
     }
   },

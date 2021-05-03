@@ -1,5 +1,5 @@
 <template>
-  <PostViewer v-bind:postsToDisplay="this.msg"></PostViewer>
+  <PostViewer v-bind:postsToDisplay="this.posts"></PostViewer>
 </template>
 
 <script>
@@ -11,14 +11,19 @@ export default {
   components: {PostViewer},
   data() {
     return {
-      msg: null,
+      posts: null,
     }
   },
   created() {
-    instance.get("/api/getPosts")
-        .then((response) => {
-          this.msg = response.data;
-        })
+    this.getPosts();
+  },
+  methods: {
+    getPosts() {
+      instance.get("/api/getPosts")
+          .then((response) => {
+            this.posts = response.data;
+          })
+    }
   }
 }
 </script>

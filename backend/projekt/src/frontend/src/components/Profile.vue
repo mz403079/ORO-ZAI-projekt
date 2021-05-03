@@ -1,21 +1,21 @@
 <template>
-<div>
-{{user.username}} - {{user.email}}
-  <div v-if="user.profileImage != null">
-    <img class="post-icon" :src="`data:image/png;base64, ${user.profileImage.imageData}`" alt="essa">
+  <div>
+    {{ user.username }} - {{ user.email }}
+    <div v-if="user.profileImage != null">
+      <img class="post-icon" :src="`data:image/png;base64, ${user.profileImage.imageData}`" alt="essa">
+    </div>
+    <form id="profilePicForm"
+          @submit="checkForm">
+      <p>
+        <label>
+          <input type="file" value="Wybierz plik" @change="fileSelected">
+        </label>
+      </p>
+      <p>
+        <input type="submit" value="Dodaj">
+      </p>
+    </form>
   </div>
-  <form id="profilePicForm"
-        @submit="checkForm">
-  <p>
-  <label>
-    <input type="file" value="Wybierz plik" @change="fileSelected">
-  </label>
-</p>
-  <p>
-    <input type="submit" value="Dodaj">
-  </p>
-  </form>
-</div>
 </template>
 
 <script>
@@ -26,22 +26,22 @@ export default {
   name: "Profile",
   data() {
     return {
-      user : null,
+      user: null,
       picName: "",
       selectedFile: null,
       formData: null,
     }
   },
   created() {
-    let json = JSON.parse(localStorage.user);
-    this.user = json;
-    instance.get("api/profile/"+json.id).then(response => {
-      this.user = response.data;
-       console.log(this.user);
-    })
-
+    this.getUserData();
   },
-  methods : {
+  methods: {
+    getUserData() {
+      this.user = JSON.parse(localStorage.user);
+      instance.get("api/profile/" + this.user.id).then(response => {
+        this.user = response.data;
+      })
+    },
     fileSelected(event) {
       this.selectedFile = event.target.files[0];
     },
@@ -51,7 +51,7 @@ export default {
       this.formData.append("file", this.selectedFile);
       this.formData.append("userId", this.user.id);
       console.log(this.formData);
-      instance.post("/api/profile/"+this.user.userId+"/pic", this.formData, {headers: multipartHeaders})
+      instance.post("/api/profile/" + this.user.userId + "/pic", this.formData, {headers: multipartHeaders})
     },
   }
 }

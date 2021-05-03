@@ -60,10 +60,6 @@
             {{ item.content }}
           </div>
         </div>
-
-      </b-row>
-      <b-row>
-
       </b-row>
     </div>
 
@@ -95,10 +91,6 @@ export default {
         el.classList.add("post-content-visible");
       }
     },
-
-    countComments(comments) {
-      console.log(comments);
-    }
   }
 
 }
