@@ -17,9 +17,12 @@
           <b-link :href="'/post/'+item.postId" class="link">
             <h4 style="font-weight: 600;"> {{ item.title }}
               <b-badge>Hot</b-badge>
-              <b-badge :href="'/tag/'+tag.tagId" v-for="tag in item.tags" v-bind:key="tag.tagId"
+
+              <b-badge v-for="tag in item.tags" v-bind:key="tag.tagId"
                        class="tagBadge">
-                {{ tag.tagName }}
+                <router-link v-bind:to="'/tag/'+tag.tagId">{{ tag.tagName }}</router-link>
+                <router-view/>
+
               </b-badge>
             </h4>
           </b-link>

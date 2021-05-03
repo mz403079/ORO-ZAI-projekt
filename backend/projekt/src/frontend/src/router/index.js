@@ -5,6 +5,7 @@ import PostsWithTag from "@/components/PostsWithTag";
 import SinglePostAdvanced from "@/components/SinglePostAdvanced";
 import AdminBoard from "@/components/AdminBoard";
 import Profile from "@/components/Profile";
+import TopTags from "@/components/TopTags";
 Vue.use(Router)
 
 export default new Router({
@@ -29,7 +30,14 @@ export default new Router({
         {
             path: '/profile',
             component: Profile,
-
+        },
+        {
+            path: '/home',
+            component: HelloWorld,
+        },
+        {
+            path: '/topTags',
+            component: TopTags,
         }
     ]
 })

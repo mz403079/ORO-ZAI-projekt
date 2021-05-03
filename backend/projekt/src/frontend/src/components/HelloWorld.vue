@@ -9,7 +9,7 @@
         </b-col>
         <b-col md="5" offset-md="1">
           <div id="post-viewer-wrapper">
-            <component v-bind:is="componentName"></component>
+            <PostViewer v-bind:postsToDisplay="this.posts"></PostViewer>
           </div>
         </b-col>
         <b-col offset-md="1">
@@ -28,18 +28,28 @@
 <script>
 import PopularTags from "@/components/PopularTags";
 import SideNavigation from "@/components/SideNavigation";
-import Home from "@/components/Home"
-import TrendingPosts from "@/components/TrendingPosts"
-import TopTags from "@/components/TopTags"
+import PostViewer from "@/components/PostViewer";
+import instance from "@/server";
 
 export default {
   name: 'HelloWorld',
-  components: {PopularTags, SideNavigation, Home, TrendingPosts, TopTags},
+  components: {PopularTags, SideNavigation, PostViewer},
   data() {
     return {
-      componentName: "Home",
+      posts: [],
     }
   },
+  created() {
+    this.getPosts();
+  },
+  methods: {
+    getPosts() {
+      instance.get("/api/getPosts")
+          .then((response) => {
+            this.posts = response.data;
+          })
+    }
+  }
 }
 </script>
 

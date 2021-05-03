@@ -3,7 +3,7 @@
     <div id="nav-wrapper">
       <nav>
         <div>
-          <b-link v-on:click="$parent.componentName='Home'" class="link">
+          <router-link to="home">
             <div class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="house-door-fill"></b-icon>
@@ -12,57 +12,59 @@
                 <span>Home</span>
               </div>
             </div>
-          </b-link>
-          <b-link v-on:click="$parent.componentName='UserHome'" class="link">
-            <div class="link-wrapper">
-              <div class="nav-icon">
-                <b-icon icon="person-circle"></b-icon>
-              </div>
-              <div class="nav-text">
-                <span>Profile</span>
-              </div>
-            </div>
-          </b-link>
-          <b-link v-b-modal.newPostModal class="link">
-            <div class="link-wrapper">
-              <div class="nav-icon">
-                <b-icon icon="plus-circle"></b-icon>
-              </div>
-              <div class="nav-text">
-                <span>New post</span>
-              </div>
-            </div>
-          </b-link>
-          <b-link v-on:click="$parent.componentName='TopTags'" class="link">
-            <div class="link-wrapper">
-              <div class="nav-icon">
-                <b-icon icon="hash"></b-icon>
-              </div>
-              <div class="nav-text">
-                <span>Top 100</span>
-              </div>
-            </div>
-          </b-link>
-          <b-link v-on:click="$parent.componentName='TrendingPosts'" class="link">
-            <div class="link-wrapper">
-              <div class="nav-icon">
-                <b-icon icon="arrow-up-right-square"></b-icon>
-              </div>
-              <div class="nav-text">
-                <span>Trending posts</span>
-              </div>
-            </div>
-          </b-link>
-          <b-link class="link">
-            <div class="link-wrapper">
-              <div class="nav-icon">
-                <b-icon icon="question-circle"></b-icon>
-              </div>
-              <div class="nav-text">
-                <span>Help</span>
-              </div>
-            </div>
-          </b-link>
+          </router-link>
+              <router-link to="UserHome">
+                <div class="link-wrapper">
+                  <div class="nav-icon">
+                    <b-icon icon="person-circle"></b-icon>
+                  </div>
+                  <div class="nav-text">
+                    <span>Profile</span>
+                  </div>
+                </div>
+              </router-link>
+              <b-link v-b-modal.newPostModal class="link">
+                <div class="link-wrapper">
+                  <div class="nav-icon">
+                    <b-icon icon="plus-circle"></b-icon>
+                  </div>
+                  <div class="nav-text">
+                    <span>New post</span>
+                  </div>
+                </div>
+              </b-link>
+              <router-link to="TopTags">
+                <div class="link-wrapper">
+                  <div class="nav-icon">
+                    <b-icon icon="hash"></b-icon>
+                  </div>
+                  <div class="nav-text">
+                    <span>Top 100</span>
+                  </div>
+                </div>
+              </router-link>
+
+              <router-link to="TrendingPosts">
+                <div class="link-wrapper">
+                  <div class="nav-icon">
+                    <b-icon icon="arrow-up-right-square"></b-icon>
+                  </div>
+                  <div class="nav-text">
+                    <span>Trending posts</span>
+                  </div>
+                </div>
+              </router-link>
+              <router-link to="Help">
+                <div class="link-wrapper">
+                  <div class="nav-icon">
+                    <b-icon icon="question-circle"></b-icon>
+                  </div>
+                  <div class="nav-text">
+                    <span>Help</span>
+                  </div>
+                </div>
+              </router-link>
+            <router-view/>
         </div>
       </nav>
     </div>
@@ -74,9 +76,10 @@
 
 <script>
 import NewPostForm from "@/components/NewPostForm";
+
 export default {
   name: "SideNavigation",
-  components : {
+  components: {
     NewPostForm,
   },
 }
@@ -95,9 +98,11 @@ export default {
 .nav-text {
   width: 80%;
 }
+
 .link {
   text-decoration: none;
 }
+
 .link-wrapper {
   color: black;
   font-size: 20px;
@@ -105,6 +110,7 @@ export default {
   padding: 12px;
   border-radius: 9999px;
 }
+
 .link-wrapper:hover {
   color: #A42CD6;
   background-color: #FBF1FF;
