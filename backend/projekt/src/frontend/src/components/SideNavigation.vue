@@ -8,7 +8,7 @@
               <div class="nav-icon">
                 <b-icon icon="house-door-fill"></b-icon>
               </div>
-              <div class="nav-text">
+              <div class="nav-text d-none d-lg-block">
                 <span>Home</span>
               </div>
             </div>
@@ -18,7 +18,7 @@
                   <div class="nav-icon">
                     <b-icon icon="person-circle"></b-icon>
                   </div>
-                  <div class="nav-text">
+                  <div class="nav-text d-none d-lg-block">
                     <span>Profile</span>
                   </div>
                 </div>
@@ -28,7 +28,7 @@
                   <div class="nav-icon">
                     <b-icon icon="plus-circle"></b-icon>
                   </div>
-                  <div class="nav-text">
+                  <div class="nav-text d-none d-lg-block">
                     <span>New post</span>
                   </div>
                 </div>
@@ -38,7 +38,7 @@
                   <div class="nav-icon">
                     <b-icon icon="hash"></b-icon>
                   </div>
-                  <div class="nav-text">
+                  <div class="nav-text d-none d-lg-block">
                     <span>Top 100</span>
                   </div>
                 </div>
@@ -49,7 +49,7 @@
                   <div class="nav-icon">
                     <b-icon icon="arrow-up-right-square"></b-icon>
                   </div>
-                  <div class="nav-text">
+                  <div class="nav-text d-none d-lg-block">
                     <span>Trending posts</span>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
                   <div class="nav-icon">
                     <b-icon icon="question-circle"></b-icon>
                   </div>
-                  <div class="nav-text">
+                  <div class="nav-text d-none d-lg-block">
                     <span>Help</span>
                   </div>
                 </div>
@@ -92,11 +92,11 @@ export default {
 }
 
 .nav-icon {
-  width: 20%;
+  width: 15%;
 }
 
 .nav-text {
-  width: 80%;
+  width: 75%;
 }
 
 .link {
@@ -107,7 +107,7 @@ export default {
   color: black;
   font-size: 20px;
   font-weight: 700;
-  padding: 12px;
+  padding: 12px 0 12px;
   border-radius: 9999px;
 }
 

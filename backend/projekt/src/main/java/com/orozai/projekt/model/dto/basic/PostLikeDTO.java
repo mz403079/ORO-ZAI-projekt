@@ -11,8 +11,7 @@ public class PostLikeDTO {
 
   private long userPostLikeId;
 
-  private User user;
+  private long userId;
 
-
-  private Post post;
+  private long postId;
 }

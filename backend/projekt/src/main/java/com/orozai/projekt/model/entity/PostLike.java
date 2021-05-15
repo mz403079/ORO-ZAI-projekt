@@ -6,6 +6,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,14 +15,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class UserPostLiked {
+public class PostLike {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long userCommentLikeId;
+  private long userPostLike;
 
-  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-  private User user;
+  private long userId;
 
-  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-  private Post post;
+  private long postId;
 }

@@ -26,11 +26,8 @@
               </b-badge>
             </h4>
           </b-link>
-
-
           <b-row>
             <div>
-
               <b-avatar v-if="item.author.profileImage != null">
                 <img class="avatar-icon"
                      :src="`data:image/png;base64, ${item.author.profileImage.imageData}`"
@@ -45,6 +42,9 @@
       </b-row>
       <b-row>
         <div>
+          <b-button class="icon-button" @click="likePost(item.postId)">
+            <b-icon icon="heart"></b-icon>
+          </b-button>
           <b-button class="icon-button">
             <b-link :href="'/post/'+item.postId" style="text-decoration: none; color:black;">
               <a style="font-weight: 600;"> {{ item.numOfComments }} </a>
@@ -71,6 +71,9 @@
 
 <script>
 
+import instance from "@/server";
+import headers from "@/headers";
+
 export default {
   name: "PostViewer",
   props: {
@@ -94,6 +97,14 @@ export default {
         el.classList.add("post-content-visible");
       }
     },
+    likePost(postId) {
+    let user = JSON.parse(localStorage.user);
+      let json = JSON.stringify({
+        "userId": user.id,
+        "postId": postId,
+      })
+       instance.post("/api/likePost",json, {headers : headers})
+    }
   }
 
 }

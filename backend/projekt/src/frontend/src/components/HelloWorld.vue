@@ -2,17 +2,17 @@
   <div id="app">
     <div class="b-container contentWrapper">
       <b-row>
-        <b-col md="2">
+        <b-col cols="2" md="2">
           <div>
             <SideNavigation></SideNavigation>
           </div>
         </b-col>
-        <b-col md="5" offset-md="1">
+        <b-col cols="9" sm="10" md="5"  offset-md="1">
           <div id="post-viewer-wrapper">
             <PostViewer v-bind:postsToDisplay="this.posts"></PostViewer>
           </div>
         </b-col>
-        <b-col offset-md="1">
+        <b-col cols="2" sm="12" md="2" offset-md="1">
           <b-row>
             <PopularTags></PopularTags>
           </b-row>
@@ -61,8 +61,10 @@ export default {
   border: solid #273E47 1px;
 }
 
-.contentWrapper {
-  width: 85%;
-  margin: 0 auto;
+@media only screen and (min-width: 900px) {
+  .contentWrapper {
+    width: 85%;
+    margin: 0 auto;
+  }
 }
 </style>

@@ -1,9 +1,12 @@
 package com.orozai.projekt.controller;
 
 import com.orozai.projekt.model.dto.basic.*;
-import com.orozai.projekt.model.dto.specialized.CommentFormDTO;
+import com.orozai.projekt.model.dto.specialized.CommentLikeFormDTO;
+import com.orozai.projekt.model.dto.specialized.PostLikeFormDTO;
+import com.orozai.projekt.model.service.CommentLikeServiceImpl;
 import com.orozai.projekt.model.service.CommentServiceImpl;
 import com.orozai.projekt.model.service.ImageServiceImpl;
+import com.orozai.projekt.model.service.PostLikeServiceImpl;
 import com.orozai.projekt.model.service.PostServiceImpl;
 import com.orozai.projekt.model.service.PostTagServiceImpl;
 import com.orozai.projekt.model.service.TagServiceImpl;
@@ -18,9 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
@@ -28,88 +29,52 @@ public class ControllerTest {
 
   private final ModelMapper modelMapper;
   private final PostServiceImpl postService;
-  private final TagServiceImpl tagService;
   private final PostTagServiceImpl postTagService;
   private final UserServiceImpl userService;
   private final CommentServiceImpl commentService;
   private final ImageServiceImpl imageService;
+  private final PostLikeServiceImpl postLikeService;
+  private final CommentLikeServiceImpl commentLikeService;
 
   public ControllerTest(ModelMapper modelMapper, PostServiceImpl postService,
-      TagServiceImpl tagService, PostTagServiceImpl postTagService,
+      PostTagServiceImpl postTagService,
       UserServiceImpl userService,
       CommentServiceImpl commentService,
-      ImageServiceImpl imageService) {
+      ImageServiceImpl imageService,
+      PostLikeServiceImpl postLikeService,
+      CommentLikeServiceImpl commentLikeService) {
     this.modelMapper = modelMapper;
     this.postService = postService;
-    this.tagService = tagService;
     this.postTagService = postTagService;
     this.userService = userService;
     this.commentService = commentService;
     this.imageService = imageService;
+    this.postLikeService = postLikeService;
+    this.commentLikeService = commentLikeService;
   }
 
-  @GetMapping(value = "/getPosts")
-  public ResponseEntity<Collection<PostDTO>> getPosts() {
-    Collection<PostDTO> posts = postService.getAll();
-    return new ResponseEntity<>(posts, HttpStatus.OK);
-  }
-  @GetMapping(value = "/getComments")
-  public ResponseEntity<Collection<CommentDTO>> getComments() {
-    Collection<CommentDTO> comments = commentService.getAll();
-    return new ResponseEntity<>(comments, HttpStatus.OK);
-  }
-  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-  @GetMapping(value = "/post/{id}")
-  public ResponseEntity<PostDTO> getPost(@PathVariable("id") Long id) {
-    PostDTO post = postService.get(id);
-    return new ResponseEntity<>(post, HttpStatus.OK);
-  }
-  @GetMapping(value = "/getTags")
-  public ResponseEntity<Collection<TagDTO>> getTags() {
-    Collection<TagDTO> tags = tagService.getAll();
-    return new ResponseEntity<>(tags, HttpStatus.OK);
-  }
 
   @GetMapping(value = "/getPostTag")
   public ResponseEntity<Collection<PostTagDTO>> getPostTags() {
     Collection<PostTagDTO> tags = postTagService.getAll();
-
     return new ResponseEntity<>(tags, HttpStatus.OK);
   }
-  @GetMapping(value = "/getTopTags")
-  public ResponseEntity<Collection<TagCountDTO>> getTopTags() {
-    Collection<TagCountDTO> tops = postTagService.getTop();
-    tagService.setTags(tops);
-    return new ResponseEntity<>(tops, HttpStatus.OK);
-  }
-  @GetMapping(value ="/tag/{id}")
-  public ResponseEntity<Collection<PostDTO>> getPostByTagId(@PathVariable("id") Long id) {
-    Collection<PostDTO> posts = postService.getByTagId(id);
-    if(posts.isEmpty())
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    else
-      return new ResponseEntity<>(posts,HttpStatus.OK);
+
+  @PostMapping(value ="/likeComment")
+  public ResponseEntity<CommentLikeDTO> likePost(@RequestBody CommentLikeFormDTO commentLikeFormDTO) {
+    CommentLikeDTO commentLikeDTO = modelMapper.map(commentLikeFormDTO, CommentLikeDTO.class);
+    commentLikeDTO.setUser(userService.get(commentLikeFormDTO.getUserId()));
+    commentLikeDTO.setComment(commentService.get(commentLikeFormDTO.getCommentId()));
+    commentLikeService.handleComment(commentLikeDTO);
+    return new ResponseEntity<>(commentLikeDTO,HttpStatus.OK);
   }
 
-  @PostMapping(value ="/addPost")
-  public ResponseEntity<PostDTO> addPost(@RequestParam("title") String title,
-      @RequestParam(name="content",required = false) String content,
-      @RequestParam(name="file",required = false) MultipartFile file,
-      @RequestParam("tags") int[] tags,
-      @RequestParam("authorId") int authorId) {
-    postService.create(title,content,file,tags,authorId);
-    return new ResponseEntity<>(HttpStatus.OK);
+  @PostMapping(value ="/likePost")
+  public ResponseEntity<PostLikeDTO> likePost(@RequestBody PostLikeDTO postLikeDTO) {
+    postLikeService.handleLike(postLikeDTO);
+    return new ResponseEntity<>(postLikeDTO,HttpStatus.OK);
   }
 
-  @PostMapping(value ="/addComment")
-  public ResponseEntity<CommentDTO> addComment(@RequestBody CommentFormDTO commentFormDTO) {
-    CommentDTO commentDTO = modelMapper.map(commentFormDTO, CommentDTO.class);
-    commentDTO.setCommentAuthor(userService.get(commentFormDTO.getAuthorId()));
-    commentDTO.setPost(postService.get(commentFormDTO.getPostId()));
-    System.out.println("HIre"+commentFormDTO.getContent()+commentDTO.getContent());
-    commentService.create(commentDTO);
-    return new ResponseEntity<>(commentDTO,HttpStatus.OK);
-  }
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping(value="/getAdminBoard")
   public ResponseEntity<String> getAdminBoard() {

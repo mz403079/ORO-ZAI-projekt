@@ -30,16 +30,26 @@ export default {
       picName: "",
       selectedFile: null,
       formData: null,
+      posts: [],
     }
   },
   created() {
     this.getUserData();
+    this.getLikedPosts();
   },
   methods: {
     getUserData() {
       this.user = JSON.parse(localStorage.user);
       instance.get("api/profile/" + this.user.id).then(response => {
         this.user = response.data;
+        console.log(this.user);
+      })
+
+    },
+    getLikedPosts() {
+      instance.get("api/getLikedPosts/" + this.user.id).then(response => {
+        this.posts = response.data;
+        console.log(this.posts);
       })
     },
     fileSelected(event) {

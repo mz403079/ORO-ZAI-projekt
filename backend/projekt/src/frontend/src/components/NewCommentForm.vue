@@ -30,10 +30,11 @@ export default {
 
   methods : {
     checkForm() {
+      let user = JSON.parse(localStorage.user);
       let json = JSON.stringify({
             "content": this.comment,
             "postId": this.postId,
-            "authorId": 1,
+            "authorId": user.id,
           })
       console.log(json);
       instance.post("/api/addComment",json, {headers : headers})

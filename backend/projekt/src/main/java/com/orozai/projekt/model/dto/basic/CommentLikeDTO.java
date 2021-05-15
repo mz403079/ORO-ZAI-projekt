@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 public class CommentLikeDTO {
 
-  private long userCommentLikeId;
+  private long CommentLikeId;
 
-  private User user;
+  private UserDTO user;
 
-
-  private Comment comment;
+  private CommentDTO comment;
 }

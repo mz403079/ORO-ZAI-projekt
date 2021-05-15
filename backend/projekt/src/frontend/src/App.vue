@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="essa">
+    <div id="margin-top">
   <Navigation></Navigation>
     </div>
   </div>
@@ -22,10 +22,8 @@ export default {
 #app {
   background-color: white;
 }
-.contentWrapper {
-  margin-left: 20px;
-}
-#essa {
+
+#margin-top {
   margin-top: 100px;
 }
 

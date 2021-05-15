@@ -1,54 +1,58 @@
 <template>
-    <div id="app">
-      <div class="b-container contentWrapper">
-        <b-row>
-          <b-col md="2">
-            <div>
-              <SideNavigation></SideNavigation>
+  <div id="app">
+    <div class="b-container contentWrapper">
+      <b-row>
+        <b-col md="2">
+          <div>
+            <SideNavigation></SideNavigation>
+          </div>
+        </b-col>
+        <b-col md="5" offset-md="1">
+          <div id="post-viewer-wrapper">
+            <div v-for="tagInfo in tags" :key="tagInfo.tagId">
+              <div>#{{ tagInfo.tag.tagName }}</div>
+              <div>{{ tagInfo.totalCount }} posts</div>
             </div>
-          </b-col>
-          <b-col md="5" offset-md="1">
-            <div id="post-viewer-wrapper">
-              <div>essa!</div>
-            </div>
-          </b-col>
-          <b-col offset-md="1">
-            <b-row>
-              <PopularTags></PopularTags>
-            </b-row>
-            <b-row>
-              <PopularTags></PopularTags>
-            </b-row>
-          </b-col>
-        </b-row>
-      </div>
+          </div>
+        </b-col>
+        <b-col offset-md="1">
+          <b-row>
+            <PopularTags></PopularTags>
+          </b-row>
+          <b-row>
+            <PopularTags></PopularTags>
+          </b-row>
+        </b-col>
+      </b-row>
     </div>
+  </div>
 </template>
 
 <script>
 import instance from "@/server";
 import SideNavigation from "@/components/SideNavigation";
 import PopularTags from "@/components/PopularTags";
+
 export default {
   name: "TopTags",
   data() {
     return {
-      tags : null,
+      tags: null,
     }
   },
-  components : {
-    SideNavigation,PopularTags
+  components: {
+    SideNavigation, PopularTags
   },
   created() {
     this.getTopTags();
   },
-  methods : {
+  methods: {
     getTopTags() {
       instance.get("/api/getTopTags")
-          .then((response) => {
-            console.log(response.data);
-            this.tags = response.data;
-          })
+      .then((response) => {
+        console.log(response.data);
+        this.tags = response.data;
+      })
     }
   }
 }

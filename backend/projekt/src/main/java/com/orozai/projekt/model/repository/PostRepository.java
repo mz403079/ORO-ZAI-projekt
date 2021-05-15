@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Transactional
 public interface PostRepository extends JpaRepository<Post, Long> {
   Collection<Post> findByTagsIn(Collection<PostTag> postTags);
+  Collection<Post> findAllByPostAuthorUserId(long userId);
 }
