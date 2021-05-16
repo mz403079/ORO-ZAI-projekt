@@ -13,7 +13,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   Collection<Post> findByTagsIn(Collection<PostTag> postTags);
 
   Collection<Post> findAllByPostAuthorUserId(long userId);
-
+  Collection<Post> findByOrderByScoreDesc();
   @Query(nativeQuery = true, value =
       "SELECT post_author_user_id as Id,COUNT(post_author_user_id) as Count FROM post " +
           "GROUP BY post_author_user_id " +

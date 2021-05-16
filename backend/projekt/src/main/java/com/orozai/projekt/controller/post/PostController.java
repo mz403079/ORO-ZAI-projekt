@@ -34,7 +34,17 @@ public class PostController {
     Collection<PostDTO> posts = postService.getLikedPosts(id);
     return new ResponseEntity<>(posts, HttpStatus.OK);
   }
+  @GetMapping(value = "/getUserPosts/{id}")
+  public ResponseEntity<Collection<PostDTO>> getUserPosts(@PathVariable("id") Long id) {
+    Collection<PostDTO> posts = postService.getByUserId(id);
+    return new ResponseEntity<>(posts, HttpStatus.OK);
+  }
 
+  @GetMapping(value = "/getTopPosts")
+  public ResponseEntity<Collection<PostDTO>> getTopPosts() {
+    Collection<PostDTO> posts = postService.getTopLikedPosts();
+    return new ResponseEntity<>(posts, HttpStatus.OK);
+  }
   @GetMapping(value ="/tag/{id}")
   public ResponseEntity<Collection<PostDTO>> getPostByTagId(@PathVariable("id") Long id) {
     Collection<PostDTO> posts = postService.getByTagId(id);

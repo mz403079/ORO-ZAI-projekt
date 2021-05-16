@@ -88,6 +88,11 @@ public class PostServiceImpl implements IService<PostDTO> {
     }
     return posts;
   }
+
+  public Collection<PostDTO> getTopLikedPosts() {
+    Collection<Post> posts = postRepository.findByOrderByScoreDesc();
+    return getPostDTOS(posts);
+  }
   public Collection<UserCountDTO> getTopUserIds() {
    Collection<ICount> topUserIds =  postRepository.getTopUserIds();
     return modelMapper.<List<UserCountDTO>>map(topUserIds, new TypeToken<List<UserCountDTO>>(){}.getType());
