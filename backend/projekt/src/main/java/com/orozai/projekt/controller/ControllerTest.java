@@ -11,6 +11,7 @@ import com.orozai.projekt.model.service.PostServiceImpl;
 import com.orozai.projekt.model.service.PostTagServiceImpl;
 import com.orozai.projekt.model.service.TagServiceImpl;
 import com.orozai.projekt.model.service.UserServiceImpl;
+import java.util.ArrayList;
 import java.util.Collection;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -66,12 +67,23 @@ public class ControllerTest {
     commentLikeDTO.setUser(userService.get(commentLikeFormDTO.getUserId()));
     commentLikeDTO.setComment(commentService.get(commentLikeFormDTO.getCommentId()));
     commentLikeService.handleComment(commentLikeDTO);
+    Collection<UserCountDTO> user = postService.getTopUserIds();
+    userService.setUsers(user);
     return new ResponseEntity<>(commentLikeDTO,HttpStatus.OK);
   }
 
+  @GetMapping(value = "/getTopUsers")
+  public ResponseEntity<Collection<UserCountDTO>> getTopUsers() {
+    Collection<UserCountDTO> tops = postService.getTopUserIds();
+    userService.setUsers(tops);
+    return new ResponseEntity<>(tops, HttpStatus.OK);
+  }
   @PostMapping(value ="/likePost")
   public ResponseEntity<PostLikeDTO> likePost(@RequestBody PostLikeDTO postLikeDTO) {
-    postLikeService.handleLike(postLikeDTO);
+    if(postLikeService.handleLike(postLikeDTO))
+      postService.update(postLikeDTO.getPostId(),1);
+    else
+      postService.update(postLikeDTO.getPostId(),-1);
     return new ResponseEntity<>(postLikeDTO,HttpStatus.OK);
   }
 

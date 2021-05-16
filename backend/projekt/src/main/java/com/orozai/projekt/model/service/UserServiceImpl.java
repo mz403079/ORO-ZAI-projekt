@@ -2,6 +2,8 @@ package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.exception.DataNotFoundException;
 import com.orozai.projekt.model.dto.basic.PostDTO;
+import com.orozai.projekt.model.dto.basic.TagCountDTO;
+import com.orozai.projekt.model.dto.basic.UserCountDTO;
 import com.orozai.projekt.model.dto.basic.UserDTO;
 import com.orozai.projekt.model.entity.ERole;
 import com.orozai.projekt.model.entity.Image;
@@ -88,6 +90,13 @@ public class UserServiceImpl implements IService<UserDTO>{
     userDTO.setProfileImage(imageService.imageToImageDTO(user.getProfileImage()));
     return userDTO;
   }
+  public void setUsers(Collection<UserCountDTO> tops) {
+    for(UserCountDTO user : tops) {
+      System.out.println(user.getCount() +"ESSA"+ user.getId());
+      user.setUser(this.get(user.getId()));
+    }
+  }
+
   @Override
   public void delete(UserDTO userDTO) {
 

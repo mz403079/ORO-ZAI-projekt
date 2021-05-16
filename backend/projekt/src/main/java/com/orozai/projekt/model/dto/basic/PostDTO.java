@@ -17,7 +17,7 @@ public class PostDTO {
 
   private String content;
 
-  private int rating;
+  private int score;
 
   private UserDTO author;
   @JsonFormat(pattern="yyyy-MM-dd HH:mm")

@@ -56,12 +56,13 @@ public class PostLikeServiceImpl implements IService<PostLikeDTO>{
   }
 
 
-  public void handleLike(PostLikeDTO postLikeDTO) {
+  public boolean handleLike(PostLikeDTO postLikeDTO) {
   Optional<PostLike> postLike =  postLikeRepository.findByUserIdAndPostId(postLikeDTO.getUserId(),postLikeDTO.getPostId());
     if (postLike.isPresent()) {
       delete(postLikeDTO);
-      return;
+      return false;
     }
     create(postLikeDTO);
+    return true;
   }
 }

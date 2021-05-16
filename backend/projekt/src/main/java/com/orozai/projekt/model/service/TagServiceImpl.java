@@ -50,7 +50,7 @@ public class TagServiceImpl implements IService<TagDTO> {
 
   public void setTags(Collection<TagCountDTO> tops) {
     for( TagCountDTO tag : tops) {
-      tag.setTag(this.get(tag.getTagId()));
+      tag.setTag(this.get(tag.getId()));
     }
   }
 }

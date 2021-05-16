@@ -43,6 +43,7 @@
       <b-row>
         <div>
           <b-button class="icon-button" @click="likePost(item.postId)">
+            {{ item.score }}
             <b-icon icon="heart"></b-icon>
           </b-button>
           <b-button class="icon-button">

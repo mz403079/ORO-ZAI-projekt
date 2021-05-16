@@ -17,7 +17,7 @@
             <PopularTags></PopularTags>
           </b-row>
           <b-row>
-            <PopularTags></PopularTags>
+            <TopUsers></TopUsers>
           </b-row>
         </b-col>
       </b-row>
@@ -29,11 +29,12 @@
 import PopularTags from "@/components/PopularTags";
 import SideNavigation from "@/components/SideNavigation";
 import PostViewer from "@/components/PostViewer";
+import TopUsers from "@/components/TopUsers";
 import instance from "@/server";
 
 export default {
   name: 'HelloWorld',
-  components: {PopularTags, SideNavigation, PostViewer},
+  components: {PopularTags, SideNavigation, PostViewer, TopUsers},
   data() {
     return {
       posts: [],

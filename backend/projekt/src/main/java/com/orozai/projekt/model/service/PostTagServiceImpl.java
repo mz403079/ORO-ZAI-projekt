@@ -3,11 +3,9 @@ package com.orozai.projekt.model.service;
 import com.orozai.projekt.exception.DataNotFoundException;
 import com.orozai.projekt.model.dto.basic.PostTagDTO;
 import com.orozai.projekt.model.dto.basic.TagCountDTO;
-import com.orozai.projekt.model.dto.basic.TagDTO;
 import com.orozai.projekt.model.entity.PostTag;
 import com.orozai.projekt.model.entity.PostTagForm;
-import com.orozai.projekt.model.entity.TagCount;
-import com.orozai.projekt.model.repository.ITagCount;
+import com.orozai.projekt.model.repository.ICount;
 import com.orozai.projekt.model.repository.PostTagRepository;
 import com.orozai.projekt.model.repository.TagRepository;
 import java.util.Collection;
@@ -42,7 +40,7 @@ public class PostTagServiceImpl implements IService<PostTagDTO> {
   return modelMapper.map(postTagRepository.findAll(), new TypeToken<List<PostTagDTO>>(){}.getType());
   }
   public Collection<TagCountDTO> getTop() {
-    Collection<ITagCount> topTags =  postTagRepository.getManu();
+    Collection<ICount> topTags =  postTagRepository.getTopTags();
     return modelMapper.<List<TagCountDTO>>map(topTags, new TypeToken<List<TagCountDTO>>(){}.getType());
   }
   @Override

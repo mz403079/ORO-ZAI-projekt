@@ -3,10 +3,13 @@ package com.orozai.projekt.model.service;
 import com.orozai.projekt.exception.DataNotFoundException;
 import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.PostLikeDTO;
+import com.orozai.projekt.model.dto.basic.TagCountDTO;
+import com.orozai.projekt.model.dto.basic.UserCountDTO;
 import com.orozai.projekt.model.entity.Image;
 import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.PostLike;
 import com.orozai.projekt.model.entity.PostTagForm;
+import com.orozai.projekt.model.repository.ICount;
 import com.orozai.projekt.model.repository.PostRepository;
 import com.orozai.projekt.model.repository.PostTagRepository;
 import com.orozai.projekt.model.repository.TagRepository;
@@ -85,7 +88,10 @@ public class PostServiceImpl implements IService<PostDTO> {
     }
     return posts;
   }
-
+  public Collection<UserCountDTO> getTopUserIds() {
+   Collection<ICount> topUserIds =  postRepository.getTopUserIds();
+    return modelMapper.<List<UserCountDTO>>map(topUserIds, new TypeToken<List<UserCountDTO>>(){}.getType());
+  }
   public Collection<PostDTO> getByUserId(long userId) {
     Collection<Post> posts = postRepository.findAllByPostAuthorUserId(userId);
     return getPostDTOS(posts);
@@ -119,6 +125,12 @@ public class PostServiceImpl implements IService<PostDTO> {
     return null;
   }
 
+  public PostDTO update(long postId, int vote) {
+    Post post = postRepository.findById(postId).orElseThrow(DataNotFoundException::new);
+    post.setScore(post.getScore()+vote);
+    postRepository.save(post);
+    return null;
+  }
   @Override
   public void delete(PostDTO postDTO) {
 
