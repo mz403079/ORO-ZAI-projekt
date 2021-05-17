@@ -2,15 +2,22 @@
   <div id="app">
     <div class="b-container contentWrapper">
       <b-row>
-        <b-col md="7">
-          <PostViewer v-bind:postsToDisplay="this.msg"></PostViewer>
+        <b-col cols="2" md="2">
+          <div>
+            <SideNavigation></SideNavigation>
+          </div>
         </b-col>
-        <b-col offset-md="1">
+        <b-col cols="9" sm="10" md="5"  offset-md="1">
+          <div id="post-viewer-wrapper">
+            <PostViewer v-bind:postsToDisplay="this.posts"></PostViewer>
+          </div>
+        </b-col>
+        <b-col cols="2" sm="12" md="2" offset-md="1">
           <b-row>
             <PopularTags></PopularTags>
           </b-row>
           <b-row>
-            <PopularTags></PopularTags>
+            <PopularUsers></PopularUsers>
           </b-row>
         </b-col>
       </b-row>
@@ -21,14 +28,16 @@
 <script>
 import PostViewer from "@/components/PostViewer";
 import PopularTags from "@/components/PopularTags";
+import PopularUsers from "@/components/PopularUsers";
+import SideNavigation from "@/components/SideNavigation";
 import instance from "@/server";
 
 export default {
   name: "PostsWithTag",
-  components: {PostViewer, PopularTags},
+  components: {PostViewer, PopularTags, PopularUsers, SideNavigation},
   data() {
     return {
-      msg: null,
+      posts: null,
     }
   },
   created() {
@@ -38,7 +47,7 @@ export default {
     getPostsWithTag() {
       instance.get("/api/tag/" + this.$route.params.id)
           .then((response) => {
-            this.msg = response.data;
+            this.posts = response.data;
           })
     }
   }
@@ -46,8 +55,15 @@ export default {
 </script>
 
 <style scoped>
-.contentWrapper {
-  width: 85%;
-  margin: 0 auto;
+#post-viewer-wrapper {
+  margin-top: 5px;
+  border: solid #273E47 1px;
+}
+
+@media only screen and (min-width: 900px) {
+  .contentWrapper {
+    width: 85%;
+    margin: 0 auto;
+  }
 }
 </style>

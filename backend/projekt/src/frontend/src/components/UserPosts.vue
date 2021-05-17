@@ -33,7 +33,7 @@ import PopularUsers from "@/components/PopularUsers";
 import instance from "@/server";
 
 export default {
-  name: 'TrendingPosts',
+  name: 'UserPosts',
   components: {PopularTags, SideNavigation, PostViewer, PopularUsers},
   data() {
     return {
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     getPosts() {
-      instance.get("/api/getTopPosts")
+      instance.get("/api/getUserPosts/"+ this.$route.params.username)
       .then((response) => {
         this.posts = response.data;
       })

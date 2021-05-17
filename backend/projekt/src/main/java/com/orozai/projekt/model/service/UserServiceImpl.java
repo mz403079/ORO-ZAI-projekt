@@ -75,7 +75,12 @@ public class UserServiceImpl implements IService<UserDTO>{
 
   public void updateProfilePic(Long userId, MultipartFile file) {
     User user = userRepository.findById(userId).orElseThrow(DataNotFoundException::new);
-    Image image = imageService.create(file);
+    Image image = new Image();
+    try {
+      image.setImageData(Base64.getEncoder().encode(file.getBytes()));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     user.setProfileImage(image);
     userRepository.save(user);
 

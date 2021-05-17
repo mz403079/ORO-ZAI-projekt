@@ -60,7 +60,11 @@ public class ControllerTest {
     Collection<PostTagDTO> tags = postTagService.getAll();
     return new ResponseEntity<>(tags, HttpStatus.OK);
   }
-
+  @GetMapping(value = "/search/{query}")
+  public ResponseEntity<Collection<PostDTO>> getPostsFromQuery(@PathVariable("query") String query) {
+    Collection<PostDTO> posts = postService.getByQuery(query);
+    return new ResponseEntity<>(posts,HttpStatus.OK);
+  }
   @PostMapping(value ="/likeComment")
   public ResponseEntity<CommentLikeDTO> likePost(@RequestBody CommentLikeFormDTO commentLikeFormDTO) {
     CommentLikeDTO commentLikeDTO = modelMapper.map(commentLikeFormDTO, CommentLikeDTO.class);

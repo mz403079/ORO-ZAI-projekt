@@ -17,7 +17,7 @@
             <PopularTags></PopularTags>
           </b-row>
           <b-row>
-            <TopUsers></TopUsers>
+            <PopularUsers></PopularUsers>
           </b-row>
         </b-col>
       </b-row>
@@ -29,19 +29,21 @@
 import PopularTags from "@/components/PopularTags";
 import SideNavigation from "@/components/SideNavigation";
 import PostViewer from "@/components/PostViewer";
-import TopUsers from "@/components/TopUsers";
+import PopularUsers from "@/components/PopularUsers";
 import instance from "@/server";
 
 export default {
   name: 'HelloWorld',
-  components: {PopularTags, SideNavigation, PostViewer, TopUsers},
+  components: {PopularTags, SideNavigation, PostViewer, PopularUsers},
   data() {
     return {
       posts: [],
+      posty: [],
     }
   },
   created() {
     this.getPosts();
+    this.getPostsy();
   },
   methods: {
     getPosts() {
@@ -49,6 +51,14 @@ export default {
           .then((response) => {
             this.posts = response.data;
           })
+    },
+    //TESTING QUERY SEARCH
+    getPostsy() {
+      instance.get("/api/search/1234")
+      .then((response) => {
+        this.posty = response.data;
+        console.log(this.posty);
+      })
     }
   }
 }

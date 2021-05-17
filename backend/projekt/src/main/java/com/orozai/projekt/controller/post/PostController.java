@@ -34,9 +34,9 @@ public class PostController {
     Collection<PostDTO> posts = postService.getLikedPosts(id);
     return new ResponseEntity<>(posts, HttpStatus.OK);
   }
-  @GetMapping(value = "/getUserPosts/{id}")
-  public ResponseEntity<Collection<PostDTO>> getUserPosts(@PathVariable("id") Long id) {
-    Collection<PostDTO> posts = postService.getByUserId(id);
+  @GetMapping(value = "/getUserPosts/{username}")
+  public ResponseEntity<Collection<PostDTO>> getUserPosts(@PathVariable("username") String username) {
+    Collection<PostDTO> posts = postService.getByUserUsername(username);
     return new ResponseEntity<>(posts, HttpStatus.OK);
   }
 
@@ -54,7 +54,7 @@ public class PostController {
       return new ResponseEntity<>(posts,HttpStatus.OK);
   }
 
-  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+//  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
   @GetMapping(value = "/post/{id}")
   public ResponseEntity<PostDTO> getPost(@PathVariable("id") Long id) {
     PostDTO post = postService.get(id);

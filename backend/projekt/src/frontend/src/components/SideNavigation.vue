@@ -3,7 +3,7 @@
     <div id="nav-wrapper">
       <nav>
         <div>
-          <router-link to="home">
+          <router-link to="/home">
             <div class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="house-door-fill"></b-icon>
@@ -13,7 +13,8 @@
               </div>
             </div>
           </router-link>
-              <router-link to="UserHome">
+
+              <router-link v-bind:to="'/user/'+user.username">
                 <div class="link-wrapper">
                   <div class="nav-icon">
                     <b-icon icon="person-circle"></b-icon>
@@ -33,7 +34,7 @@
                   </div>
                 </div>
               </b-link>
-              <router-link to="TopTags">
+              <router-link to="/topTags">
                 <div class="link-wrapper">
                   <div class="nav-icon">
                     <b-icon icon="hash"></b-icon>
@@ -44,7 +45,7 @@
                 </div>
               </router-link>
 
-              <router-link to="TrendingPosts">
+              <router-link to="/trending-posts">
                 <div class="link-wrapper">
                   <div class="nav-icon">
                     <b-icon icon="arrow-up-right-square"></b-icon>
@@ -82,6 +83,19 @@ export default {
   components: {
     NewPostForm,
   },
+  data() {
+    return {
+      user: null,
+    }
+  },
+  created() {
+    this.getUser();
+  },
+  methods: {
+    getUser() {
+      this.user = JSON.parse(localStorage.user);
+    }
+  }
 }
 </script>
 

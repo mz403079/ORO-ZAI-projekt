@@ -68,6 +68,11 @@ public class PostServiceImpl implements IService<PostDTO> {
     return getPostDTOS(posts);
   }
 
+  public Collection<PostDTO> getByQuery(String query) {
+    Collection<Post> posts = postRepository.findByTitleContainingOrContentContainingOrPostAuthorUsernameContaining(query,query,query);
+    return getPostDTOS(posts);
+  }
+
   @Override
   public PostDTO create(PostDTO postDTO) {
     return null;
@@ -132,6 +137,7 @@ public class PostServiceImpl implements IService<PostDTO> {
 
   public PostDTO update(long postId, int vote) {
     Post post = postRepository.findById(postId).orElseThrow(DataNotFoundException::new);
+    System.out.println("ESSSA like"+vote);
     post.setScore(post.getScore()+vote);
     postRepository.save(post);
     return null;
@@ -155,5 +161,10 @@ public class PostServiceImpl implements IService<PostDTO> {
       postsDTO.add(postToPostDTO(post));
     }
     return postsDTO;
+  }
+
+  public Collection<PostDTO> getByUserUsername(String username) {
+    Collection<Post> posts = postRepository.findAllByPostAuthorUsername(username);
+    return getPostDTOS(posts);
   }
 }

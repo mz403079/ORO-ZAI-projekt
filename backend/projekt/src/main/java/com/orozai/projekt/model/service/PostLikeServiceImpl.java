@@ -15,7 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PostLikeServiceImpl implements IService<PostLikeDTO>{
+public class PostLikeServiceImpl implements IService<PostLikeDTO> {
+
   private final ModelMapper modelMapper;
   private final PostLikeRepository postLikeRepository;
 
@@ -36,8 +37,11 @@ public class PostLikeServiceImpl implements IService<PostLikeDTO>{
   }
 
   public Collection<PostLikeDTO> getByUserId(long userId) {
-    return modelMapper.map(postLikeRepository.findAllByUserId(userId), new TypeToken<List<PostLikeDTO>>(){}.getType());
+    return modelMapper
+        .map(postLikeRepository.findAllByUserId(userId), new TypeToken<List<PostLikeDTO>>() {
+        }.getType());
   }
+
   @Override
   public PostLikeDTO create(PostLikeDTO postLikeDTO) {
     PostLike postLike = modelMapper.map(postLikeDTO, PostLike.class);
@@ -52,13 +56,16 @@ public class PostLikeServiceImpl implements IService<PostLikeDTO>{
 
   @Override
   public void delete(PostLikeDTO postLikeDTO) {
-    postLikeRepository.delete(modelMapper.map(postLikeDTO,PostLike.class));
+    PostLike postLike = postLikeRepository
+        .findByUserIdAndPostId(postLikeDTO.getUserId(), postLikeDTO.getPostId());
+    postLikeRepository.delete(postLike);
   }
 
 
   public boolean handleLike(PostLikeDTO postLikeDTO) {
-  Optional<PostLike> postLike =  postLikeRepository.findByUserIdAndPostId(postLikeDTO.getUserId(),postLikeDTO.getPostId());
-    if (postLike.isPresent()) {
+    PostLike postLike = postLikeRepository
+        .findByUserIdAndPostId(postLikeDTO.getUserId(), postLikeDTO.getPostId());
+    if (postLike != null) {
       delete(postLikeDTO);
       return false;
     }

@@ -35,7 +35,7 @@
               </b-avatar>
               <b-avatar v-else>R</b-avatar>
 
-              {{ item.author.username }} at {{ item.timePosted }}
+              <b-link :href="'/user/'+item.author.username">{{ item.author.username }}</b-link> at {{ item.timePosted }}
             </div>
           </b-row>
         </b-col>
@@ -152,8 +152,8 @@ export default {
 }
 
 .avatar-icon {
-  width: 40px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
 }
 
 .post-content-hidden {

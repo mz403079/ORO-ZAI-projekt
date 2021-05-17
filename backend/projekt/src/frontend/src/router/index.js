@@ -6,6 +6,8 @@ import SinglePostAdvanced from "@/components/SinglePostAdvanced";
 import AdminBoard from "@/components/AdminBoard";
 import Profile from "@/components/Profile";
 import TopTags from "@/components/TopTags";
+import TrendingPosts from "@/components/TrendingPosts";
+import UserPosts from "@/components/UserPosts";
 Vue.use(Router)
 
 export default new Router({
@@ -38,6 +40,14 @@ export default new Router({
         {
             path: '/topTags',
             component: TopTags,
+        },
+        {
+            path: '/trending-posts',
+            component: TrendingPosts,
+        },
+        {
+            path: '/user/:username',
+            component: UserPosts,
         }
     ]
 })
