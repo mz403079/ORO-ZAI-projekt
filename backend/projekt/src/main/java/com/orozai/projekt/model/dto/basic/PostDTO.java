@@ -25,6 +25,8 @@ public class PostDTO {
 
   private Set<TagDTO> tags = new HashSet<>();
 
+  private Set<UserDTO> likes = new HashSet<>();
+
   private Set<CommentDTO> comments = new HashSet<>();
 
   private int numOfComments;

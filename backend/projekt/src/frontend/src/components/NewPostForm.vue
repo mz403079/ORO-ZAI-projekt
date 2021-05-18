@@ -59,13 +59,14 @@ export default {
     checkForm() {
       event.preventDefault();
 
-      // let json = JSON.parse(localStorage.user); temp 1
+      let json = JSON.parse(localStorage.user);
+      console.log(json);
       this.formData = new FormData();
       this.formData.append("title", this.title);
       this.formData.append("content", this.content);
       this.formData.append("file", this.selectedFile);
       this.formData.append("tags", this.selected);
-      this.formData.append("authorId", 1);    // temp 1
+      this.formData.append("authorId", parseInt(json.id));    // temp 1
       console.log(this.formData);
       instance.post("/api/addPost", this.formData, {headers: multipartHeaders})
     },

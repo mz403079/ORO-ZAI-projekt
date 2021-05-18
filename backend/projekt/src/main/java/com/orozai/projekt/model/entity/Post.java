@@ -11,7 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.Getter;
@@ -35,10 +37,6 @@ public class Post {
   @Type(type = "text")
   private String content;
 
-  private String link;
-
-  private int score;
-
   @OneToOne
   private User postAuthor;
 
@@ -46,13 +44,21 @@ public class Post {
   @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime timePosted;
 
-  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-  private Set<PostTag> tags = new HashSet<>();
+  @ManyToMany(mappedBy = "likedPosts")
+  private Set<User> likes = new HashSet<>();
+
+  @JoinTable
+  @ManyToMany
+  private Set<Tag> tags = new HashSet<>();
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<Comment> comments = new HashSet<>();
   
   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Image postImage;
+
+  public int getNumOfLikes() {
+    return likes.size();
+  }
 
 }

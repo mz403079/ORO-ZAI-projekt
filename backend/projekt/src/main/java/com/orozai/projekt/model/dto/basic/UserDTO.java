@@ -1,13 +1,9 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.orozai.projekt.model.entity.Image;
-import com.orozai.projekt.model.entity.PostLike;
+import com.orozai.projekt.model.entity.Post;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +19,8 @@ public class UserDTO {
   private String email;
   @JsonIgnore
   private Set<CommentDTO> comments = new HashSet<>();
+  @JsonIgnore
+  private Set<PostDTO> likedPosts = new HashSet<>();
 
   private ImageDTO profileImage;
 }

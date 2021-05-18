@@ -1,11 +1,8 @@
 package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.model.dto.basic.CommentLikeDTO;
-import com.orozai.projekt.model.dto.basic.PostLikeDTO;
 import com.orozai.projekt.model.entity.Comment;
 import com.orozai.projekt.model.entity.CommentLike;
-import com.orozai.projekt.model.entity.Post;
-import com.orozai.projekt.model.entity.PostLike;
 import com.orozai.projekt.model.entity.User;
 import com.orozai.projekt.model.repository.CommentLikeRepository;
 import java.util.Collection;

@@ -49,10 +49,22 @@ public class User {
   @OneToMany(mappedBy = "commentAuthor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<Comment> comments = new HashSet<>();
 
+  @ManyToMany
+  private Set<Post> likedPosts = new HashSet<>();
+
   @Column(nullable = false)
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(	name = "user_roles",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> Roles = new HashSet<>();
+
+  public void addLike(Post post) {
+    this.likedPosts.add(post);
+    post.getLikes().add(this);
+  }
+  public void removeLike(Post post) {
+    this.likedPosts.remove(post);
+    post.getLikes().remove(this);
+  }
 }

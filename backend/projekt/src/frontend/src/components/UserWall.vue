@@ -33,32 +33,22 @@ import PopularUsers from "@/components/PopularUsers";
 import instance from "@/server";
 
 export default {
-  name: 'HelloWorld',
+  name: 'UserWall',
   components: {PopularTags, SideNavigation, PostViewer, PopularUsers},
   data() {
     return {
       posts: [],
-      posty: [],
     }
   },
   created() {
     this.getPosts();
-    this.getPostsy();
   },
   methods: {
     getPosts() {
-      instance.get("/api/getPosts")
-          .then((response) => {
-            this.posts = response.data;
-            console.log(this.posts);
-          })
-    },
-    //TESTING QUERY SEARCH
-    getPostsy() {
-      instance.get("/api/search/1234")
+      let user = JSON.parse(localStorage.user);
+      instance.get("/api/getProfilePosts/"+user.id)
       .then((response) => {
-        this.posty = response.data;
-        console.log(this.posty);
+        this.posts = response.data;
       })
     }
   }

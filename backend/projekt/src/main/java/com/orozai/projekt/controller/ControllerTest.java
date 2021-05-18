@@ -2,16 +2,11 @@ package com.orozai.projekt.controller;
 
 import com.orozai.projekt.model.dto.basic.*;
 import com.orozai.projekt.model.dto.specialized.CommentLikeFormDTO;
-import com.orozai.projekt.model.dto.specialized.PostLikeFormDTO;
 import com.orozai.projekt.model.service.CommentLikeServiceImpl;
 import com.orozai.projekt.model.service.CommentServiceImpl;
 import com.orozai.projekt.model.service.ImageServiceImpl;
-import com.orozai.projekt.model.service.PostLikeServiceImpl;
 import com.orozai.projekt.model.service.PostServiceImpl;
-import com.orozai.projekt.model.service.PostTagServiceImpl;
-import com.orozai.projekt.model.service.TagServiceImpl;
 import com.orozai.projekt.model.service.UserServiceImpl;
-import java.util.ArrayList;
 import java.util.Collection;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -30,36 +25,30 @@ public class ControllerTest {
 
   private final ModelMapper modelMapper;
   private final PostServiceImpl postService;
-  private final PostTagServiceImpl postTagService;
   private final UserServiceImpl userService;
   private final CommentServiceImpl commentService;
   private final ImageServiceImpl imageService;
-  private final PostLikeServiceImpl postLikeService;
   private final CommentLikeServiceImpl commentLikeService;
 
   public ControllerTest(ModelMapper modelMapper, PostServiceImpl postService,
-      PostTagServiceImpl postTagService,
       UserServiceImpl userService,
       CommentServiceImpl commentService,
       ImageServiceImpl imageService,
-      PostLikeServiceImpl postLikeService,
       CommentLikeServiceImpl commentLikeService) {
     this.modelMapper = modelMapper;
     this.postService = postService;
-    this.postTagService = postTagService;
     this.userService = userService;
     this.commentService = commentService;
     this.imageService = imageService;
-    this.postLikeService = postLikeService;
     this.commentLikeService = commentLikeService;
   }
 
 
-  @GetMapping(value = "/getPostTag")
-  public ResponseEntity<Collection<PostTagDTO>> getPostTags() {
-    Collection<PostTagDTO> tags = postTagService.getAll();
-    return new ResponseEntity<>(tags, HttpStatus.OK);
-  }
+//  @GetMapping(value = "/getPostTag")
+//  public ResponseEntity<Collection<PostTagDTO>> getPostTags() {
+//    Collection<PostTagDTO> tags = postTagService.getAll();
+//    return new ResponseEntity<>(tags, HttpStatus.OK);
+//  }
   @GetMapping(value = "/search/{query}")
   public ResponseEntity<Collection<PostDTO>> getPostsFromQuery(@PathVariable("query") String query) {
     Collection<PostDTO> posts = postService.getByQuery(query);
@@ -84,10 +73,14 @@ public class ControllerTest {
   }
   @PostMapping(value ="/likePost")
   public ResponseEntity<PostLikeDTO> likePost(@RequestBody PostLikeDTO postLikeDTO) {
-    if(postLikeService.handleLike(postLikeDTO))
-      postService.update(postLikeDTO.getPostId(),1);
-    else
-      postService.update(postLikeDTO.getPostId(),-1);
+    UserDTO user =  userService.get(postLikeDTO.getUserId());
+    PostDTO post = postService.get(postLikeDTO.getPostId());
+    userService.update(user, post);
+//    postService.update(post,user);
+//    if(postLikeService.handleLike(postLikeDTO))
+//      postService.update(postLikeDTO.getPostId(),1);
+//    else
+//      postService.update(postLikeDTO.getPostId(),-1);
     return new ResponseEntity<>(postLikeDTO,HttpStatus.OK);
   }
 

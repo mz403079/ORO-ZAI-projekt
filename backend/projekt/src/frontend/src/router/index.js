@@ -8,6 +8,7 @@ import Profile from "@/components/Profile";
 import TopTags from "@/components/TopTags";
 import TrendingPosts from "@/components/TrendingPosts";
 import UserPosts from "@/components/UserPosts";
+import UserWall from "@/components/UserWall";
 Vue.use(Router)
 
 export default new Router({
@@ -48,6 +49,10 @@ export default new Router({
         {
             path: '/user/:username',
             component: UserPosts,
+        },
+        {
+            path: '/my-wall',
+            component: UserWall,
         }
     ]
 })

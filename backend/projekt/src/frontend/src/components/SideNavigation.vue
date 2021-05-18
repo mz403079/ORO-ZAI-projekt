@@ -14,7 +14,7 @@
             </div>
           </router-link>
 
-              <router-link v-bind:to="'/user/'+user.username">
+              <router-link v-bind:to="'/my-wall/'">
                 <div class="link-wrapper">
                   <div class="nav-icon">
                     <b-icon icon="person-circle"></b-icon>
