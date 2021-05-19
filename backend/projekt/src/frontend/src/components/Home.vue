@@ -20,9 +20,9 @@ export default {
   methods: {
     getPosts() {
       instance.get("/api/getPosts")
-          .then((response) => {
-            this.posts = response.data;
-          })
+      .then((response) => {
+        this.posts = response.data;
+      })
     }
   }
 }

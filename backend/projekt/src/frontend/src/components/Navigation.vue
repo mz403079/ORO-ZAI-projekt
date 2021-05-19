@@ -40,9 +40,10 @@
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
 import isUserAdmin from "@/isUserAdmin";
+
 export default {
   name: "Navigation",
-  components : {
+  components: {
     LoginForm, RegisterForm
   },
   computed: {
@@ -53,7 +54,7 @@ export default {
       return isUserAdmin();
     }
   },
-  methods : {
+  methods: {
     logOut() {
       localStorage.clear();
     }
@@ -63,10 +64,11 @@ export default {
 
 <style scoped>
 .nav-button {
-  background-color:#343a40;
+  background-color: #343a40;
   border: 0;
   border-radius: 9999px;
 }
+
 .nav-button:hover {
   background-color: #c1c1c1;
   color: gold;

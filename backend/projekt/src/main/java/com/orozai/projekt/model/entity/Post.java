@@ -41,7 +41,7 @@ public class Post {
   private User postAuthor;
 
   @Column(nullable = false)
-  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime timePosted;
 
   @ManyToMany(mappedBy = "likedPosts")
@@ -53,7 +53,7 @@ public class Post {
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<Comment> comments = new HashSet<>();
-  
+
   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Image postImage;
 

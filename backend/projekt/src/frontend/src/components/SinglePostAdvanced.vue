@@ -5,7 +5,8 @@
         <b-col>
           <h3> {{ post.title }}
             <b-badge>Hot</b-badge>
-            <b-badge :href="'/tag/'+tag.tagId" v-for="tag in post.tags" v-bind:key="tag.tagId" class="tagBadge">
+            <b-badge :href="'/tag/'+tag.tagId" v-for="tag in post.tags" v-bind:key="tag.tagId"
+                     class="tagBadge">
               {{ tag.tagName }}
             </b-badge>
           </h3>
@@ -47,9 +48,9 @@ export default {
   methods: {
     getPost() {
       instance.get("/api/post/" + this.$route.params.id, {headers: authHeader()})
-          .then((response) => {
-            this.post = response.data;
-          })
+      .then((response) => {
+        this.post = response.data;
+      })
     }
   }
 }

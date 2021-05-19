@@ -7,7 +7,7 @@
             <SideNavigation></SideNavigation>
           </div>
         </b-col>
-        <b-col cols="9" sm="10" md="5"  offset-md="1">
+        <b-col cols="9" sm="10" md="5" offset-md="1">
           <div id="post-viewer-wrapper">
             <PostViewer v-bind:postsToDisplay="this.posts"></PostViewer>
           </div>
@@ -48,10 +48,10 @@ export default {
   methods: {
     getPosts() {
       instance.get("/api/getPosts")
-          .then((response) => {
-            this.posts = response.data;
-            console.log(this.posts);
-          })
+      .then((response) => {
+        this.posts = response.data;
+        console.log(this.posts);
+      })
     },
     //TESTING QUERY SEARCH
     getPostsy() {

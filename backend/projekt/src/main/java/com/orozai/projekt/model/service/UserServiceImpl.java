@@ -9,7 +9,6 @@ import com.orozai.projekt.model.entity.Image;
 import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.Role;
 import com.orozai.projekt.model.entity.User;
-import com.orozai.projekt.model.repository.ImageRepository;
 import com.orozai.projekt.model.repository.PostRepository;
 import com.orozai.projekt.model.repository.RoleRepository;
 import com.orozai.projekt.model.repository.UserRepository;
@@ -26,11 +25,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class UserServiceImpl implements IService<UserDTO>{
+public class UserServiceImpl implements IService<UserDTO> {
+
   private final ModelMapper modelMapper;
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
-  private final ImageRepository imageRepository;
   private final ImageServiceImpl imageService;
   private final PostRepository postRepository;
 
@@ -40,13 +39,11 @@ public class UserServiceImpl implements IService<UserDTO>{
   public UserServiceImpl(ModelMapper modelMapper,
       UserRepository userRepository,
       RoleRepository roleRepository,
-      ImageRepository imageRepository,
       ImageServiceImpl imageService,
       PostRepository postRepository, PasswordEncoder encoder) {
     this.modelMapper = modelMapper;
     this.userRepository = userRepository;
     this.roleRepository = roleRepository;
-    this.imageRepository = imageRepository;
     this.imageService = imageService;
     this.postRepository = postRepository;
     this.encoder = encoder;
@@ -88,34 +85,34 @@ public class UserServiceImpl implements IService<UserDTO>{
     userRepository.save(user);
 
   }
+
   @Override
   public UserDTO update(UserDTO userDTO) {
     return null;
   }
+
   @Transactional
   public UserDTO update(UserDTO userDTO, PostDTO postDTO) {
-//    Set<PostDTO> likedPosts = userDTO.getLikedPosts();
-//    if(likedPosts.contains(postDTO))
-//      likedPosts.remove(postDTO);
-//    else
-//      likedPosts.add(postDTO);
-//    userDTO.setLikedPosts(likedPosts);
-//    userRepository.save(modelMapper.map(userDTO,User.class));
-    User user = userRepository.findById(userDTO.getUserId()).orElseThrow(DataNotFoundException::new);
-    Post post = postRepository.findById(postDTO.getPostId()).orElseThrow(DataNotFoundException::new);
-    if(user.getLikedPosts().contains(post))
+    User user = userRepository.findById(userDTO.getUserId())
+        .orElseThrow(DataNotFoundException::new);
+    Post post = postRepository.findById(postDTO.getPostId())
+        .orElseThrow(DataNotFoundException::new);
+    if (user.getLikedPosts().contains(post)) {
       user.removeLike(post);
-    else
+    } else {
       user.addLike(post);
+    }
     return userDTO;
   }
+
   public UserDTO userToUserDTO(User user) {
-    UserDTO userDTO = modelMapper.map(user,UserDTO.class);
+    UserDTO userDTO = modelMapper.map(user, UserDTO.class);
     userDTO.setProfileImage(imageService.imageToImageDTO(user.getProfileImage()));
     return userDTO;
   }
+
   public void setUsers(Collection<UserCountDTO> tops) {
-    for(UserCountDTO user : tops) {
+    for (UserCountDTO user : tops) {
       user.setUser(this.get(user.getId()));
     }
   }

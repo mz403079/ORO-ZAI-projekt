@@ -66,7 +66,7 @@ export default {
       this.formData.append("content", this.content);
       this.formData.append("file", this.selectedFile);
       this.formData.append("tags", this.selected);
-      this.formData.append("authorId", parseInt(json.id));    // temp 1
+      this.formData.append("authorId", parseInt(json.id));
       console.log(this.formData);
       instance.post("/api/addPost", this.formData, {headers: multipartHeaders})
     },
@@ -87,9 +87,9 @@ export default {
   },
   created() {
     instance.get("/api/getTags")
-        .then((response) => {
-          this.tags = response.data;
-        })
+    .then((response) => {
+      this.tags = response.data;
+    })
   }
 }
 </script>
@@ -98,6 +98,7 @@ export default {
 .tagButton {
   padding: 10px;
 }
+
 .formWrapper {
   background-color: white;
   padding: 25px;

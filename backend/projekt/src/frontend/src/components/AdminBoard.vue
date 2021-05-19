@@ -1,23 +1,24 @@
 <template>
-<div>
-  no
-  {{response}}
-</div>
+  <div>
+    no
+    {{ response }}
+  </div>
 </template>
 
 <script>
 import instance from "@/server";
+
 export default {
   name: "AdminBoard",
   data() {
     return {
-      response : null,
+      response: null,
     }
   },
   created() {
-      instance.get("api/getAdminBoard").then(response => {
+    instance.get("api/getAdminBoard").then(response => {
       console.log(response.data)
-      })
+    })
   }
 }
 </script>

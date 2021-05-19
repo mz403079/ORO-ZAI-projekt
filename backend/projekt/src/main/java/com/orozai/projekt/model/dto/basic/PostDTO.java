@@ -1,7 +1,6 @@
 package com.orozai.projekt.model.dto.basic;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.orozai.projekt.model.entity.User;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PostDTO {
+
   private Long postId;
 
   private String title;
@@ -20,7 +20,7 @@ public class PostDTO {
   private int score;
 
   private UserDTO author;
-  @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
   private LocalDateTime timePosted;
 
   private Set<TagDTO> tags = new HashSet<>();

@@ -26,21 +26,22 @@ import headers from "@/headers";
 export default {
   name: "Login",
 
-  data () {
+  data() {
     return {
-      username : "",
-      password : "",
+      username: "",
+      password: "",
     }
   },
 
-  methods : {
+  methods: {
     checkForm() {
       event.preventDefault();
       let json = JSON.stringify({
         "username": this.username,
         "plainPassword": this.password,
       })
-      instance.post("/api/auth/signin",json, {headers : headers}).then(response => {
+      instance.post("/api/auth/signin", json, {headers: headers}).then(response => {
+        console.log(response.data);
         localStorage.setItem('user', JSON.stringify(response.data));
       })
     }

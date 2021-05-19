@@ -4,8 +4,6 @@ import com.orozai.projekt.model.dto.basic.UserDTO;
 import com.orozai.projekt.model.dto.specialized.JwtResponse;
 import com.orozai.projekt.model.dto.specialized.LoginFormDTO;
 import com.orozai.projekt.model.dto.specialized.RegisterFormDTO;
-import com.orozai.projekt.model.repository.RoleRepository;
-import com.orozai.projekt.model.repository.UserRepository;
 import com.orozai.projekt.model.service.UserDetailsImpl;
 import com.orozai.projekt.model.service.UserServiceImpl;
 import com.orozai.projekt.security.JwtUtils;
@@ -20,7 +18,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
   @Autowired
   private final AuthenticationManager authenticationManager;
 
@@ -52,7 +50,8 @@ public class AuthController {
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginFormDTO loginFormDTO) {
     Authentication authentication = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(loginFormDTO.getUsername(), loginFormDTO.getPassword()));
+        new UsernamePasswordAuthenticationToken(loginFormDTO.getUsername(),
+            loginFormDTO.getPassword()));
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
     String jwt = jwtUtils.generateJwtToken(authentication);

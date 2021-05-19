@@ -1,7 +1,6 @@
 package com.orozai.projekt.model.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.orozai.projekt.model.entity.Role;
 import com.orozai.projekt.model.entity.User;
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @Setter
 public class UserDetailsImpl implements UserDetails {
+
   private static final long serialVersionUTD = 1L;
 
   private long userId;

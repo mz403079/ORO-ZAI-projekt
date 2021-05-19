@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommentLikeFormDTO {
+
   private long userId;
 
   private long commentId;

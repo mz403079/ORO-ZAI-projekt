@@ -11,7 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommentLikeServiceImpl implements IService<CommentLikeDTO>{
+public class CommentLikeServiceImpl implements IService<CommentLikeDTO> {
+
   private final ModelMapper modelMapper;
   private final CommentLikeRepository commentLikeRepository;
 
@@ -45,14 +46,15 @@ public class CommentLikeServiceImpl implements IService<CommentLikeDTO>{
 
   @Override
   public void delete(CommentLikeDTO commentLikeDTO) {
-    commentLikeRepository.delete(modelMapper.map(commentLikeDTO,CommentLike.class));
+    commentLikeRepository.delete(modelMapper.map(commentLikeDTO, CommentLike.class));
 
   }
 
   public void handleComment(CommentLikeDTO commentLikeDTO) {
-    Optional<CommentLike> commentLike =  commentLikeRepository.findByUserAndComment(modelMapper.map(commentLikeDTO.getUser(), User.class),
-        modelMapper.map(commentLikeDTO.getComment(),
-            Comment.class));
+    Optional<CommentLike> commentLike = commentLikeRepository
+        .findByUserAndComment(modelMapper.map(commentLikeDTO.getUser(), User.class),
+            modelMapper.map(commentLikeDTO.getComment(),
+                Comment.class));
     if (commentLike.isPresent()) {
       delete(commentLikeDTO);
       return;

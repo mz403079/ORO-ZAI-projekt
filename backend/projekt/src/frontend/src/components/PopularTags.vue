@@ -24,9 +24,9 @@ export default {
   methods: {
     getPopularTags() {
       instance.get("/api/getTags")
-          .then((response) => {
-            this.tags = response.data;
-          })
+      .then((response) => {
+        this.tags = response.data;
+      })
     }
   }
 }

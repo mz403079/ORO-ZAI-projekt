@@ -2,9 +2,7 @@ package com.orozai.projekt.model.service;
 
 import com.orozai.projekt.exception.DataNotFoundException;
 import com.orozai.projekt.model.dto.basic.PostDTO;
-import com.orozai.projekt.model.dto.basic.PostLikeDTO;
 import com.orozai.projekt.model.dto.basic.UserCountDTO;
-import com.orozai.projekt.model.dto.basic.UserDTO;
 import com.orozai.projekt.model.entity.Image;
 import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.Tag;
@@ -17,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.transaction.Transactional;
@@ -120,15 +117,11 @@ public class PostServiceImpl implements IService<PostDTO> {
     if (content != null) {
       post.setContent(content);
     }
-
     post.setPostAuthor(userRepository.findById((long) authorId).orElseThrow(
         DataNotFoundException::new));
-
     post.setTimePosted(LocalDateTime.now());
     postRepository.save(post);
-
     return null;
-
   }
 
   @Override

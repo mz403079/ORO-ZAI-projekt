@@ -14,58 +14,58 @@
             </div>
           </router-link>
 
-              <router-link v-bind:to="'/my-wall/'">
-                <div class="link-wrapper">
-                  <div class="nav-icon">
-                    <b-icon icon="person-circle"></b-icon>
-                  </div>
-                  <div class="nav-text d-none d-lg-block">
-                    <span>Profile</span>
-                  </div>
-                </div>
-              </router-link>
-              <b-link v-b-modal.newPostModal class="link">
-                <div class="link-wrapper">
-                  <div class="nav-icon">
-                    <b-icon icon="plus-circle"></b-icon>
-                  </div>
-                  <div class="nav-text d-none d-lg-block">
-                    <span>New post</span>
-                  </div>
-                </div>
-              </b-link>
-              <router-link to="/topTags">
-                <div class="link-wrapper">
-                  <div class="nav-icon">
-                    <b-icon icon="hash"></b-icon>
-                  </div>
-                  <div class="nav-text d-none d-lg-block">
-                    <span>Top 100</span>
-                  </div>
-                </div>
-              </router-link>
+          <router-link v-bind:to="'/my-wall/'">
+            <div class="link-wrapper">
+              <div class="nav-icon">
+                <b-icon icon="person-circle"></b-icon>
+              </div>
+              <div class="nav-text d-none d-lg-block">
+                <span>Profile</span>
+              </div>
+            </div>
+          </router-link>
+          <b-link v-b-modal.newPostModal class="link">
+            <div class="link-wrapper">
+              <div class="nav-icon">
+                <b-icon icon="plus-circle"></b-icon>
+              </div>
+              <div class="nav-text d-none d-lg-block">
+                <span>New post</span>
+              </div>
+            </div>
+          </b-link>
+          <router-link to="/topTags">
+            <div class="link-wrapper">
+              <div class="nav-icon">
+                <b-icon icon="hash"></b-icon>
+              </div>
+              <div class="nav-text d-none d-lg-block">
+                <span>Top 100</span>
+              </div>
+            </div>
+          </router-link>
 
-              <router-link to="/trending-posts">
-                <div class="link-wrapper">
-                  <div class="nav-icon">
-                    <b-icon icon="arrow-up-right-square"></b-icon>
-                  </div>
-                  <div class="nav-text d-none d-lg-block">
-                    <span>Trending posts</span>
-                  </div>
-                </div>
-              </router-link>
-              <router-link to="Help">
-                <div class="link-wrapper">
-                  <div class="nav-icon">
-                    <b-icon icon="question-circle"></b-icon>
-                  </div>
-                  <div class="nav-text d-none d-lg-block">
-                    <span>Help</span>
-                  </div>
-                </div>
-              </router-link>
-            <router-view/>
+          <router-link to="/trending-posts">
+            <div class="link-wrapper">
+              <div class="nav-icon">
+                <b-icon icon="arrow-up-right-square"></b-icon>
+              </div>
+              <div class="nav-text d-none d-lg-block">
+                <span>Trending posts</span>
+              </div>
+            </div>
+          </router-link>
+          <router-link to="Help">
+            <div class="link-wrapper">
+              <div class="nav-icon">
+                <b-icon icon="question-circle"></b-icon>
+              </div>
+              <div class="nav-text d-none d-lg-block">
+                <span>Help</span>
+              </div>
+            </div>
+          </router-link>
+          <router-view/>
         </div>
       </nav>
     </div>
@@ -113,7 +113,7 @@ export default {
   width: 75%;
 }
 
-.link {
+a {
   text-decoration: none;
 }
 

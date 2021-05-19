@@ -2,7 +2,8 @@
   <div>
     {{ user.username }} - {{ user.email }}
     <div v-if="user.profileImage != null">
-      <img class="post-icon" :src="`data:image/png;base64, ${user.profileImage.imageData}`" alt="essa">
+      <img class="post-icon" :src="`data:image/png;base64, ${user.profileImage.imageData}`"
+           alt="essa">
     </div>
     <form id="profilePicForm"
           @submit="checkForm">
@@ -61,7 +62,8 @@ export default {
       this.formData.append("file", this.selectedFile);
       this.formData.append("userId", this.user.id);
       console.log(this.formData);
-      instance.post("/api/profile/" + this.user.userId + "/pic", this.formData, {headers: multipartHeaders})
+      instance.post("/api/profile/" + this.user.userId + "/pic", this.formData,
+          {headers: multipartHeaders})
     },
   }
 }

@@ -24,16 +24,19 @@ public class ImageServiceImpl implements IService<ImageDTO> {
   }
 
   public ImageDTO imageToImageDTO(Image image) {
-    if(image == null)
+    if (image == null) {
       return null;
-    ImageDTO imageDTO = modelMapper.map(image,ImageDTO.class);
+    }
+    ImageDTO imageDTO = modelMapper.map(image, ImageDTO.class);
     byte[] imageData = image.getImageData();
-    if(imageData != null && imageData.length > 0)
+    if (imageData != null && imageData.length > 0) {
       imageDTO.setImageData(new String(imageData));
-    else
+    } else {
       imageDTO.setImageData(null);
+    }
     return imageDTO;
   }
+
   @Override
   public ImageDTO get(Long id) {
     Image image = imageRepository.findById(id).orElseThrow(DataNotFoundException::new);
@@ -67,6 +70,7 @@ public class ImageServiceImpl implements IService<ImageDTO> {
     }
     return null;
   }
+
   @Override
   public ImageDTO update(ImageDTO imageDTO) {
     return null;

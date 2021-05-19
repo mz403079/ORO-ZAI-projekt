@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="b-container comment" v-for="comment in comments" :key="comment.commentId">
-      {{comment.commentAuthor.username}} said {{comment.content}}
+      {{ comment.commentAuthor.username }} said {{ comment.content }}
     </div>
   </div>
 </template>

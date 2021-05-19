@@ -6,7 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TagCount {
-    Tag tag;
 
-    Long totalCount;
+  Tag tag;
+
+  Long totalCount;
 }

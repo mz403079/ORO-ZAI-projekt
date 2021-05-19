@@ -1,6 +1,11 @@
 package com.orozai.projekt.controller;
 
-import com.orozai.projekt.model.dto.basic.*;
+import com.orozai.projekt.model.dto.basic.CommentLikeDTO;
+import com.orozai.projekt.model.dto.basic.ImageDTO;
+import com.orozai.projekt.model.dto.basic.PostDTO;
+import com.orozai.projekt.model.dto.basic.PostLikeDTO;
+import com.orozai.projekt.model.dto.basic.UserCountDTO;
+import com.orozai.projekt.model.dto.basic.UserDTO;
 import com.orozai.projekt.model.dto.specialized.CommentLikeFormDTO;
 import com.orozai.projekt.model.service.CommentLikeServiceImpl;
 import com.orozai.projekt.model.service.CommentServiceImpl;
@@ -44,25 +49,28 @@ public class ControllerTest {
   }
 
 
-//  @GetMapping(value = "/getPostTag")
+  //  @GetMapping(value = "/getPostTag")
 //  public ResponseEntity<Collection<PostTagDTO>> getPostTags() {
 //    Collection<PostTagDTO> tags = postTagService.getAll();
 //    return new ResponseEntity<>(tags, HttpStatus.OK);
 //  }
   @GetMapping(value = "/search/{query}")
-  public ResponseEntity<Collection<PostDTO>> getPostsFromQuery(@PathVariable("query") String query) {
+  public ResponseEntity<Collection<PostDTO>> getPostsFromQuery(
+      @PathVariable("query") String query) {
     Collection<PostDTO> posts = postService.getByQuery(query);
-    return new ResponseEntity<>(posts,HttpStatus.OK);
+    return new ResponseEntity<>(posts, HttpStatus.OK);
   }
-  @PostMapping(value ="/likeComment")
-  public ResponseEntity<CommentLikeDTO> likePost(@RequestBody CommentLikeFormDTO commentLikeFormDTO) {
+
+  @PostMapping(value = "/likeComment")
+  public ResponseEntity<CommentLikeDTO> likePost(
+      @RequestBody CommentLikeFormDTO commentLikeFormDTO) {
     CommentLikeDTO commentLikeDTO = modelMapper.map(commentLikeFormDTO, CommentLikeDTO.class);
     commentLikeDTO.setUser(userService.get(commentLikeFormDTO.getUserId()));
     commentLikeDTO.setComment(commentService.get(commentLikeFormDTO.getCommentId()));
     commentLikeService.handleComment(commentLikeDTO);
     Collection<UserCountDTO> user = postService.getTopUserIds();
     userService.setUsers(user);
-    return new ResponseEntity<>(commentLikeDTO,HttpStatus.OK);
+    return new ResponseEntity<>(commentLikeDTO, HttpStatus.OK);
   }
 
   @GetMapping(value = "/getTopUsers")
@@ -71,9 +79,10 @@ public class ControllerTest {
     userService.setUsers(tops);
     return new ResponseEntity<>(tops, HttpStatus.OK);
   }
-  @PostMapping(value ="/likePost")
+
+  @PostMapping(value = "/likePost")
   public ResponseEntity<PostLikeDTO> likePost(@RequestBody PostLikeDTO postLikeDTO) {
-    UserDTO user =  userService.get(postLikeDTO.getUserId());
+    UserDTO user = userService.get(postLikeDTO.getUserId());
     PostDTO post = postService.get(postLikeDTO.getPostId());
     userService.update(user, post);
 //    postService.update(post,user);
@@ -81,19 +90,19 @@ public class ControllerTest {
 //      postService.update(postLikeDTO.getPostId(),1);
 //    else
 //      postService.update(postLikeDTO.getPostId(),-1);
-    return new ResponseEntity<>(postLikeDTO,HttpStatus.OK);
+    return new ResponseEntity<>(postLikeDTO, HttpStatus.OK);
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping(value="/getAdminBoard")
+  @GetMapping(value = "/getAdminBoard")
   public ResponseEntity<String> getAdminBoard() {
-    return new ResponseEntity<>("essa",HttpStatus.OK);
+    return new ResponseEntity<>("essa", HttpStatus.OK);
 
   }
 
   @GetMapping("/getImage/{id}")
   public ResponseEntity<ImageDTO> getImage(@PathVariable("id") Long id) {
     ImageDTO imageDTO = imageService.get(id);
-    return new ResponseEntity<>(imageDTO,HttpStatus.OK);
+    return new ResponseEntity<>(imageDTO, HttpStatus.OK);
   }
 }

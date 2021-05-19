@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class TagController {
+
   private final TagServiceImpl tagService;
 
   public TagController(TagServiceImpl tagService) {

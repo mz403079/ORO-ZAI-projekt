@@ -9,13 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommentDTO {
+
   private Long commentId;
 
   private String content;
 
   private int score;
 
-  @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
   private LocalDateTime timeCommented;
   @JsonIgnore
   private PostDTO post;

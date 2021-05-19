@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/profile")
 public class UserController {
+
   private final UserServiceImpl userService;
 
   public UserController(UserServiceImpl userService) {
@@ -24,13 +25,13 @@ public class UserController {
   @GetMapping("/{id}")
   public ResponseEntity<UserDTO> getProfilePage(@PathVariable("id") Long userID) {
     UserDTO userDTO = userService.get(userID);
-    return new ResponseEntity<>(userDTO,HttpStatus.OK);
+    return new ResponseEntity<>(userDTO, HttpStatus.OK);
   }
 
   @PostMapping("/{id}/pic")
   public ResponseEntity<String> updateUserData(@PathVariable("id") Long userID,
-      @RequestParam(name="file") MultipartFile file) {
-      userService.updateProfilePic(userID,file);
+      @RequestParam(name = "file") MultipartFile file) {
+    userService.updateProfilePic(userID, file);
 
     return new ResponseEntity<>("pic changed", HttpStatus.OK);
   }

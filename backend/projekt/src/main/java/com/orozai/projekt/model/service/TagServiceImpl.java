@@ -29,12 +29,15 @@ public class TagServiceImpl implements IService<TagDTO> {
 
   @Override
   public TagDTO get(Long id) {
-    return modelMapper.map(tagRepository.findById(id).orElseThrow(DataNotFoundException::new), TagDTO.class);
+    return modelMapper
+        .map(tagRepository.findById(id).orElseThrow(DataNotFoundException::new), TagDTO.class);
   }
 
   @Override
   public Collection<TagDTO> getAll() {
-    return modelMapper.map(tagRepository.findAll(Sort.by(Sort.Direction.ASC,"tagId")), new TypeToken<List<TagDTO>>(){}.getType());
+    return modelMapper.map(tagRepository.findAll(Sort.by(Sort.Direction.ASC, "tagId")),
+        new TypeToken<List<TagDTO>>() {
+        }.getType());
   }
 
   @Override
@@ -53,22 +56,24 @@ public class TagServiceImpl implements IService<TagDTO> {
   }
 
   public Collection<TagCountDTO> getTop() {
-    Collection<ICount> topTags =  tagRepository.getTopTags();
-    Collection<TagCountDTO> topTagDTOs = modelMapper.<List<TagCountDTO>>map(topTags, new TypeToken<List<TagCountDTO>>(){}.getType());
+    Collection<ICount> topTags = tagRepository.getTopTags();
+    Collection<TagCountDTO> topTagDTOs = modelMapper.<List<TagCountDTO>>map(topTags,
+        new TypeToken<List<TagCountDTO>>() {
+        }.getType());
     setTags(topTagDTOs);
     return topTagDTOs;
   }
 
   public void setTags(Collection<TagCountDTO> tops) {
-    for( TagCountDTO tag : tops) {
+    for (TagCountDTO tag : tops) {
       tag.setTag(this.get(tag.getId()));
     }
   }
 
   public Set<Tag> assignTagnames(int[] tagIds) {
     Set<Tag> tags = new HashSet<>();
-    for(int tagId : tagIds) {
-        tags.add(tagRepository.findById((long) tagId).orElseThrow(DataNotFoundException::new));
+    for (int tagId : tagIds) {
+      tags.add(tagRepository.findById((long) tagId).orElseThrow(DataNotFoundException::new));
     }
     return tags;
   }

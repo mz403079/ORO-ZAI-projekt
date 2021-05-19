@@ -18,6 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Comment {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Setter(AccessLevel.NONE)
@@ -28,7 +29,7 @@ public class Comment {
 
   private int score;
 
-  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime timeCommented;
 
   @ManyToOne(optional = false, fetch = FetchType.LAZY)

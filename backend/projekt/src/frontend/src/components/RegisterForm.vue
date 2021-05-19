@@ -30,24 +30,24 @@ import headers from "@/headers";
 
 export default {
   name: "Register",
-  data () {
+  data() {
     return {
-      username : "",
-      password : "",
-      email : "",
+      username: "",
+      password: "",
+      email: "",
     }
   },
 
-  methods : {
+  methods: {
     checkForm() {
       event.preventDefault();
       let json = JSON.stringify({
         "username": this.username,
         "plainPassword": this.password,
-        "email" : this.email,
+        "email": this.email,
       })
       console.log(json);
-      instance.post("/api/auth/signup",json, {headers : headers}).then((response) => {
+      instance.post("/api/auth/signup", json, {headers: headers}).then((response) => {
         console.log(response);
       })
     }

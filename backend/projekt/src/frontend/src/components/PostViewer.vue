@@ -16,8 +16,6 @@
         <b-col md="9">
           <b-link :href="'/post/'+item.postId" class="link">
             <h4 style="font-weight: 600;"> {{ item.title }}
-              <b-badge>Hot</b-badge>
-
               <b-badge v-for="tag in item.tags" v-bind:key="tag.tagId"
                        class="tagBadge">
                 <router-link v-bind:to="'/tag/'+tag.tagId">{{ tag.tagName }}</router-link>
@@ -28,39 +26,44 @@
           </b-link>
           <b-row>
             <div>
-              <b-avatar v-if="item.author.profileImage != null">
-                <img class="avatar-icon"
-                     :src="`data:image/png;base64, ${item.author.profileImage.imageData}`"
-                     alt="${item.title}">
-              </b-avatar>
-              <b-avatar v-else>R</b-avatar>
+              <b-link :href="'/user/'+item.author.username">
+                <b-avatar v-if="item.author.profileImage != null">
+                  <img class="avatar-icon"
+                       :src="`data:image/png;base64, ${item.author.profileImage.imageData}`"
+                       alt="${item.title}">
+                </b-avatar>
+                <b-avatar v-else>R</b-avatar>
 
-              <b-link :href="'/user/'+item.author.username">{{ item.author.username }}</b-link> at {{ item.timePosted }}
+                {{ item.author.username }}
+              </b-link>
+              at {{ item.timePosted }}
             </div>
           </b-row>
         </b-col>
       </b-row>
       <b-row>
-        <div>
-          <b-button class="icon-button" @click="likePost(item.postId)">
-            {{ item.score }}
-            <b-icon icon="heart"></b-icon>
-          </b-button>
-          <b-button class="icon-button">
-            <b-link :href="'/post/'+item.postId" style="text-decoration: none; color:black;">
-              <a style="font-weight: 600;"> {{ item.numOfComments }} </a>
-              <b-icon icon="chat-left-text"></b-icon>
-            </b-link>
-          </b-button>
-          <b-button class="icon-button" @click="toggleVisibility($event)">
-            <b-icon icon="arrows-angle-expand"></b-icon>
-          </b-button>
+        <div class="omega">
+          <div class="buttons-wrapper">
+            <b-button class="icon-button" @click="likePost(item.postId)">
+              {{ item.score }}
+              <b-icon icon="heart"></b-icon>
+            </b-button>
+            <b-button class="icon-button">
+              <b-link :href="'/post/'+item.postId" style="text-decoration: none; color:black;">
+                <a style="font-weight: 600;"> {{ item.numOfComments }} </a>
+                <b-icon icon="chat-left-text"></b-icon>
+              </b-link>
+            </b-button>
+            <b-button class="icon-button" @click="toggleVisibility($event)">
+              <b-icon icon="arrows-angle-expand"></b-icon>
+            </b-button>
+          </div>
           <div v-if="item.postImage != null" class="post-content-hidden">
 
             <img style="width:90%;" :src="`data:image/png;base64, ${item.postImage.imageData}`"
                  alt="${item.title}">
           </div>
-          <div v-else-if="item.content != null">
+          <div v-else-if="item.content != null" class="post-content-hidden">
             {{ item.content }}
           </div>
         </div>
@@ -99,12 +102,12 @@ export default {
       }
     },
     likePost(postId) {
-    let user = JSON.parse(localStorage.user);
+      let user = JSON.parse(localStorage.user);
       let json = JSON.stringify({
         "userId": user.id,
         "postId": postId,
       })
-       instance.post("/api/likePost",json, {headers : headers})
+      instance.post("/api/likePost", json, {headers: headers})
     }
   }
 
@@ -120,20 +123,36 @@ export default {
   border-bottom: solid #273E47 1px;
 }
 
+.omega {
+  width: 100%;
+}
+
+.buttons-wrapper {
+  display: flex;
+}
+
+.buttons-wrapper > * {
+  flex-basis: 100%;
+}
+
 .tagBadge {
   margin-left: 5px;
+  background-color: #FBF1FF;
+}
+
+a {
+  color: #A42CD6;
+  text-decoration: none;
 }
 
 .icon-button {
   background-color: white;
   border: 0;
-  border-radius: 100%;
   color: black;
 }
 
 .icon-button:hover {
   font-size: 1.1rem;
-  border-radius: 100%;
   color: #A42CD6;
   background-color: #FBF1FF;
 }

@@ -1,7 +1,6 @@
 package com.orozai.projekt.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -19,14 +18,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
 @Setter
-@Table(name="\"user\"")
+@Table(name = "\"user\"")
 public class User {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonIgnore
@@ -54,7 +52,7 @@ public class User {
 
   @Column(nullable = false)
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(	name = "user_roles",
+  @JoinTable(name = "user_roles",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> Roles = new HashSet<>();
@@ -63,6 +61,7 @@ public class User {
     this.likedPosts.add(post);
     post.getLikes().add(this);
   }
+
   public void removeLike(Post post) {
     this.likedPosts.remove(post);
     post.getLikes().remove(this);

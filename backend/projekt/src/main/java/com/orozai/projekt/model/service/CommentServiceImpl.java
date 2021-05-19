@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CommentServiceImpl implements IService<CommentDTO> {
+
   private final ModelMapper modelMapper;
   private final CommentRepository commentRepository;
 
@@ -27,7 +28,8 @@ public class CommentServiceImpl implements IService<CommentDTO> {
 
   @Override
   public Collection<CommentDTO> getAll() {
-    return modelMapper.map(commentRepository.findAll(), new TypeToken<Set<CommentDTO>>(){}.getType());
+    return modelMapper.map(commentRepository.findAll(), new TypeToken<Set<CommentDTO>>() {
+    }.getType());
   }
 
   @Override

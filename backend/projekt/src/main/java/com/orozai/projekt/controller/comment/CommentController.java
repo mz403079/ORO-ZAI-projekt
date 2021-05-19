@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class CommentController {
+
   private final ModelMapper modelMapper;
   private final UserServiceImpl userService;
   private final CommentServiceImpl commentService;
@@ -33,7 +34,7 @@ public class CommentController {
     this.postService = postService;
   }
 
-  @PostMapping(value ="/addComment")
+  @PostMapping(value = "/addComment")
   public ResponseEntity<CommentDTO> addComment(@RequestBody CommentFormDTO commentFormDTO) {
     CommentDTO commentDTO = modelMapper.map(commentFormDTO, CommentDTO.class);
     commentDTO.setCommentAuthor(userService.get(commentFormDTO.getAuthorId()));
@@ -41,6 +42,7 @@ public class CommentController {
     commentService.create(commentDTO);
     return new ResponseEntity<>(commentDTO, HttpStatus.OK);
   }
+
   @GetMapping(value = "/getComments")
   public ResponseEntity<Collection<CommentDTO>> getComments() {
     Collection<CommentDTO> comments = commentService.getAll();
