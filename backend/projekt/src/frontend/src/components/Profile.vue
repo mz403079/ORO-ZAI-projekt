@@ -50,7 +50,6 @@ export default {
     getLikedPosts() {
       instance.get("api/getLikedPosts/" + this.user.id).then(response => {
         this.posts = response.data;
-        console.log(this.posts);
       })
     },
     fileSelected(event) {

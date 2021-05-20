@@ -31,6 +31,7 @@ import PopularTags from "@/components/PopularTags";
 import PopularUsers from "@/components/PopularUsers";
 import SideNavigation from "@/components/SideNavigation";
 import instance from "@/server";
+import setLikes from "@/setLikes";
 
 export default {
   name: "PostsWithTag",
@@ -48,6 +49,7 @@ export default {
       instance.get("/api/tag/" + this.$route.params.id)
       .then((response) => {
         this.posts = response.data;
+        setLikes(this.posts);
       })
     }
   }

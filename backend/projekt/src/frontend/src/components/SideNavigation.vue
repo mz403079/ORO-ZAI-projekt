@@ -126,6 +126,7 @@ a {
 }
 
 .link-wrapper:hover {
+  padding-left: 20px;
   color: #A42CD6;
   background-color: #FBF1FF;
 }

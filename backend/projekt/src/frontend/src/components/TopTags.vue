@@ -8,10 +8,15 @@
           </div>
         </b-col>
         <b-col md="5" offset-md="1">
-          <div id="post-viewer-wrapper">
+          <div id="tag-viewer-wrapper">
             <div v-for="tagInfo in tags" :key="tagInfo.tagId">
-              <div>#{{ tagInfo.tag.tagName }}</div>
-              <div>{{ tagInfo.totalCount }} posts</div>
+              <router-link class="tag-badge-link" v-bind:to="'/tag/'+tagInfo.tag.tagId">
+                <div class="tag-wrapper">
+                  <div><span class="tag-name">#{{ tagInfo.tag.tagName }}</span></div>
+                  <div><span>{{ tagInfo.count }} posts</span></div>
+                </div>
+              </router-link>
+
             </div>
           </div>
         </b-col>
@@ -25,6 +30,7 @@
         </b-col>
       </b-row>
     </div>
+    <router-view/>
   </div>
 </template>
 
@@ -50,7 +56,6 @@ export default {
     getTopTags() {
       instance.get("/api/getTopTags")
       .then((response) => {
-        console.log(response.data);
         this.tags = response.data;
       })
     }
@@ -59,9 +64,27 @@ export default {
 </script>
 
 <style scoped>
-#post-viewer-wrapper {
+#tag-viewer-wrapper {
   margin-top: 5px;
   border: solid #273E47 1px;
+}
+
+.tag-name {
+  font-weight: 700;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.tag-wrapper {
+  padding: 10px;
+  border-bottom: solid #273E47 1px;
+}
+
+.tag-wrapper:hover {
+  background-color: #FBF1FF;
 }
 
 .contentWrapper {

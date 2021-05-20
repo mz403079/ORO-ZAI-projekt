@@ -44,7 +44,7 @@ public class Post {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime timePosted;
 
-  @ManyToMany(mappedBy = "likedPosts")
+  @ManyToMany(mappedBy = "likedPosts", fetch = FetchType.LAZY)
   private Set<User> likes = new HashSet<>();
 
   @JoinTable

@@ -1,16 +1,21 @@
 <template>
   <div class="wrapper">
-    <h4>Top Ledditors</h4>
+    <h3>Top Ledditors</h3>
     <b-row v-for="userInfo in users" v-bind:key="userInfo.user.userId">
       <b-col>
-        <b-avatar size="3rem" v-if="userInfo.user.profileImage != null">
-          <img class="avatar-icon"
-               :src="`data:image/png;base64, ${userInfo.user.profileImage.imageData}`" alt="essa">
-        </b-avatar>
-        <b-avatar size="3rem" v-else>R</b-avatar>
+        <router-link class="tag-badge-link" v-bind:to="'/user/'+userInfo.user.username">
+          <b-avatar size="3rem" v-if="userInfo.user.profileImage != null">
+            <img class="avatar-icon"
+                 :src="`data:image/png;base64, ${userInfo.user.profileImage.imageData}`" alt="essa">
+          </b-avatar>
+          <b-avatar size="3rem" v-else>R</b-avatar>
+        </router-link>
       </b-col>
       <b-col>
-        <b-link :href="'/user/'+userInfo.user.username">{{ userInfo.user.username }}</b-link>
+        <router-link class="tag-badge-link" v-bind:to="'/user/'+userInfo.user.username">
+          {{ userInfo.user.username }}
+        </router-link>
+        <router-view/>
         <br>
         {{ userInfo.count }} posts
       </b-col>
@@ -44,14 +49,18 @@ export default {
 </script>
 
 <style scoped>
+
+h3 {
+  font-weight: 700;
+}
+
 .wrapper {
+  background-color: #FBF1FF;
   width: 250px;
-  background-color: greenyellow;
   margin-top: 25px;
   border-radius: 5px;
   padding: 0 15px 0;
 }
-
 
 .avatar-icon {
   width: 100%;

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.transaction.Transactional;
@@ -90,6 +91,7 @@ public class PostServiceImpl implements IService<PostDTO> {
     User user = userRepository.findById(userId).orElseThrow(DataNotFoundException::new);
     List<Post> posts = (List<Post>) postRepository.findAllByPostAuthorUserId(userId);
     posts.addAll(user.getLikedPosts());
+    posts = new ArrayList<>(new HashSet<>(posts));
     posts.sort(Comparator.comparing(Post::getTimePosted).reversed());
     return getPostDTOS(posts);
   }

@@ -1,8 +1,11 @@
 <template>
-  <div class="gog">
-    <h4>Popular tags<br>
-      <b-badge v-for="tag in tags" v-bind:key="tag.tagId" class="tagBadge">
-        {{ tag.tagName }}
+  <div class="wrapper">
+    <h3>Popular tags</h3>
+    <h4>
+      <b-badge v-for="tag in tags" v-bind:key="tag.tag.tagId" class="tag-badge">
+        <router-link class="tag-badge-link" v-bind:to="'/tag/'+tag.tagId"> {{ tag.tag.tagName }}
+        </router-link>
+        <router-view/>
       </b-badge>
     </h4>
   </div>
@@ -23,8 +26,9 @@ export default {
   },
   methods: {
     getPopularTags() {
-      instance.get("/api/getTags")
+      instance.get("/api/getTopTags")
       .then((response) => {
+        console.log(response.data);
         this.tags = response.data;
       })
     }
@@ -33,15 +37,25 @@ export default {
 </script>
 
 <style scoped>
-.gog {
-  width: 250px;
-  background-color: white;
-  margin-top: 25px;
-  border-radius: 5px;
-  padding: 0 15px 0;
+h3 {
+  font-weight: 700;
 }
 
-.tagBadge {
-  margin-left: 5px;
+.wrapper {
+  width: 250px;
+  background-color: #FBF1FF;
+  padding: 0 5px 0;
+  border-radius: 5px;
+
+}
+
+a {
+  color: #A42CD6;
+
+}
+
+.tag-badge {
+  margin-right: 5px;
+  background-color: white;
 }
 </style>

@@ -31,6 +31,7 @@ import SideNavigation from "@/components/SideNavigation";
 import PostViewer from "@/components/PostViewer";
 import PopularUsers from "@/components/PopularUsers";
 import instance from "@/server";
+import setLikes from "@/setLikes";
 
 export default {
   name: 'UserPosts',
@@ -48,6 +49,7 @@ export default {
       instance.get("/api/getUserPosts/" + this.$route.params.username)
       .then((response) => {
         this.posts = response.data;
+        setLikes(this.posts);
       })
     }
   }

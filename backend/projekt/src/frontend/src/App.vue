@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="margin-top">
-  <Navigation></Navigation>
+      <Navigation></Navigation>
     </div>
   </div>
 </template>
