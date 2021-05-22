@@ -5,10 +5,10 @@ import PostsWithTag from "@/components/PostsWithTag";
 import SinglePostAdvanced from "@/components/SinglePostAdvanced";
 import AdminBoard from "@/components/AdminBoard";
 import Profile from "@/components/Profile";
-import TopTags from "@/components/TopTags";
-import TrendingPosts from "@/components/TrendingPosts";
+import TopTags from "@/components/SideNavbarComponents/TopTags";
+import TrendingPosts from "@/components/SideNavbarComponents/TrendingPosts";
 import UserPosts from "@/components/UserPosts";
-import UserWall from "@/components/UserWall";
+import UserWall from "@/components/SideNavbarComponents/UserWall";
 
 Vue.use(Router)
 
