@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <div class="post-wrapper" v-for="item in postsToDisplay" :key="item.postId">
       <div class="post">
         <router-link class="tag-badge-link" v-bind:to="'/post/'+item.postId">
@@ -14,8 +14,7 @@
               </div>
             </b-col>
             <b-col md="9">
-
-              <h4 style="font-weight: 600;"> {{ item.title }}
+              <h5 style="font-weight: 600;"> {{ item.title }}
                 <b-badge v-for="tag in item.tags" v-bind:key="tag.tagId"
                          class="tagBadge">
                   <router-link class="tag-badge-link" v-bind:to="'/tag/'+tag.tagId">{{
@@ -23,14 +22,11 @@
                     }}
                   </router-link>
                   <router-view/>
-
                 </b-badge>
-              </h4>
-
+              </h5>
               <b-row>
                 <div>
                   <router-link class="tag-badge-link" v-bind:to="'/user/'+item.author.username">
-
                     <b-avatar v-if="item.author.profileImage != null">
                       <img class="avatar-icon"
                            :src="`data:image/png;base64, ${item.author.profileImage.imageData}`"
@@ -50,11 +46,9 @@
         <router-view/>
       </div>
       <div>
-
-
         <div class="omega">
           <div class="buttons-wrapper">
-            <b-button class="icon-button"
+            <b-button class="icon-button" style="border-bottom-left-radius: 8px;"
                       @click="likePost(item.postId); item.likes = !item.likes">
               {{ item.score }}
               <b-icon v-if="item.likes === true" icon="heart-fill"
@@ -69,7 +63,7 @@
               </router-link>
             </b-button>
 
-            <b-button class="icon-button" @click="toggleVisibility($event)">
+            <b-button class="icon-button" style="border-bottom-right-radius: 8px;" @click="toggleVisibility($event)">
               <b-icon icon="arrows-angle-expand"></b-icon>
             </b-button>
           </div>
@@ -82,11 +76,8 @@
             {{ item.content }}
           </div>
         </div>
-
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -131,18 +122,25 @@ export default {
 </script>
 
 <style scoped>
+#app{
+  margin:0;
+  padding: 0;
+}
 .post-wrapper {
-  border-bottom: solid #273E47 1px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: solid #FFE8FF 1px;
 }
 
 .post {
-  background-color: white;
+  background-color: #FBF1FF;
+  border-radius: 8px 8px 0 0;
   padding: 15px 25px 10px 25px;
 
 }
 
 .post:hover {
-  background-color: #FBF1FF;
+  background-color: #FFE8FF;
 }
 
 #comment-link {
@@ -164,14 +162,15 @@ export default {
 
 .tagBadge {
   margin-left: 5px;
-  background-color: white;
-  text-decoration: underline;
+  background-color: #A42CD6;
 }
 
 .tagBadge a {
-  color: #A42CD6;
+  color: white;
 }
-
+.tagBadge a:hover {
+  text-decoration: underline;
+}
 a {
   color: black;
   text-decoration: none;
@@ -179,12 +178,15 @@ a {
 
 
 .icon-button {
-  background-color: white;
+  background-color: #FBF1FF;
   border: 0;
   color: black;
   width: 100%;
 }
-
+.icon-button:hover {
+  color: #A42CD6;
+  background-color: #FFE8FF;
+}
 .likeso {
   font-size: 1rem;
   color: hsl(317, 100%, 54%);
@@ -193,11 +195,7 @@ a {
   text-shadow: 0 0 0.5em hsl(317, 100%, 54%);
 }
 
-.icon-button:hover {
-  /*font-size: 1.1rem;*/
-  color: #A42CD6;
-  background-color: #FBF1FF;
-}
+
 
 .username:hover {
   text-decoration: underline;

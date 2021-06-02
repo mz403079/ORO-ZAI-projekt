@@ -51,7 +51,7 @@ export default {
 <style scoped>
 
 h3 {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .wrapper {

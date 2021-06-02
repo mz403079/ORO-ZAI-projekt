@@ -13,7 +13,6 @@
               </div>
             </div>
           </router-link>
-
           <router-link v-bind:to="'/my-wall/'">
             <div class="link-wrapper">
               <div class="nav-icon">
@@ -44,7 +43,6 @@
               </div>
             </div>
           </router-link>
-
           <router-link to="/trending-posts">
             <div class="link-wrapper">
               <div class="nav-icon">

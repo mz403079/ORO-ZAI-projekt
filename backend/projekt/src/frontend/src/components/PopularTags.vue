@@ -38,24 +38,29 @@ export default {
 
 <style scoped>
 h3 {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .wrapper {
   width: 250px;
-  background-color: #FBF1FF;
   padding: 0 5px 0;
   border-radius: 5px;
 
 }
 
 a {
-  color: #A42CD6;
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
 
 }
 
 .tag-badge {
   margin-right: 5px;
-  background-color: white;
+  background-color: #A42CD6;
+}
+
+.tag-badge a:hover {
+  text-decoration: underline;
 }
 </style>

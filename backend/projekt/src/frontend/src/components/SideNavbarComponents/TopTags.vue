@@ -16,7 +16,6 @@
                   <div><span>{{ tagInfo.count }} posts</span></div>
                 </div>
               </router-link>
-
             </div>
           </div>
         </b-col>

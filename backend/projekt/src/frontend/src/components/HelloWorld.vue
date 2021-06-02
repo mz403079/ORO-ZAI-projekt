@@ -71,7 +71,6 @@ export default {
 
 #post-viewer-wrapper {
   margin-top: 5px;
-  border: solid #273E47 1px;
 }
 
 @media only screen and (min-width: 900px) {
