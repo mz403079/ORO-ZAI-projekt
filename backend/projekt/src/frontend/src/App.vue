@@ -4,13 +4,13 @@
       <Navigation></Navigation>
     </div>
     <b-row>
-      <b-col cols="2" md="2" offset-md="1">
+      <b-col cols="1" md="2" offset-lg="1">
         <SideNavigation></SideNavigation>
       </b-col>
-      <b-col cols="9" sm="10" md="5">
+      <b-col cols="11" md="8" lg="5">
         <router-view></router-view>
       </b-col>
-      <b-col cols="2" sm="12" md="2" offset-md="1">
+      <b-col cols="12" md="2" offset-lg="1">
         <PopularTags></PopularTags>
         <PopularUsers></PopularUsers>
       </b-col>

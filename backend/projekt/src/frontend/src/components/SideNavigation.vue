@@ -118,7 +118,7 @@ a {
   color: black;
   font-size: 20px;
   font-weight: 700;
-  padding: 12px 0 12px;
+  padding: 12px 0 12px 10px;
   border-radius: 9999px;
 }
 

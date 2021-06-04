@@ -14,15 +14,20 @@
               </div>
             </b-col>
             <b-col md="9">
-              <h5 style="font-weight: 600;"> {{ item.title }}
-                <b-badge v-for="tag in item.tags" v-bind:key="tag.tagId"
-                         class="tagBadge">
-                  <router-link class="tag-badge-link" v-bind:to="'/tag/'+tag.tagId">{{
-                      tag.tagName
-                    }}
-                  </router-link>
-                  <router-view/>
-                </b-badge>
+              <h5 class="post-header">
+                <div>{{ item.title }}
+                  <b-badge v-for="tag in item.tags" v-bind:key="tag.tagId"
+                           class="tagBadge">
+                    <router-link class="tag-badge-link" v-bind:to="'/tag/'+tag.tagId">{{
+                        tag.tagName
+                      }}
+                    </router-link>
+                    <router-view/>
+                  </b-badge>
+                </div>
+                <div v-if="userIsAdmin">
+                  <b-icon color="red" icon="trash"></b-icon>
+                </div>
               </h5>
               <b-row>
                 <div>
@@ -85,6 +90,7 @@
 
 import instance from "@/server";
 import headers from "@/headers";
+import isUserAdmin from "@/isUserAdmin";
 
 export default {
   name: "PostViewer",
@@ -93,8 +99,12 @@ export default {
   },
   data() {
     return {
-      "fullWidthImage": false,
+      fullWidthImage: false,
+      userIsAdmin: false,
     }
+  },
+  created() {
+    this.userIsAdmin = isUserAdmin();
   },
   methods: {
     toggleVisibility(e) {
@@ -122,10 +132,11 @@ export default {
 </script>
 
 <style scoped>
-#app{
-  margin:0;
+#app {
+  margin: 0;
   padding: 0;
 }
+
 .post-wrapper {
   margin-bottom: 15px;
   border-radius: 10px;
@@ -135,7 +146,7 @@ export default {
 .post {
   background-color: #FBF1FF;
   border-radius: 8px 8px 0 0;
-  padding: 15px 25px 10px 25px;
+  padding: 15px 0 10px 25px;
 
 }
 
@@ -155,6 +166,12 @@ export default {
   display: flex;
 }
 
+.post-header {
+  display: flex;
+  font-weight: 600;
+  justify-content: space-between;
+}
+
 .buttons-wrapper > * {
   flex-basis: 100%;
   padding-bottom: 10px;
@@ -168,9 +185,11 @@ export default {
 .tagBadge a {
   color: white;
 }
+
 .tagBadge a:hover {
   text-decoration: underline;
 }
+
 a {
   color: black;
   text-decoration: none;
@@ -183,10 +202,12 @@ a {
   color: black;
   width: 100%;
 }
+
 .icon-button:hover {
   color: #A42CD6;
   background-color: #FFE8FF;
 }
+
 .likeso {
   font-size: 1rem;
   color: hsl(317, 100%, 54%);
@@ -194,7 +215,6 @@ a {
   filter: drop-shadow(5px 5px 4px #A42CD6);
   text-shadow: 0 0 0.5em hsl(317, 100%, 54%);
 }
-
 
 
 .username:hover {
