@@ -1,13 +1,6 @@
 <template>
   <div id="app">
     <div class="b-container contentWrapper">
-      <b-row>
-        <b-col md="2">
-          <div>
-            <SideNavigation></SideNavigation>
-          </div>
-        </b-col>
-        <b-col md="5" offset-md="1">
           <div id="tag-viewer-wrapper">
             <div v-for="tagInfo in tags" :key="tagInfo.tagId">
               <router-link class="tag-badge-link" v-bind:to="'/tag/'+tagInfo.tag.tagId">
@@ -18,25 +11,12 @@
               </router-link>
             </div>
           </div>
-        </b-col>
-        <b-col offset-md="1">
-          <b-row>
-            <PopularTags></PopularTags>
-          </b-row>
-          <b-row>
-            <PopularTags></PopularTags>
-          </b-row>
-        </b-col>
-      </b-row>
-    </div>
-    <router-view/>
+  </div>
   </div>
 </template>
 
 <script>
 import instance from "@/server";
-import SideNavigation from "@/components/SideNavigation";
-import PopularTags from "@/components/PopularTags";
 
 export default {
   name: "TopTags",
@@ -45,9 +25,7 @@ export default {
       tags: null,
     }
   },
-  components: {
-    SideNavigation, PopularTags
-  },
+
   created() {
     this.getTopTags();
   },

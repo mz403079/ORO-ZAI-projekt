@@ -1,41 +1,15 @@
 <template>
-  <div id="app">
-    <div class="b-container contentWrapper">
-      <b-row>
-        <b-col cols="2" md="2">
-          <div>
-            <SideNavigation></SideNavigation>
-          </div>
-        </b-col>
-        <b-col cols="9" sm="10" md="5" offset-md="1">
-          <div id="post-viewer-wrapper">
-            <PostViewer v-bind:postsToDisplay="this.posts"></PostViewer>
-          </div>
-        </b-col>
-        <b-col cols="2" sm="12" md="2" offset-md="1">
-          <b-row>
-            <PopularTags></PopularTags>
-          </b-row>
-          <b-row>
-            <PopularUsers></PopularUsers>
-          </b-row>
-        </b-col>
-      </b-row>
-    </div>
-  </div>
+  <PostViewer v-bind:postsToDisplay="this.posts"></PostViewer>
 </template>
 
 <script>
 import PostViewer from "@/components/PostViewer";
-import PopularTags from "@/components/PopularTags";
-import PopularUsers from "@/components/PopularUsers";
-import SideNavigation from "@/components/SideNavigation";
 import instance from "@/server";
 import setLikes from "@/setLikes";
 
 export default {
   name: "PostsWithTag",
-  components: {PostViewer, PopularTags, PopularUsers, SideNavigation},
+  components: {PostViewer},
   data() {
     return {
       posts: null,

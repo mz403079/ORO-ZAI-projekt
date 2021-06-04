@@ -5,7 +5,6 @@
       <b-badge v-for="tag in tags" v-bind:key="tag.tag.tagId" class="tag-badge">
         <router-link class="tag-badge-link" v-bind:to="'/tag/'+tag.tagId"> {{ tag.tag.tagName }}
         </router-link>
-        <router-view/>
       </b-badge>
     </h4>
   </div>
@@ -18,7 +17,7 @@ export default {
   name: "PopularTags",
   data() {
     return {
-      tags: null,
+      tags: [],
     }
   },
   created() {

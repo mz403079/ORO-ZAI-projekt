@@ -15,7 +15,6 @@
         <router-link class="tag-badge-link" v-bind:to="'/user/'+userInfo.user.username">
           {{ userInfo.user.username }}
         </router-link>
-        <router-view/>
         <br>
         {{ userInfo.count }} posts
       </b-col>

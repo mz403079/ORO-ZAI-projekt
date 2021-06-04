@@ -63,7 +63,6 @@
               </div>
             </div>
           </router-link>
-          <router-view/>
         </div>
       </nav>
     </div>
@@ -87,7 +86,7 @@ export default {
     }
   },
   created() {
-    this.getUser();
+    // this.getUser();
   },
   methods: {
     getUser() {

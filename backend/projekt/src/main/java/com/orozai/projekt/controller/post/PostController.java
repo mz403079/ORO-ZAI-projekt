@@ -73,7 +73,7 @@ public class PostController {
     }
   }
 
-  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+//  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
   @GetMapping(value = "/post/{id}")
   public ResponseEntity<PostDTO> getPost(@PathVariable("id") Long id) {
     System.out
