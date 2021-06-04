@@ -12,7 +12,7 @@ export default {
   components: {PostViewer},
   data() {
     return {
-      posts: null,
+      posts: [],
     }
   },
   created() {

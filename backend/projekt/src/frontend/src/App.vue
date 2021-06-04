@@ -42,5 +42,4 @@ export default {
 #margin-top {
   margin-top: 100px;
 }
-
 </style>

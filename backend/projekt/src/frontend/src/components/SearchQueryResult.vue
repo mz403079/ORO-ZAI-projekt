@@ -1,20 +1,37 @@
 <template>
-
+  <PostViewer v-bind:postsToDisplay="this.posts"></PostViewer>
 </template>
 
 <script>
 import instance from "@/server";
+import PostViewer from "@/components/PostViewer";
 
 export default {
   name: "SearchQueryResult",
-
+  components: {PostViewer},
+  props: {
+    search: String,
+  },
+  data() {
+    return {
+      posts: [],
+    }
+  },
+  created() {
+    this.getPosts();
+  },
   methods: {
     getPosts() {
-      instance.get("/api/search/1234")
+      instance.get("/api/search/" + this.search)
           .then((response) => {
-            this.posty = response.data;
-            console.log(this.posty);
+            this.posts = response.data;
+            console.log("refng");
           })
+    }
+  },
+  watch:{
+    $route (){
+      this.getPosts();
     }
   }
 }

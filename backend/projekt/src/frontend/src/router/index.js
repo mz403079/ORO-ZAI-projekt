@@ -9,6 +9,7 @@ import TopTags from "@/components/SideNavbarComponents/TopTags";
 import TrendingPosts from "@/components/SideNavbarComponents/TrendingPosts";
 import UserPosts from "@/components/UserPosts";
 import UserWall from "@/components/SideNavbarComponents/UserWall";
+import SearchQueryResult from "@/components/SearchQueryResult";
 
 Vue.use(Router)
 
@@ -54,6 +55,13 @@ export default new Router({
     {
       path: '/my-wall',
       component: UserWall,
+    },
+    {
+      path: '/result',
+      component: SearchQueryResult,
+      props(route) {
+        return {  search: route.query.search }
+      }
     }
   ]
 })
