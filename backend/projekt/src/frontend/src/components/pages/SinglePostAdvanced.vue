@@ -30,7 +30,7 @@
 
 <script>
 import instance from "@/server";
-import NewCommentForm from "@/components/NewCommentForm";
+import NewCommentForm from "@/components/forms/NewCommentForm";
 import CommentViewer from "@/components/CommentViewer";
 import authHeader from "@/authHeader";
 

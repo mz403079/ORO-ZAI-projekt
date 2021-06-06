@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import NewPostForm from "@/components/NewPostForm";
+import NewPostForm from "@/components/forms/NewPostForm";
 
 export default {
   name: "SideNavigation",
@@ -110,7 +110,7 @@ export default {
   width: 75%;
 }
 
-a {
+a, a:hover {
   text-decoration: none;
 }
 
@@ -118,13 +118,19 @@ a {
   color: black;
   font-size: 20px;
   font-weight: 700;
-  padding: 12px 0 12px 10px;
+  padding: 12px 0 10px;
   border-radius: 9999px;
 }
 
 .link-wrapper:hover {
-  padding-left: 20px;
+
   color: #A42CD6;
-  background-color: #FBF1FF;
+
+}
+@media only screen and (min-width: 600px) {
+  .link-wrapper:hover {
+    padding-left: 20px;
+    background-color: #FBF1FF;
+  }
 }
 </style>

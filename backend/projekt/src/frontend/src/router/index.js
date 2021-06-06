@@ -1,15 +1,15 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from "@/components/HelloWorld";
-import PostsWithTag from "@/components/PostsWithTag";
-import SinglePostAdvanced from "@/components/SinglePostAdvanced";
+import HelloWorld from "@/components/pages/HelloWorld";
+import PostsWithTag from "@/components/pages/PostsWithTag";
+import SinglePostAdvanced from "@/components/pages/SinglePostAdvanced";
 import AdminBoard from "@/components/AdminBoard";
-import Profile from "@/components/Profile";
-import TopTags from "@/components/SideNavbarComponents/TopTags";
-import TrendingPosts from "@/components/SideNavbarComponents/TrendingPosts";
-import UserPosts from "@/components/UserPosts";
-import UserWall from "@/components/SideNavbarComponents/UserWall";
-import SearchQueryResult from "@/components/SearchQueryResult";
+import Profile from "@/components/pages/Profile";
+import TopTags from "@/components/TopTags";
+import TrendingPosts from "@/components/TrendingPosts";
+import UserPosts from "@/components/pages/UserPosts";
+import UserWall from "@/components/UserWall";
+import SearchQueryResult from "@/components/pages/SearchQueryResult";
 
 Vue.use(Router)
 

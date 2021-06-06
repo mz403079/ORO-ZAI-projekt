@@ -2,9 +2,7 @@
   <div>
     <b-navbar fixed="top" toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand href="#">Leddit</b-navbar-brand>
-
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <div v-if="currentUser">
@@ -12,7 +10,6 @@
           </div>
           <div v-else>
             <b-button v-b-modal.modal-1>Zaloguj / Zarejestruj</b-button>
-
             <b-modal id="modal-1" title="BootstrapVue">
               <RegisterForm></RegisterForm>
               <LoginForm></LoginForm>
@@ -24,8 +21,6 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
          <SearchBar/>
-
-
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -33,8 +28,8 @@
 </template>
 
 <script>
-import LoginForm from "@/components/LoginForm";
-import RegisterForm from "@/components/RegisterForm";
+import LoginForm from "@/components/forms/LoginForm";
+import RegisterForm from "@/components/forms/RegisterForm";
 import isUserAdmin from "@/isUserAdmin";
 import SearchBar from "@/components/SearchBar";
 

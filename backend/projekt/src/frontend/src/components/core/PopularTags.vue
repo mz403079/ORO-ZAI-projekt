@@ -47,11 +47,10 @@ h3 {
 
 }
 
-a {
+a, a:hover {
   font-weight: 500;
   color: white;
   text-decoration: none;
-
 }
 
 .tag-badge {

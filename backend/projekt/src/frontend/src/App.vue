@@ -3,11 +3,12 @@
     <div id="margin-top">
       <Navigation></Navigation>
     </div>
+    <b-container fluid>
     <b-row>
-      <b-col cols="1" md="2" offset-lg="1">
+      <b-col cols="1" md="1" lg="2" offset-lg="1">
         <SideNavigation></SideNavigation>
       </b-col>
-      <b-col cols="11" md="8" lg="5">
+      <b-col cols="11" md="7" lg="5">
         <router-view></router-view>
       </b-col>
       <b-col cols="12" md="2" offset-lg="1">
@@ -15,14 +16,15 @@
         <PopularUsers></PopularUsers>
       </b-col>
     </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import Navigation from "@/components/Navigation";
-import PopularTags from "@/components/PopularTags";
-import SideNavigation from "@/components/SideNavigation";
-import PopularUsers from "@/components/PopularUsers";
+import Navigation from "@/components/core/Navigation";
+import PopularTags from "@/components/core/PopularTags";
+import SideNavigation from "@/components/core/SideNavigation";
+import PopularUsers from "@/components/core/PopularUsers";
 
 export default {
   name: 'App',
@@ -36,7 +38,6 @@ export default {
 <style>
 #app {
   background-color: white;
-  /*font-family: "Poppins", sans-serif;*/
 }
 
 #margin-top {
