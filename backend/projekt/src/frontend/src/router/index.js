@@ -6,9 +6,9 @@ import SinglePostAdvanced from "@/components/pages/SinglePostAdvanced";
 import AdminBoard from "@/components/AdminBoard";
 import Profile from "@/components/pages/Profile";
 import TopTags from "@/components/TopTags";
-import TrendingPosts from "@/components/TrendingPosts";
+import TrendingPosts from "@/components/pages/TrendingPosts";
 import UserPosts from "@/components/pages/UserPosts";
-import UserWall from "@/components/UserWall";
+import UserWall from "@/components/pages/UserWall";
 import SearchQueryResult from "@/components/pages/SearchQueryResult";
 
 Vue.use(Router)
@@ -41,7 +41,7 @@ export default new Router({
       component: HelloWorld,
     },
     {
-      path: '/topTags',
+      path: '/top-tags',
       component: TopTags,
     },
     {

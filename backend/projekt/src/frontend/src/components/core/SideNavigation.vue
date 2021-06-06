@@ -2,9 +2,9 @@
   <div id="app">
     <div id="nav-wrapper">
       <nav>
-        <div>
+        <div class="wrapper">
           <router-link to="/home">
-            <div class="link-wrapper">
+            <div id="/home" class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="house-door-fill"></b-icon>
               </div>
@@ -13,8 +13,8 @@
               </div>
             </div>
           </router-link>
-          <router-link v-bind:to="'/my-wall/'">
-            <div class="link-wrapper">
+          <router-link to="/my-wall">
+            <div id="/my-wall" class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="person-circle"></b-icon>
               </div>
@@ -33,8 +33,8 @@
               </div>
             </div>
           </b-link>
-          <router-link to="/topTags">
-            <div class="link-wrapper">
+          <router-link to="/top-tags">
+            <div id="/top-tags" class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="hash"></b-icon>
               </div>
@@ -44,7 +44,7 @@
             </div>
           </router-link>
           <router-link to="/trending-posts">
-            <div class="link-wrapper">
+            <div id="/trending-posts" class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="arrow-up-right-square"></b-icon>
               </div>
@@ -53,8 +53,8 @@
               </div>
             </div>
           </router-link>
-          <router-link to="Help">
-            <div class="link-wrapper">
+          <router-link to="/help">
+            <div id="/help" class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="question-circle"></b-icon>
               </div>
@@ -66,14 +66,14 @@
         </div>
       </nav>
     </div>
-    <b-modal id="newPostModal" title="BootstrapVue">
+    <b-modal hide-footer id="newPostModal" title="Say something!">
       <NewPostForm></NewPostForm>
     </b-modal>
   </div>
 </template>
 
 <script>
-import NewPostForm from "@/components/forms/NewPostForm";
+import NewPostForm from "@/components/forms/PostForm";
 
 export default {
   name: "SideNavigation",
@@ -83,6 +83,7 @@ export default {
   data() {
     return {
       user: null,
+      pageElement: null,
     }
   },
   created() {
@@ -91,6 +92,20 @@ export default {
   methods: {
     getUser() {
       this.user = JSON.parse(localStorage.user);
+    },
+    toggleCurrentPage() {
+      if (this.pageElement !== null) {
+        this.pageElement.classList.remove("current");
+      }
+      let currentPage = this.$router.currentRoute;
+      this.pageElement = document.getElementById(currentPage.path);
+      if(this.pageElement !== null)
+        this.pageElement.classList.add("current");
+    }
+  },
+  watch: {
+    $route() {
+      this.toggleCurrentPage();
     }
   }
 }
@@ -122,11 +137,14 @@ a, a:hover {
   border-radius: 9999px;
 }
 
-.link-wrapper:hover {
-
+.current {
   color: #A42CD6;
-
 }
+
+.link-wrapper:hover {
+  color: #A42CD6;
+}
+
 @media only screen and (min-width: 600px) {
   .link-wrapper:hover {
     padding-left: 20px;

@@ -3,12 +3,12 @@
     <form id="postForm"
           @submit="checkForm">
       <p>
-        <label>Tytul
+        <label>Title:
           <input type="text" v-model="title">
         </label>
       </p>
       <p>
-        <label>Tresc
+        <label>Description:
           <input type="text" v-model="content">
         </label>
       </p>
@@ -42,11 +42,8 @@ export default {
   data() {
     return {
       selected: [],
-      msg: [],
       title: "",
       content: "",
-      authorId: 0,
-      picName: "",
       tags: null,
       selectedFile: null,
       formData: null,

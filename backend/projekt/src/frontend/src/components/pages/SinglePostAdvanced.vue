@@ -30,9 +30,10 @@
 
 <script>
 import instance from "@/server";
-import NewCommentForm from "@/components/forms/NewCommentForm";
+import NewCommentForm from "@/components/forms/CommentForm";
 import CommentViewer from "@/components/CommentViewer";
 import authHeader from "@/authHeader";
+import setLikes from "@/setLikes";
 
 export default {
   name: "SinglePostAdvanced",
@@ -50,6 +51,7 @@ export default {
       instance.get("/api/post/" + this.$route.params.id, {headers: authHeader()})
       .then((response) => {
         this.post = response.data;
+        setLikes(this.posts);
       })
     }
   }

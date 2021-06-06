@@ -5,6 +5,7 @@
 <script>
 import instance from "@/server";
 import PostViewer from "@/components/PostViewer";
+import setLikes from "@/setLikes";
 
 export default {
   name: "SearchQueryResult",
@@ -25,7 +26,7 @@ export default {
       instance.get("/api/search/" + this.search)
           .then((response) => {
             this.posts = response.data;
-            console.log("refng");
+            setLikes(this.posts);
           })
     }
   },

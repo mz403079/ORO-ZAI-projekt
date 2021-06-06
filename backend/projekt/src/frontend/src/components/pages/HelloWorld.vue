@@ -13,12 +13,10 @@ export default {
   data() {
     return {
       posts: [],
-      posty: [],
     }
   },
   created() {
     this.getPosts();
-    this.getPostsy();
   },
   methods: {
     getPosts() {
@@ -28,14 +26,6 @@ export default {
         setLikes(this.posts);
       })
     },
-    //TESTING QUERY SEARCH
-    getPostsy() {
-      instance.get("/api/search/1234")
-      .then((response) => {
-        this.posty = response.data;
-        console.log(this.posty);
-      })
-    }
   }
 }
 </script>
@@ -43,14 +33,4 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-#post-viewer-wrapper {
-  margin-top: 5px;
-}
-
-@media only screen and (min-width: 900px) {
-  .contentWrapper {
-    width: 85%;
-    margin: 0 auto;
-  }
-}
 </style>

@@ -9,6 +9,7 @@ import com.orozai.projekt.model.entity.Image;
 import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.Role;
 import com.orozai.projekt.model.entity.User;
+import com.orozai.projekt.model.repository.ImageRepository;
 import com.orozai.projekt.model.repository.PostRepository;
 import com.orozai.projekt.model.repository.RoleRepository;
 import com.orozai.projekt.model.repository.UserRepository;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements IService<UserDTO> {
   private final RoleRepository roleRepository;
   private final ImageServiceImpl imageService;
   private final PostRepository postRepository;
+  private final ImageRepository imageRepository;
 
   @Autowired
   private final PasswordEncoder encoder;
@@ -40,12 +42,14 @@ public class UserServiceImpl implements IService<UserDTO> {
       UserRepository userRepository,
       RoleRepository roleRepository,
       ImageServiceImpl imageService,
-      PostRepository postRepository, PasswordEncoder encoder) {
+      PostRepository postRepository,
+      ImageRepository imageRepository, PasswordEncoder encoder) {
     this.modelMapper = modelMapper;
     this.userRepository = userRepository;
     this.roleRepository = roleRepository;
     this.imageService = imageService;
     this.postRepository = postRepository;
+    this.imageRepository = imageRepository;
     this.encoder = encoder;
   }
 
@@ -69,6 +73,7 @@ public class UserServiceImpl implements IService<UserDTO> {
         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
     roles.add(userRole);
     user.setRoles(roles);
+    user.setProfileImage(imageRepository.findByImageId(2L));
     userRepository.save(user);
     return null;
   }

@@ -3,7 +3,9 @@ package com.orozai.projekt.controller;
 import com.orozai.projekt.model.dto.basic.UserDTO;
 import com.orozai.projekt.model.dto.specialized.JwtResponse;
 import com.orozai.projekt.model.dto.specialized.LoginFormDTO;
+import com.orozai.projekt.model.dto.specialized.MessageResponse;
 import com.orozai.projekt.model.dto.specialized.RegisterFormDTO;
+import com.orozai.projekt.model.repository.UserRepository;
 import com.orozai.projekt.model.service.UserDetailsImpl;
 import com.orozai.projekt.model.service.UserServiceImpl;
 import com.orozai.projekt.security.JwtUtils;
@@ -37,14 +39,18 @@ public class AuthController {
 
   private final UserServiceImpl userService;
 
+  private final UserRepository userRepository;
+
   public AuthController(
       AuthenticationManager authenticationManager,
       JwtUtils jwtUtils, ModelMapper modelMapper,
-      UserServiceImpl userService) {
+      UserServiceImpl userService,
+      UserRepository userRepository) {
     this.authenticationManager = authenticationManager;
     this.jwtUtils = jwtUtils;
     this.modelMapper = modelMapper;
     this.userService = userService;
+    this.userRepository = userRepository;
   }
 
   @PostMapping("/signin")
@@ -72,23 +78,21 @@ public class AuthController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterFormDTO registerFormDTO) {
-//    if (userRepository.existsByUsername(registerFormDTO.getUsername())) {
-//      return ResponseEntity
-//          .badRequest()
-//          .body(new MessageResponse("Error: Username is already taken!"));
-//    }
-//
-//    if (userRepository.existsByEmail(registerFormDTO.getEmail())) {
-//      return ResponseEntity
-//          .badRequest()
-//          .body(new MessageResponse("Error: Email is already in use!"));
-//    }
-//
-//    // Create new user's account
+    if (userRepository.existsByUsername(registerFormDTO.getUsername())) {
+      return ResponseEntity
+          .badRequest()
+          .body(new MessageResponse("Error: Username is already taken!"));
+    }
+
+    if (userRepository.existsByEmail(registerFormDTO.getEmail())) {
+      return ResponseEntity
+          .badRequest()
+          .body(new MessageResponse("Error: Email is already registered!"));
+    }
+
     UserDTO userDTO = modelMapper.map(registerFormDTO, UserDTO.class);
     userService.create(userDTO);
 
-//    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     return new ResponseEntity<>(HttpStatus.OK);
   }
 

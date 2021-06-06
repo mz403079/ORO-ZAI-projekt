@@ -43,4 +43,7 @@ export default {
 #margin-top {
   margin-top: 100px;
 }
+a {
+  color: red;
+}
 </style>

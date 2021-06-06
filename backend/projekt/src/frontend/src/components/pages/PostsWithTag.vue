@@ -26,20 +26,15 @@ export default {
         setLikes(this.posts);
       })
     }
+  },
+  watch:{
+    $route (){
+      this.getPosts();
+    }
   }
 }
 </script>
 
 <style scoped>
-#post-viewer-wrapper {
-  margin-top: 5px;
-  border: solid #273E47 1px;
-}
 
-@media only screen and (min-width: 900px) {
-  .contentWrapper {
-    width: 85%;
-    margin: 0 auto;
-  }
-}
 </style>
