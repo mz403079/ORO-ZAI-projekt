@@ -8,7 +8,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import router from "@/router";
 import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
-
 Vue.use(VueToast);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)

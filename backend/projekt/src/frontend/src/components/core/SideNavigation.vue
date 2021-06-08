@@ -3,7 +3,7 @@
     <div id="nav-wrapper">
       <nav>
         <div class="wrapper">
-          <router-link to="/home">
+          <router-link to="/">
             <div id="/home" class="link-wrapper">
               <div class="nav-icon">
                 <b-icon icon="house-door-fill"></b-icon>

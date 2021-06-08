@@ -3,13 +3,13 @@ package com.orozai.projekt.model.service;
 import com.orozai.projekt.exception.DataNotFoundException;
 import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.UserCountDTO;
+import com.orozai.projekt.model.dto.specialized.PageablePostDTO;
 import com.orozai.projekt.model.entity.Image;
 import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.Tag;
 import com.orozai.projekt.model.entity.User;
 import com.orozai.projekt.model.repository.ICount;
 import com.orozai.projekt.model.repository.PostRepository;
-import com.orozai.projekt.model.repository.TagRepository;
 import com.orozai.projekt.model.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,6 +21,9 @@ import java.util.Set;
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,17 +33,14 @@ public class PostServiceImpl implements IService<PostDTO> {
 
   private final ModelMapper modelMapper;
   private final PostRepository postRepository;
-  private final TagRepository tagRepository;
   private final UserRepository userRepository;
   private final ImageServiceImpl imageService;
 
   public PostServiceImpl(ModelMapper modelMapper, PostRepository postRepository,
-      TagRepository tagRepository,
       UserRepository userRepository,
       ImageServiceImpl imageService) {
     this.modelMapper = modelMapper;
     this.postRepository = postRepository;
-    this.tagRepository = tagRepository;
     this.userRepository = userRepository;
     this.imageService = imageService;
   }
@@ -60,6 +60,30 @@ public class PostServiceImpl implements IService<PostDTO> {
     return getPostDTOS(posts);
   }
 
+  @Transactional
+  public PageablePostDTO getAll(int page) {
+    Pageable pageable = PageRequest.of(page - 1, 5,
+        Sort.by(Sort.Direction.DESC, "timePosted"));
+    Page<Post> posts = postRepository.findAll(pageable);
+    List<PostDTO> postDTOs = new ArrayList<>(getPostDTOS(posts.getContent()));
+    PageablePostDTO pageablePostDTO = new PageablePostDTO();
+    pageablePostDTO.setPosts(postDTOs);
+    pageablePostDTO.setPages(posts.getTotalPages());
+    return pageablePostDTO;
+  }
+
+  public PageablePostDTO getByUserUsername(String username, int page) {
+    Pageable pageable = PageRequest.of(page - 1, 5,
+        Sort.by(Sort.Direction.DESC, "timePosted"));
+    Page<Post> posts = postRepository
+        .findAllByPostAuthorUsername(username, pageable);
+    List<PostDTO> postDTOs = new ArrayList<>(getPostDTOS(posts.getContent()));
+    PageablePostDTO pageablePostDTO = new PageablePostDTO();
+    pageablePostDTO.setPosts(postDTOs);
+    pageablePostDTO.setPages(posts.getTotalPages());
+    return pageablePostDTO;
+  }
+
   public Collection<PostDTO> getByQuery(String query) {
     Collection<Post> posts = postRepository
         .findByTitleContainingOrContentContainingOrPostAuthorUsernameContaining(query, query,
@@ -72,9 +96,15 @@ public class PostServiceImpl implements IService<PostDTO> {
     return null;
   }
 
-  public Collection<PostDTO> getByTagId(Long id) {
-    Collection<Post> posts = postRepository.findAllByTagsTagId(id);
-    return getPostDTOS(posts);
+  public PageablePostDTO getByTagId(Long id,int page) {
+    Pageable pageable = PageRequest.of(page - 1, 5,
+        Sort.by(Sort.Direction.DESC, "timePosted"));
+    Page<Post> posts = postRepository.findAllByTagsTagId(id, pageable);
+    List<PostDTO> postDTOs = new ArrayList<>(getPostDTOS(posts.getContent()));
+    PageablePostDTO pageablePostDTO = new PageablePostDTO();
+    pageablePostDTO.setPosts(postDTOs);
+    pageablePostDTO.setPages(posts.getTotalPages());
+    return pageablePostDTO;
   }
 
   public Collection<PostDTO> getLikedPosts(long userId) {
@@ -82,14 +112,9 @@ public class PostServiceImpl implements IService<PostDTO> {
     return getPostDTOS(user.getLikedPosts());
   }
 
-  public Collection<PostDTO> getByUserId(long userId) {
-    Collection<Post> posts = postRepository.findAllByPostAuthorUserId(userId);
-    return getPostDTOS(posts);
-  }
-
   public Collection<PostDTO> getProfilePosts(long userId) {
     User user = userRepository.findById(userId).orElseThrow(DataNotFoundException::new);
-    List<Post> posts = (List<Post>) postRepository.findAllByPostAuthorUserId(userId);
+    List<Post> posts = postRepository.findAllByPostAuthorUserId(userId);
     posts.addAll(user.getLikedPosts());
     posts = new ArrayList<>(new HashSet<>(posts));
     posts.sort(Comparator.comparing(Post::getTimePosted).reversed());
@@ -101,6 +126,7 @@ public class PostServiceImpl implements IService<PostDTO> {
     posts.sort(Comparator.comparing(Post::getNumOfLikes).reversed());
     return getPostDTOS(posts);
   }
+
 
   public Collection<UserCountDTO> getTopUserIds() {
     Collection<ICount> topUserIds = postRepository.getTopUserIds();
@@ -153,10 +179,5 @@ public class PostServiceImpl implements IService<PostDTO> {
       postsDTO.add(postToPostDTO(post));
     }
     return postsDTO;
-  }
-
-  public Collection<PostDTO> getByUserUsername(String username) {
-    Collection<Post> posts = postRepository.findAllByPostAuthorUsername(username);
-    return getPostDTOS(posts);
   }
 }

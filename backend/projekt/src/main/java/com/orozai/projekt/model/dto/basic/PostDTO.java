@@ -32,4 +32,6 @@ public class PostDTO {
   private int numOfComments;
 
   private ImageDTO postImage;
+
+  private int totalPages;
 }

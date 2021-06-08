@@ -1,6 +1,7 @@
 package com.orozai.projekt.controller.post;
 
 import com.orozai.projekt.model.dto.basic.PostDTO;
+import com.orozai.projekt.model.dto.specialized.PageablePostDTO;
 import com.orozai.projekt.model.entity.Tag;
 import com.orozai.projekt.model.service.PostServiceImpl;
 import com.orozai.projekt.model.service.TagServiceImpl;
@@ -31,9 +32,9 @@ public class PostController {
     this.tagService = tagService;
   }
 
-  @GetMapping(value = "/getPosts")
-  public ResponseEntity<Collection<PostDTO>> getPosts() {
-    Collection<PostDTO> posts = postService.getAll();
+  @GetMapping(value = "/getPosts/{page}")
+  public ResponseEntity<PageablePostDTO> getPosts(@PathVariable int page) {
+    PageablePostDTO posts = postService.getAll(page);
     return new ResponseEntity<>(posts, HttpStatus.OK);
   }
 
@@ -50,10 +51,10 @@ public class PostController {
     return new ResponseEntity<>(posts, HttpStatus.OK);
   }
 
-  @GetMapping(value = "/getUserPosts/{username}")
-  public ResponseEntity<Collection<PostDTO>> getUserPosts(
-      @PathVariable("username") String username) {
-    Collection<PostDTO> posts = postService.getByUserUsername(username);
+  @GetMapping(value = "/getUserPosts/{username}/{page}")
+  public ResponseEntity<PageablePostDTO> getUserPosts(
+      @PathVariable("username") String username, @PathVariable int page) {
+    PageablePostDTO posts = postService.getByUserUsername(username, page);
     return new ResponseEntity<>(posts, HttpStatus.OK);
   }
 
@@ -63,10 +64,10 @@ public class PostController {
     return new ResponseEntity<>(posts, HttpStatus.OK);
   }
 
-  @GetMapping(value = "/tag/{id}")
-  public ResponseEntity<Collection<PostDTO>> getPostByTagId(@PathVariable("id") Long id) {
-    Collection<PostDTO> posts = postService.getByTagId(id);
-    if (posts.isEmpty()) {
+  @GetMapping(value = "/tag/{id}/{page}")
+  public ResponseEntity<PageablePostDTO> getPostByTagId(@PathVariable("id") Long id, @PathVariable int page) {
+    PageablePostDTO posts = postService.getByTagId(id, page);
+    if (posts.getPosts().isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } else {
       return new ResponseEntity<>(posts, HttpStatus.OK);
@@ -80,6 +81,13 @@ public class PostController {
         .println("ENIU" + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     PostDTO post = postService.get(id);
     return new ResponseEntity<>(post, HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/search/{query}")
+  public ResponseEntity<Collection<PostDTO>> getPostsFromQuery(
+      @PathVariable("query") String query) {
+    Collection<PostDTO> posts = postService.getByQuery(query);
+    return new ResponseEntity<>(posts, HttpStatus.OK);
   }
 
   @PostMapping(value = "/addPost")

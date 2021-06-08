@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from "@/components/pages/HelloWorld";
+import Home from "@/components/pages/Home";
 import PostsWithTag from "@/components/pages/PostsWithTag";
 import SinglePostAdvanced from "@/components/pages/SinglePostAdvanced";
 import AdminBoard from "@/components/AdminBoard";
@@ -18,7 +18,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: HelloWorld,
+      component: Home,
     },
     {
       path: '/tag/:id',
@@ -38,7 +38,7 @@ export default new Router({
     },
     {
       path: '/home',
-      component: HelloWorld,
+      component: Home,
     },
     {
       path: '/top-tags',
@@ -49,7 +49,7 @@ export default new Router({
       component: TrendingPosts,
     },
     {
-      path: '/user/:username',
+      path: '/user/:username/',
       component: UserPosts,
     },
     {

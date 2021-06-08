@@ -18,11 +18,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
 @Setter
+@ToString
 public class Post {
 
   @Id

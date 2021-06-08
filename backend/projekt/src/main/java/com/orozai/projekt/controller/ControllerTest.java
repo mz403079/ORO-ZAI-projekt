@@ -28,49 +28,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ControllerTest {
 
-  private final ModelMapper modelMapper;
   private final PostServiceImpl postService;
   private final UserServiceImpl userService;
-  private final CommentServiceImpl commentService;
   private final ImageServiceImpl imageService;
-  private final CommentLikeServiceImpl commentLikeService;
 
-  public ControllerTest(ModelMapper modelMapper, PostServiceImpl postService,
+  public ControllerTest(PostServiceImpl postService,
       UserServiceImpl userService,
-      CommentServiceImpl commentService,
-      ImageServiceImpl imageService,
-      CommentLikeServiceImpl commentLikeService) {
-    this.modelMapper = modelMapper;
+      ImageServiceImpl imageService) {
     this.postService = postService;
     this.userService = userService;
-    this.commentService = commentService;
     this.imageService = imageService;
-    this.commentLikeService = commentLikeService;
-  }
-
-
-  //  @GetMapping(value = "/getPostTag")
-//  public ResponseEntity<Collection<PostTagDTO>> getPostTags() {
-//    Collection<PostTagDTO> tags = postTagService.getAll();
-//    return new ResponseEntity<>(tags, HttpStatus.OK);
-//  }
-  @GetMapping(value = "/search/{query}")
-  public ResponseEntity<Collection<PostDTO>> getPostsFromQuery(
-      @PathVariable("query") String query) {
-    Collection<PostDTO> posts = postService.getByQuery(query);
-    return new ResponseEntity<>(posts, HttpStatus.OK);
-  }
-
-  @PostMapping(value = "/likeComment")
-  public ResponseEntity<CommentLikeDTO> likePost(
-      @RequestBody CommentLikeFormDTO commentLikeFormDTO) {
-    CommentLikeDTO commentLikeDTO = modelMapper.map(commentLikeFormDTO, CommentLikeDTO.class);
-    commentLikeDTO.setUser(userService.get(commentLikeFormDTO.getUserId()));
-    commentLikeDTO.setComment(commentService.get(commentLikeFormDTO.getCommentId()));
-    commentLikeService.handleComment(commentLikeDTO);
-    Collection<UserCountDTO> user = postService.getTopUserIds();
-    userService.setUsers(user);
-    return new ResponseEntity<>(commentLikeDTO, HttpStatus.OK);
   }
 
   @GetMapping(value = "/getTopUsers")
@@ -85,11 +52,6 @@ public class ControllerTest {
     UserDTO user = userService.get(postLikeDTO.getUserId());
     PostDTO post = postService.get(postLikeDTO.getPostId());
     userService.update(user, post);
-//    postService.update(post,user);
-//    if(postLikeService.handleLike(postLikeDTO))
-//      postService.update(postLikeDTO.getPostId(),1);
-//    else
-//      postService.update(postLikeDTO.getPostId(),-1);
     return new ResponseEntity<>(postLikeDTO, HttpStatus.OK);
   }
 

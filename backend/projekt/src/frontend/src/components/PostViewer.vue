@@ -18,7 +18,8 @@
                 <div>{{ item.title }}
                   <b-badge v-for="tag in item.tags" v-bind:key="tag.tagId"
                            class="tagBadge">
-                    <router-link class="tag-badge-link" v-bind:to="'/tag/'+tag.tagId">{{
+                    <router-link class="tag-badge-link"
+                                 :to="{ path: '/tag/'+tag.tagId+'/', query: { page: 1 }}">{{
                         tag.tagName
                       }}
                     </router-link>
@@ -31,7 +32,8 @@
               </h5>
               <b-row>
                 <div>
-                  <router-link class="tag-badge-link" v-bind:to="'/user/'+item.author.username">
+                  <router-link class="tag-badge-link"
+                               :to="{ path: '/user/'+item.author.username+'/', query: { page: 1 }}">
                     <b-avatar v-if="item.author.profileImage != null">
                       <img class="avatar-icon"
                            :src="`data:image/png;base64, ${item.author.profileImage.imageData}`"
@@ -41,8 +43,7 @@
 
                     <span class="username">  {{ item.author.username }} </span>
                   </router-link>
-
-                  at {{ item.timePosted }}
+                  · {{ timeFromNow(item.timePosted) }}
                 </div>
               </b-row>
             </b-col>
@@ -68,7 +69,8 @@
               </router-link>
             </b-button>
 
-            <b-button class="icon-button" style="border-bottom-right-radius: 8px;" @click="toggleVisibility($event)">
+            <b-button class="icon-button" style="border-bottom-right-radius: 8px;"
+                      @click="toggleVisibility($event)">
               <b-icon icon="arrows-angle-expand"></b-icon>
             </b-button>
           </div>
@@ -91,6 +93,7 @@
 import instance from "@/server";
 import headers from "@/headers";
 import isUserAdmin from "@/isUserAdmin";
+import {formatDistanceToNow} from 'date-fns'
 
 export default {
   name: "PostViewer",
@@ -105,6 +108,7 @@ export default {
   },
   created() {
     this.userIsAdmin = isUserAdmin();
+
   },
   methods: {
     toggleVisibility(e) {
@@ -116,6 +120,11 @@ export default {
         el.classList.remove("post-content-hidden");
         el.classList.add("post-content-visible");
       }
+    },
+    timeFromNow(time) {
+      return formatDistanceToNow(
+          new Date(time), {addSuffix: true}
+      )
     },
     likePost(postId) {
       let user = JSON.parse(localStorage.user);
