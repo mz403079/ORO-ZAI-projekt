@@ -4,6 +4,7 @@ import com.orozai.projekt.exception.DataNotFoundException;
 import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.UserCountDTO;
 import com.orozai.projekt.model.dto.specialized.PageablePostDTO;
+import com.orozai.projekt.model.entity.Comment;
 import com.orozai.projekt.model.entity.Image;
 import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.Tag;
@@ -17,6 +18,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -162,7 +164,21 @@ public class PostServiceImpl implements IService<PostDTO> {
   public void delete(PostDTO postDTO) {
 
   }
-
+  public PostDTO delete(long id) {
+    Post post = postRepository.findById(id).orElseThrow(
+        DataNotFoundException::new);
+    PostDTO postDTO = postToPostDTO(post);
+    Set<User> users = post.getLikes();
+    for(User user : users) {
+      user.removeLike(post);
+    }
+    Set<Comment> comments = post.getComments();
+    for(Comment comment : comments) {
+      comment.removeComment(post);
+    }
+    postRepository.delete(post);
+    return postDTO;
+  }
   public PostDTO postToPostDTO(Post post) {
     PostDTO postDTO = modelMapper.map(post, PostDTO.class);
     postDTO.setPostImage(imageService.imageToImageDTO(post.getPostImage()));

@@ -3,6 +3,7 @@ package com.orozai.projekt.model.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,11 +33,16 @@ public class Comment {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime timeCommented;
 
-  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   private Post post;
 
   @ManyToOne(optional = false, fetch = FetchType.LAZY)
   @JsonIgnore
   private User commentAuthor;
+
+  public void removeComment(Post comment) {
+    this.getPost().getComments().remove(comment);
+    this.setPost(null);
+  }
 }

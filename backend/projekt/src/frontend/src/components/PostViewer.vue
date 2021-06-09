@@ -26,7 +26,9 @@
                   </b-badge>
                 </div>
                 <div v-if="userIsAdmin">
-                  <b-icon color="red" icon="trash"></b-icon>
+                  <router-link :to="{ path: '#'}">
+                  <b-icon color="red" icon="trash" @click="deletePost(item.postId)"></b-icon>
+                  </router-link>
                 </div>
               </h5>
               <b-row>
@@ -93,6 +95,7 @@ import instance from "@/server";
 import headers from "@/headers";
 import isUserAdmin from "@/isUserAdmin";
 import {formatDistanceToNow} from 'date-fns'
+import authHeader from "@/authHeader";
 
 export default {
   name: "PostViewer",
@@ -133,6 +136,11 @@ export default {
       })
       instance.post("/api/likePost", json, {headers: headers})
     },
+    deletePost(id) {
+      instance.delete("/api/deletePost/"+id, {headers: authHeader()}).then(() => {
+        this.$parent.$emit('ChangeView', "refresh");
+      });
+    }
   }
 
 }

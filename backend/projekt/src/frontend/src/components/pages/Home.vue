@@ -23,6 +23,10 @@ export default {
     }
   },
   created() {
+    this.$on('ChangeView', section => {
+      if(section === "refresh")
+        this.getPosts();
+    });
     if (!this.$route.query.page) {
       this.currentPage = 1;
     } else {

@@ -2,6 +2,7 @@ package com.orozai.projekt.controller.post;
 
 import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.specialized.PageablePostDTO;
+import com.orozai.projekt.model.entity.Post;
 import com.orozai.projekt.model.entity.Tag;
 import com.orozai.projekt.model.service.PostServiceImpl;
 import com.orozai.projekt.model.service.TagServiceImpl;
@@ -9,7 +10,9 @@ import java.util.Collection;
 import java.util.Set;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,6 +91,12 @@ public class PostController {
       @PathVariable("query") String query) {
     Collection<PostDTO> posts = postService.getByQuery(query);
     return new ResponseEntity<>(posts, HttpStatus.OK);
+  }
+  @PreAuthorize("hasRole('ADMIN')")
+  @DeleteMapping(value = "/deletePost/{id}")
+  public ResponseEntity<PostDTO> deletePost(@PathVariable("id") Long id) {
+    PostDTO postDTO = postService.delete(id);
+    return new ResponseEntity<>(postDTO,HttpStatus.OK);
   }
 
   @PostMapping(value = "/addPost")
