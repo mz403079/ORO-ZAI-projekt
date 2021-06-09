@@ -22,10 +22,10 @@ export default {
     getPosts() {
       let user = JSON.parse(localStorage.user);
       instance.get("/api/getProfilePosts/" + user.id)
-          .then((response) => {
-            this.posts = response.data;
-            setLikes(this.posts);
-          })
+      .then((response) => {
+        this.posts = response.data;
+        setLikes(this.posts);
+      })
     }
   }
 }

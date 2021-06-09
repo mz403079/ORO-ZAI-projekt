@@ -1,16 +1,16 @@
 <template>
   <div>
     <b-form @submit.stop.prevent="checkForm">
-      <label for="username">Username:</label>
+      <label for="username-l">Username:</label>
       <b-form-input type="text"
-                    id="username"
+                    id="username-l"
                     v-model="form.username"
                     placeholder="Enter username"
                     required
       ></b-form-input>
-      <label for="text-password">Password:</label>
+      <label for="text-password-l">Password:</label>
       <b-form-input type="password"
-                    id="text-password"
+                    id="text-password-l"
                     v-model="form.password"
                     required
                     placeholder="Enter password"
@@ -67,6 +67,7 @@ export default {
   margin: 20px 0;
 
 }
+
 .form-control:focus {
   color: #495057;
   background-color: #fff;
@@ -80,10 +81,12 @@ export default {
   background-color: #A42CD6;
   border-color: #A42CD6;
 }
+
 .sign-up-button:hover {
   background-color: #C44EF6;
   border-color: #C44EF6;
 }
+
 .form-control label {
   display: block;
 }

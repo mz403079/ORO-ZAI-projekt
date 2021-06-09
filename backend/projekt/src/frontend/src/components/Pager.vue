@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page">
     <ul class="pagination">
       <router-link :to="{ path: path, query: { page: currentPage-1 }}"
                    v-bind:class="{disabled : currentPage === 1}">

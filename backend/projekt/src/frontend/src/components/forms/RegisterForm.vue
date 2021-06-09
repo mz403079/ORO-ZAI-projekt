@@ -104,8 +104,10 @@ export default {
 
   methods: {
     checkForm() {
-      if(this.passwordMatch && this.validateEmail && this.validateUsername && this.validatePassword)
+      if (this.passwordMatch && this.validateEmail && this.validateUsername
+          && this.validatePassword) {
         this.registerUser();
+      }
     },
 
     registerUser() {
@@ -142,6 +144,7 @@ export default {
   margin: 20px 0;
 
 }
+
 .form-control:focus {
   color: #495057;
   background-color: #fff;
@@ -155,10 +158,12 @@ export default {
   background-color: #A42CD6;
   border-color: #A42CD6;
 }
+
 .sign-up-button:hover {
   background-color: #C44EF6;
   border-color: #C44EF6;
 }
+
 .form-control label {
   display: block;
 }

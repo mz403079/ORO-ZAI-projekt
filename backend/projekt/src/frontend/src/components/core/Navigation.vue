@@ -1,19 +1,19 @@
 <template>
   <div>
-    <b-navbar  class="navbar" fixed="top" toggleable="md">
+    <b-navbar class="navbar" fixed="top" toggleable="md">
       <b-navbar-brand class="text-white" href="#">Leddit</b-navbar-brand>
-      <b-navbar-toggle id="mm" target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle id="nav-button" target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav >
+        <b-navbar-nav>
           <div v-if="currentUser">
             <b-button id="log-out-btn" @click="logOut()" href="/">Logout</b-button>
           </div>
           <div v-else>
-            <b-button id="sign-btn" v-b-modal.modal-1 >Sign-in / Sign-up</b-button>
+            <b-button id="sign-btn" v-b-modal.modal-1>Sign-in / Sign-up</b-button>
             <b-modal hide-footer hide-header content-class="shadow" id="modal-1" title="Hello!">
               <b-tabs fill content-class="mt-3"
               >
-                <b-tab title="Sign-up" >
+                <b-tab title="Sign-up">
                   <RegisterForm></RegisterForm>
                 </b-tab>
                 <b-tab title="Sign-in">
@@ -66,24 +66,30 @@ export default {
   border: 0;
   border-radius: 9999px;
 }
- ul > li > a{
+
+ul > li > a {
   color: #A42CD6;
 }
-ul > li > a:hover{
-  color:#C44EF6;
+
+ul > li > a:hover {
+  color: #C44EF6;
 }
+
 #log-out-btn, #sign-btn {
   background-color: #A42CD6;
   border-color: #A42CD6;
 }
+
 #log-out-btn:hover, #sign-btn:hover {
   background-color: #C44EF6;
   border-color: #C44EF6;
 }
+
 .navbar {
   background-color: black;
 }
-#mm {
+
+#nav-button {
   background-color: #A42CD6;
 
 }

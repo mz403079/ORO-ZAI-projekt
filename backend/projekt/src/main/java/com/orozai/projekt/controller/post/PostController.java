@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Set;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,7 +64,8 @@ public class PostController {
   }
 
   @GetMapping(value = "/tag/{id}/{page}")
-  public ResponseEntity<PageablePostDTO> getPostByTagId(@PathVariable("id") Long id, @PathVariable int page) {
+  public ResponseEntity<PageablePostDTO> getPostByTagId(@PathVariable("id") Long id,
+      @PathVariable int page) {
     PageablePostDTO posts = postService.getByTagId(id, page);
     if (posts.getPosts().isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -74,7 +74,7 @@ public class PostController {
     }
   }
 
-//  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  //  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
   @GetMapping(value = "/post/{id}")
   public ResponseEntity<PostDTO> getPost(@PathVariable("id") Long id) {
     System.out

@@ -3,7 +3,9 @@
     <h3>Popular tags</h3>
     <h4>
       <b-badge v-for="tag in tags" v-bind:key="tag.tag.tagId" class="tag-badge">
-        <router-link class="tag-badge-link" v-bind:to="'/tag/'+tag.tagId"> {{ tag.tag.tagName }}
+        <router-link class="tag-badge-link"
+                     :to="{ path: '/tag/'+tag.tag.tagId+'/', query: { page: 1 }}">
+          {{ tag.tag.tagName }}
         </router-link>
       </b-badge>
     </h4>
@@ -27,7 +29,6 @@ export default {
     getPopularTags() {
       instance.get("/api/getTopTags")
       .then((response) => {
-        console.log(response.data);
         this.tags = response.data;
       })
     }

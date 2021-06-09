@@ -1,7 +1,8 @@
 <template>
   <div>
     <PostViewer v-bind:postsToDisplay="this.posts"></PostViewer>
-    <Pager v-bind:path="this.$router.currentRoute.path" v-bind:pages="this.pages" v-bind:current-page="currentPage"></Pager>
+    <Pager v-bind:path="this.$router.currentRoute.path" v-bind:pages="this.pages"
+           v-bind:current-page="this.currentPage"></Pager>
   </div>
 </template>
 

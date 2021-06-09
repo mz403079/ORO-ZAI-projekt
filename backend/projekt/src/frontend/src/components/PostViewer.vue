@@ -19,9 +19,8 @@
                   <b-badge v-for="tag in item.tags" v-bind:key="tag.tagId"
                            class="tagBadge">
                     <router-link class="tag-badge-link"
-                                 :to="{ path: '/tag/'+tag.tagId+'/', query: { page: 1 }}">{{
-                        tag.tagName
-                      }}
+                                 :to="{ path: '/tag/'+tag.tagId+'/', query: { page: 1 }}">
+                      {{ tag.tagName }}
                     </router-link>
                     <router-view/>
                   </b-badge>

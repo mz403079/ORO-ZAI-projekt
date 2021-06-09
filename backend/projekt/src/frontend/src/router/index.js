@@ -60,7 +60,7 @@ export default new Router({
       path: '/result',
       component: SearchQueryResult,
       props(route) {
-        return {  search: route.query.search }
+        return {search: route.query.search}
       }
     }
   ]

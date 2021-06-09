@@ -96,7 +96,7 @@ public class PostServiceImpl implements IService<PostDTO> {
     return null;
   }
 
-  public PageablePostDTO getByTagId(Long id,int page) {
+  public PageablePostDTO getByTagId(Long id, int page) {
     Pageable pageable = PageRequest.of(page - 1, 5,
         Sort.by(Sort.Direction.DESC, "timePosted"));
     Page<Post> posts = postRepository.findAllByTagsTagId(id, pageable);

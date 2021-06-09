@@ -1,15 +1,13 @@
 package com.orozai.projekt.model.repository;
 
 import com.orozai.projekt.model.entity.Post;
+import java.util.Collection;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.Collection;
-import javax.transaction.Transactional;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 @Transactional
 public interface PostRepository extends JpaRepository<Post, Long> {

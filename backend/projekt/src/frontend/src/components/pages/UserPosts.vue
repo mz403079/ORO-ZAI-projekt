@@ -1,7 +1,8 @@
 <template>
   <div>
     <PostViewer v-bind:postsToDisplay="posts"></PostViewer>
-    <Pager v-bind:path="this.$router.currentRoute.path" v-bind:pages="this.pages" v-bind:current-page="currentPage"></Pager>
+    <Pager v-bind:path="this.$router.currentRoute.path" v-bind:pages="this.pages"
+           v-bind:current-page="currentPage"></Pager>
   </div>
 </template>
 
@@ -10,6 +11,7 @@ import PostViewer from "@/components/PostViewer";
 import instance from "@/server";
 import setLikes from "@/setLikes";
 import Pager from "@/components/Pager";
+
 export default {
   name: 'UserPosts',
   components: {PostViewer, Pager},

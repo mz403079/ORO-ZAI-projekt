@@ -24,14 +24,14 @@ export default {
   methods: {
     getPosts() {
       instance.get("/api/search/" + this.search)
-          .then((response) => {
-            this.posts = response.data;
-            setLikes(this.posts);
-          })
+      .then((response) => {
+        this.posts = response.data;
+        setLikes(this.posts);
+      })
     }
   },
-  watch:{
-    $route (){
+  watch: {
+    $route() {
       this.getPosts();
     }
   }

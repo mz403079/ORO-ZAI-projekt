@@ -99,8 +99,9 @@ export default {
       }
       let currentPage = this.$router.currentRoute;
       this.pageElement = document.getElementById(currentPage.path);
-      if(this.pageElement !== null)
+      if (this.pageElement !== null) {
         this.pageElement.classList.add("current");
+      }
     }
   },
   watch: {

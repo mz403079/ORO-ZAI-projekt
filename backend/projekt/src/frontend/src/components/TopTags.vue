@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <div class="b-container contentWrapper">
-          <div id="tag-viewer-wrapper">
-            <div v-for="tagInfo in tags" :key="tagInfo.tagId">
-              <router-link class="tag-badge-link" v-bind:to="'/tag/'+tagInfo.tag.tagId">
-                <div class="tag-wrapper">
-                  <div><span class="tag-name">#{{ tagInfo.tag.tagName }}</span></div>
-                  <div><span>{{ tagInfo.count }} posts</span></div>
-                </div>
-              </router-link>
+      <div id="tag-viewer-wrapper">
+        <div v-for="tagInfo in tags" :key="tagInfo.tagId">
+          <router-link class="tag-badge-link" v-bind:to="'/tag/'+tagInfo.tag.tagId">
+            <div class="tag-wrapper">
+              <div><span class="tag-name">#{{ tagInfo.tag.tagName }}</span></div>
+              <div><span>{{ tagInfo.count }} posts</span></div>
             </div>
-          </div>
-  </div>
+          </router-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
