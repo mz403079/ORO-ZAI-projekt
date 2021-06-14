@@ -31,5 +31,7 @@ export default {
 </script>
 
 <style scoped>
-
+a, a:hover {
+  color: #A42CD6;
+}
 </style>

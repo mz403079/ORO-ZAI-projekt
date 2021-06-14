@@ -1,9 +1,12 @@
 package com.orozai.projekt.controller;
 
+import com.orozai.projekt.model.dto.basic.PostDTO;
 import com.orozai.projekt.model.dto.basic.UserDTO;
 import com.orozai.projekt.model.service.UserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +29,14 @@ public class UserController {
   public ResponseEntity<UserDTO> getProfilePage(@PathVariable("id") Long userID) {
     UserDTO userDTO = userService.get(userID);
     return new ResponseEntity<>(userDTO, HttpStatus.OK);
+  }
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @DeleteMapping(value = "/deleteUser/{id}")
+  public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") Long id) {
+    System.out.println("haloo");
+    UserDTO userDTO = userService.delete(id);
+    return new ResponseEntity<>(userDTO,HttpStatus.OK);
   }
 
   @PostMapping("/{id}/pic")

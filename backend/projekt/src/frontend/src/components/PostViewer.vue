@@ -137,7 +137,7 @@ export default {
       instance.post("/api/likePost", json, {headers: headers})
     },
     deletePost(id) {
-      instance.delete("/api/deletePost/"+id, {headers: authHeader()}).then(() => {
+      instance.delete("/api/deletePost/"+parseInt(id), {headers: authHeader()}).then(() => {
         this.$parent.$emit('ChangeView', "refresh");
       });
     }

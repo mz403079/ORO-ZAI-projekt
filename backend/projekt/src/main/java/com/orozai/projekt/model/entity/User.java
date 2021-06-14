@@ -41,8 +41,11 @@ public class User {
   @JsonIgnore
   private String email;
 
-  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToOne(cascade = CascadeType.ALL)
   private Image profileImage;
+
+  @OneToMany(mappedBy = "postAuthor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  private Set<Post> posts = new HashSet<>();
 
   @OneToMany(mappedBy = "commentAuthor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<Comment> comments = new HashSet<>();
@@ -65,5 +68,10 @@ public class User {
   public void removeLike(Post post) {
     this.likedPosts.remove(post);
     post.getLikes().remove(this);
+  }
+
+  public void removePost(Post post) {
+    post.setPostAuthor(null);
+    this.posts.remove(post);
   }
 }

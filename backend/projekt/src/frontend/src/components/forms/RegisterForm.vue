@@ -98,7 +98,7 @@ export default {
       if (this.form.username.length < 1) {
         return null;
       }
-      return this.form.username.length > 5;
+      return this.form.username.length > 4;
     }
   },
 

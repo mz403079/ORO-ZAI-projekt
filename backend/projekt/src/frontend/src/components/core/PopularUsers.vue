@@ -26,17 +26,17 @@
 import instance from "@/server";
 
 export default {
-  name: "PopularTags",
+  name: "PopularUsers",
   data() {
     return {
       users: null,
     }
   },
   created() {
-    this.getPopularTags();
+    this.getPopularUsers();
   },
   methods: {
-    getPopularTags() {
+    getPopularUsers() {
       instance.get("/api/getTopUsers")
       .then((response) => {
         this.users = response.data;

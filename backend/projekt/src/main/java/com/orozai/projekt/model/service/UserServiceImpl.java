@@ -126,4 +126,29 @@ public class UserServiceImpl implements IService<UserDTO> {
   public void delete(UserDTO userDTO) {
 
   }
+
+  public UserDTO delete(Long id) {
+    System.out.println("removing");
+    User user = userRepository.findById(id).orElseThrow(
+        DataNotFoundException::new);
+    UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+    Set<Post> posts = user.getLikedPosts();
+    for(Post post : posts) {
+      post.removeLike(user);
+    }
+//    Set<Post> posts2 = user.getPosts();
+//    for(Post post : posts2) {
+//     System.out.println(post.getTitle());
+//    }
+//
+//    for(Post post : posts2) {
+//      post.removeAuthor(user);
+//    }
+//    for(Post post : posts2) {
+//      user.removePost(post);
+//    }
+    userRepository.delete(user);
+    System.out.println("removed");
+    return userDTO;
+  }
 }

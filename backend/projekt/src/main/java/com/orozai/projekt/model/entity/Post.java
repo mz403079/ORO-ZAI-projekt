@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.Getter;
@@ -39,7 +40,7 @@ public class Post {
   @Type(type = "text")
   private String content;
 
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   private User postAuthor;
 
   @Column(nullable = false)
@@ -63,5 +64,14 @@ public class Post {
     return likes.size();
   }
 
+  public void removeLike(User user) {
+    this.likes.remove(user);
+    user.getLikedPosts().remove(this);
+  }
 
+  public void removeAuthor(User user) {
+    this.setPostAuthor(null);
+    this.getPostAuthor().getPosts().remove(this);
+
+  }
 }
